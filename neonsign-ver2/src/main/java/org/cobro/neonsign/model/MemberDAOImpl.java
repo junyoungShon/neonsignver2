@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.cobro.neonsign.vo.FindPasswordVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.PickedVO;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -163,5 +164,47 @@ public class MemberDAOImpl implements MemberDAO{
 	public int allBlockMembers() {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("member.allBlockMembers");
+	}
+	/**
+	 * 비밀 번호 찾기 요청이 들어올 경우 테이블에 기록을 삽입해준다.
+	 * @author junyoung
+	 */
+	@Override
+	public void insertPasswordFindRequest(FindPasswordVO findPasswordVO) {
+		sqlSessionTemplate.insert("member.insertPasswordFindRequest",findPasswordVO);
+		
+	}
+	/**
+	 * 회원의 비밀번호만을 변경해주는 dao 메서드로서 비밀번호 찾기에 사용된다.
+	 * @author junyoung
+	 */
+	@Override
+	public void memberUpdatePassword(MemberVO memberVO) {
+		sqlSessionTemplate.update("member.memberUpdatePassword", memberVO);
+	}
+	/**
+	 * 해당 이메일로 이전에 비밀번호 찾기 요청이 있었던 경우가 있는지 확인해주는 메서드
+	 * @author junyoung
+	 */
+	@Override
+	public MemberVO confirmPasswordFindRequest(FindPasswordVO findPasswordVO) {
+		return sqlSessionTemplate.selectOne("member.confirmPasswordFindRequest", findPasswordVO);
+	}
+	/**
+	 * 해당 이메일로 이전에 비밀번호 찾기 요청이 있었던 경우 테이블에서 관련 정보를 삭제해준다.
+	 * @author junyoung
+	 */
+	@Override
+	public void deletePasswordFindRequest(FindPasswordVO findPasswordVO) {
+		sqlSessionTemplate.delete("member.deletePasswordFindRequest", findPasswordVO);
+	}
+	/**
+	 * 랜덤 문자열과 요청 회원 이메일을 비교하여 유효한 요청인지 검증
+	 * @author junyoung
+	 */
+	@Override
+	public MemberVO requestTemporaryPasswordCheckRandomSentence(
+			FindPasswordVO findPasswordVO) {
+		return sqlSessionTemplate.selectOne("member.requestTemporaryPasswordCheckRandomSentence", findPasswordVO);
 	}
 }

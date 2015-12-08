@@ -211,6 +211,28 @@
 		</div>
 	</div>
 	<!--로그인모달창 끝 -->
+	<!-- 비밀 번호 찾기 모달 -->
+	<div class="modal fade forget-modal" tabindex="-1" role="dialog" aria-labelledby="myForgetModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true"><i class="fa fa-remove"></i></span>
+						<span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">비밀 번호 복구 요청</h4>
+				</div>
+				<div class="modal-body">
+					<p class="alertSpace">자신이 아이디로 사용하는 이메일을 입력해주세요</p>
+					<input type="email" name="memberEmail" id="recovery-email" class="form-control" autocomplete="off">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-info requestTemporaryPassword">메일 요청</button>
+				</div>
+			</div> <!-- /.modal-content -->
+		</div> <!-- /.modal-dialog -->
+	</div> <!-- /.modal -->
 	
 	<!-- 업데이트 모달 만들기 -->
 <div class="modal fade" id="memberUpateModal" tabindex="-1" role="dialog"

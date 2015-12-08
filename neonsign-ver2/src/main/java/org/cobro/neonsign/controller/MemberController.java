@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.cobro.neonsign.model.ItjaMemberBean;
 import org.cobro.neonsign.model.MemberService;
+import org.cobro.neonsign.vo.FindPasswordVO;
 import org.cobro.neonsign.vo.ItjaMemberVO;
 import org.cobro.neonsign.vo.MemberListVO;
 import org.cobro.neonsign.vo.MemberVO;
@@ -226,5 +227,25 @@ public class MemberController {
 		String path="redirect:memberLogout.neon";
     	return path;
 	}
-	
+	/**
+	 * 비밀번호를 찾기 위한 메일 전송
+	 * @author junyoung
+	 */
+	@RequestMapping("findPasswordMailRequest.neon")
+	public String findPasswordMailRequest(FindPasswordVO findPasswordVO){
+		memberService.findPasswordMailRequest(findPasswordVO);
+		return "loginPage";
+	}
+	/**
+	 * 비밀번호 요청 메일을 받고 제시된 링크를 클릭했을 때 메서드
+	 * 
+	 * @author junyoung
+	 */
+	@RequestMapping("requestTemporaryPassword.neon")
+	public ModelAndView requestTemporaryPassword(FindPasswordVO findPasswordVO){
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("memberVO", memberService.requestTemporaryPassword(findPasswordVO));
+		mav.setViewName("temporaryPasswordView");
+		return mav;
+	}
 }

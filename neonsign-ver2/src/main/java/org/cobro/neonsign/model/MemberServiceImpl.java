@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.cobro.neonsign.utility.PasswordFinder;
+import org.cobro.neonsign.vo.FindPasswordVO;
 import org.cobro.neonsign.vo.MemberListVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.PagingBean;
@@ -19,6 +21,8 @@ public class MemberServiceImpl implements MemberService{
 	private MemberDAO memberDAO;
 	@Resource
 	private UtilService utilService;
+	@Resource
+	private PasswordFinder passwordFinder;
 	
 	@Override
 	public MemberVO findMemberByEmail(String emailComp) {
@@ -151,6 +155,38 @@ public class MemberServiceImpl implements MemberService{
 	public String memberDelete(MemberVO memberVO) {
 		// TODO Auto-generated method stub
 		return memberDAO.memberDelete(memberVO);
+	}
+	/**
+	 * 비밀번호를 찾기위한 메일 요청메서드
+	 * di를 세터게터로 주입
+	 * @author junyoung
+	 */
+	@Override
+	public void findPasswordMailRequest(FindPasswordVO findPasswordVO) {
+		passwordFinder.setMemberDAO(memberDAO);
+		passwordFinder.passFinder(findPasswordVO);
+	}
+	/**
+	 * 비밀번호 요청 메일을 받고 제시된 링크를 클릭했을 때 메서드
+	 * 랜덤 문자열과 해당 회원의 이메일 아이디를 비교하여 유효성을 판단한 뒤 임시 비밀번호를 생성해 삽입한다.
+	 * @author junyoung
+	 */
+	@Override
+	public MemberVO requestTemporaryPassword(FindPasswordVO findPasswordVO) {
+		System.out.println("멤버 서비스에 들어오나"+findPasswordVO);
+		MemberVO memberVO = memberDAO.requestTemporaryPasswordCheckRandomSentence(findPasswordVO);
+		String temporaryPassword = passwordFinder.randomSentenceMaker(5);
+		//만료된 요청이 아닐 경우에만 동작
+		if(memberVO!=null){
+			memberVO.setMemberPassword(temporaryPassword);
+			memberDAO.memberUpdatePassword(memberVO);
+			//요청 수행 후 패스워드 파인드 테이블의 정보 삭제
+			memberDAO.deletePasswordFindRequest(findPasswordVO);
+			memberVO = memberDAO.findByPassword(memberVO.getMemberEmail());
+		}else{
+			memberVO = null;
+		}
+		return memberVO;
 	}
 	
 }

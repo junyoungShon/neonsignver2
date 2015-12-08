@@ -170,7 +170,13 @@
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-jsp</artifactId>
 			<version>2.2.2</version>
-		</dependency>    
+		</dependency>   
+		<!-- java 메일 라이브러리 -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency> 
 	</dependencies>
 	<build>
 		<plugins>

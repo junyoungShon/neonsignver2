@@ -22,7 +22,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="memberEmail" column="MEMBER_EMAIL"/>
 		<result property="mainArticleNo" column="MAIN_ARTICLE_NO"/>
 	</resultMap>
-   
+	
+	<!-- findPasswordVO resultMap -->
+	<resultMap type="findPasswordVO" id="findPasswordVOResultMap">
+		<result property="memberEmail" column="MEMBER_EMAIL"/>
+		<result property="randomSentence" column="RANDOM_SENTECE"/>
+	</resultMap>
+	
+   	<!-- 비밀 번호 찾기 요청 인서트 구문 -->
+   	<insert id="insertPasswordFindRequest">
+   		insert into FIND_PASSWORD (MEMBER_EMAIL,RANDOM_SENTENCE) values (#{memberEmail},#{randomSentence})
+   	</insert>
+   	<!-- 이전에 비밀번호 찾기 요청이있었는지 반환 -->
+   	<select id="confirmPasswordFindRequest" parameterType="findPasswordVO" resultMap="memberResultMap">
+		select member_email from find_password where random_sentence = #{randomSentence}
+	</select>
+	<!-- 있었다면 요청을 테이블에서 삭제해준다. -->
+	<delete id="deletePasswordFindRequest" parameterType="findPasswordVO">
+		delete from find_password where member_email = #{memberEmail}
+	</delete>
+	<!-- 요청에 다른 랜덤문자열과 이메일을 확인 하여 유효성 검증 -->
+	<select id="requestTemporaryPasswordCheckRandomSentence" resultMap="memberResultMap">
+		select member_email from find_password where random_sentence = #{randomSentence} and member_email = #{memberEmail}
+	</select>
+   	<!-- 회원정보수정(비밀번호만 수정해준다.) -->
+    <update id="memberUpdatePassword" parameterType="memberVO">
+    update brain_member set MEMBER_PASSWORD=#{memberPassword} where MEMBER_EMAIL=#{memberEmail} 
+    </update>
+    
 	<!-- 한솔 회원가입 -->
 	<insert id="memberRegister" parameterType="memberVO">
 		insert into
@@ -48,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 </select>
 	 <!-- 한솔 이메일 중복체크 -->
 	 <select id="findMemberByEmail" resultMap="memberResultMap" parameterType="string">
-	 	select MEMBER_EMAIL from brain_member where MEMBER_EMAIL=#{value}
+	 	select MEMBER_EMAIL,MEMBER_NICKNAME from brain_member where MEMBER_EMAIL=#{value}
 	 </select>
 	 	 <!-- 일반회원 목록 -->
 	  <select id="RegisterMemberList" resultMap="memberResultMap" resultType="memberVO">
@@ -111,7 +138,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
  <!-- 한솔 비밀번호 재확인 -->
 	 <select id="findByPassword" resultMap="memberResultMap" parameterType="string" resultType="memberVO">
-	 select MEMBER_PASSWORD from brain_member where  MEMBER_EMAIL=#{MEMBER_EMAIL}
+	 select MEMBER_PASSWORD,member_nickname from brain_member where  MEMBER_EMAIL=#{memberEmail}
 	 </select>
 	 <!-- 한솔 회원탈퇴 -->
     <delete id="memberDelete" parameterType="memberVO" >
@@ -123,8 +150,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     set MEMBER_PASSWORD=#{memberPassword} , MEMBER_NICKNAME=#{memberNickName}
     where MEMBER_EMAIL=#{memberEmail} 
     </update>
-      
     
+    
+  
     
 </mapper> 		
  

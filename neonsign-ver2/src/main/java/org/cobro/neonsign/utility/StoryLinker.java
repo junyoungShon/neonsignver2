@@ -1,4 +1,4 @@
-package org.cobro.neonsign.thread;
+package org.cobro.neonsign.utility;
 
 import java.util.List;
 

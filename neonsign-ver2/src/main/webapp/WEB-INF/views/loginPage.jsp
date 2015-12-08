@@ -155,15 +155,15 @@
 					<span aria-hidden="true"><i class="fa fa-remove"></i></span>
 					<span class="sr-only">Close</span>
 				</button>
-				<h4 class="modal-title">Recovery password</h4>
+				<h4 class="modal-title">비밀 번호 복구 요청</h4>
 			</div>
 			<div class="modal-body">
-				<p>Type your email account</p>
-				<input type="email" name="recovery-email" id="recovery-email" class="form-control" autocomplete="off">
+				<p class="alertSpace">자신이 아이디로 사용하는 이메일을 입력해주세요</p>
+				<input type="email" name="memberEmail" id="recovery-email" class="form-control" autocomplete="off">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-info">Recovery</button>
+				<button type="button" class="btn btn-info requestTemporaryPassword">메일 요청</button>
 			</div>
 		</div> <!-- /.modal-content -->
 	</div> <!-- /.modal-dialog -->

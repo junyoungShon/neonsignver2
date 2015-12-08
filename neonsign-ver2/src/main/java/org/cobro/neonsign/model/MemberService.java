@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cobro.neonsign.vo.FindPasswordVO;
 import org.cobro.neonsign.vo.MemberListVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.PickedVO;
@@ -25,4 +26,6 @@ public interface MemberService {
 	public MemberVO defaultMemberLogin(MemberVO memberVO);
 	public MemberVO findByPassword(String mailComp);
 	public MemberListVO getBlockMemberList(int i);
+	public void findPasswordMailRequest(FindPasswordVO findPasswordVO);
+	public MemberVO requestTemporaryPassword(FindPasswordVO findPasswordVO);
 }

@@ -1585,67 +1585,6 @@ $(document).ready(function(){ //DOM이 준비되고
 
 
 
-
-	//<!--회원탈퇴모달--!>
-	$('.memberDelete').click(function(){
-		$("#memberDeleteModal").modal({
-			//취소버튼으로만 창을 끌 수 있도록 지정
-			backdrop: 'static',
-			keyboard: false
-		});
-	});
-
-	var userCheckFlag=false;
-	$("#memberDeleteModal").on('show.bs.modal', function () {
-		 
-	 
-	$("#password").keyup(function () {
-		var PassComp = $(this).val();
-		var mailComp=$('#memberDeleteEmail').val();
-
-		if(PassComp==""){
-			userCheckFlag = false;
-			$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-error');
-			$('.checkpassInput > .control-label').html('현재비밀번호를 입력해 주세요');
-			$('.checkpassInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
-		}else if(PassComp.length<8 || PassComp.length>19){
-			userPassFlag = false;
-			$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-error');
-			$('.checkpassInput > .control-label').html('비밀번호 확인중 입니다');
-			$('.checkpassInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
-		}else{					
-			$.ajax({
-				type:"post",
-				url:"findByPassword.neon",				
-				data:"mailComp="+mailComp,	
-				success:function(result){
-					if(result.memberPassword!=PassComp){
-						userCheckFlag = false;
-						$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-error');
-						$('.checkpassInput > .control-label').html("현재 비밀번호 오류");
-						$('.checkpassInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
-						  
-					}else{
-						userCheckFlag = true;
-						$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-success');
-						$('.checkpassInput > .control-label').html("확인 되었습니다");	
-						$('.checkpassInput > .glyphicon').attr('class','glyphicon glyphicon-ok form-control-feedback');
-						   
-					}//else2			
-				}//success			
-			});//ajax
-		
-		}//else1
-
-
-	});
-	});
-
-
-
-
-
-
 	//<!--회원탈퇴모달--!>
 	$('.memberDelete').click(function(){
 		$("#memberDeleteModal").modal({
@@ -1729,11 +1668,52 @@ $(document).ready(function(){ //DOM이 준비되고
     //로그인 및 가입 요청창
     function confirmLogin(){
     	if(confirm('로그인이 필요합니다. 가입하실래요?')){
-    		redirect:memberLogin;
-    	}else{return;
-    	}
+	    	redirect:memberLogin;
+	    	}else{return;
+	    	}
     }
-
+    // 비밀번호 찾기를 위한 요청 폼 검증
+    var userRequestPasswordMailFlag = false;
+    $('#recovery-email').keyup(function(){
+		var regEmail=/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$/;
+		var emailComp = $(this).val();
+		if(emailComp==""){
+			userRequestPasswordMailFlag = false;
+			$('.alertSpace').html('이메일을 입력해주세요');
+		}else if(!regEmail.test(emailComp)){
+			userRequestPasswordMailFlag = false;
+			$('.alertSpace').html('유효한 이메일을 입력해주세요');
+		}else if(emailComp.length<1||emailComp.length>20){
+			userRequestPasswordMailFlag = false;
+			$('.alertSpace').html('입력한 이메일의 길이가 너무 깁니다.');
+		}else{
+			$.ajax({
+				type:"post",
+				url:"findMemberByEmail.neon",				
+				data:"emailComp="+emailComp,	
+				success:function(result){
+	    			if(result==false){
+	    				userRequestPasswordMailFlag = true;
+	    				$('.alertSpace').html('저희 회원이십니다. 요청하기 버튼을 눌러주세요');
+	    			}else{
+	    				userRequestPasswordMailFlag = false;
+	    				$('.alertSpace').html('저희 회원이 아닙니다.');
+	    			}//else2
+				}
+			});//ajax
+		}//success
+	});
+    // 비밀번호 찾기를 위한 요청 폼 검증
+    $('.requestTemporaryPassword').click(function(){
+		 if(userRequestPasswordMailFlag){
+			 location.href="findPasswordMailRequest.neon?memberEmail="+ $('#recovery-email').val();
+		 }else{
+			 alert('이메일을 확인해주세요');
+			 $('#recovery-email').val('');
+			 $('#recovery-email').focus();
+		 }
+	 });
+    // 비밀번호 찾기를 위한 요청 폼 검증 끝
 });//document.ready
 	
 

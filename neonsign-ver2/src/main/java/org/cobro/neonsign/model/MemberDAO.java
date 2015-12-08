@@ -3,6 +3,7 @@ package org.cobro.neonsign.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cobro.neonsign.vo.FindPasswordVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.PickedVO;
 
@@ -26,4 +27,10 @@ public interface MemberDAO {
 	public MemberVO findByPassword(String checkPassComp);
 	public int allMembers();
 	public int allBlockMembers();
+	public void insertPasswordFindRequest(FindPasswordVO findPasswordVO);
+	public MemberVO requestTemporaryPasswordCheckRandomSentence(
+			FindPasswordVO findPasswordVO);
+	public void memberUpdatePassword(MemberVO memberVO);
+	public MemberVO confirmPasswordFindRequest(FindPasswordVO findPasswordVO);
+	public void deletePasswordFindRequest(FindPasswordVO findPasswordVO);
 }

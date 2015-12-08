@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.cobro.neonsign.thread.StoryLinker;
+import org.cobro.neonsign.utility.StoryLinker;
 import org.cobro.neonsign.vo.ItjaMemberVO;
 import org.cobro.neonsign.vo.MainArticleVO;
 import org.cobro.neonsign.vo.MemberVO;
