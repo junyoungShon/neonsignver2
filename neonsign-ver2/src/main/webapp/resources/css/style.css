@@ -1,0 +1,450 @@
+ @CHARSET "UTF-8";
+
+
+/* Links */
+@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css); 
+
+.hide-card-box{
+	display: none;
+}
+
+/* Custom default button */
+.btn-default,
+.btn-default:hover,
+.btn-default:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritence from `body` */
+  background-color: #fff;
+  border: 1px solid #fff;
+}
+/*
+ * Base structure
+ */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  color: #fff;
+  text-align: center;
+  
+}
+
+/* Extra markup and styles for table-esque vertical and horizontal centering */
+.site-wrapper {
+  display: table;
+  width: 100%;
+  height: 100%; /* For at least Firefox */
+  min-height: 100%;
+  background-image: url('../img/index_bg.jpg');
+  background-size: cover;
+  /* opacity: 0.7!important; filter:alpha(opacity=0); */
+}
+.site-wrapper-inner {
+  display: table-cell;
+  vertical-align: top;
+ /*  background-color: rgba( 0, 0, 0, 0.2 ); */
+}
+.cover-container {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Padding for spacing */
+.inner {
+  padding: 30px;
+}
+/*
+ * Header
+ */
+.masthead-brand {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width : 150px;
+  height :100px;
+  
+}
+
+.masthead-nav > li {
+  display: inline-block;
+}
+.masthead-nav > li + li {
+  margin-left: 20px;
+}
+.masthead-nav > li > a {
+  padding-right: 0;
+  padding-left: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff; /* IE8 proofing */
+  color: rgba(255,255,255,.75);
+  border-bottom: 2px solid transparent;
+}
+.masthead-nav > li > a:hover,
+.masthead-nav > li > a:focus {
+  background-color: transparent;
+  border-bottom-color: #a9a9a9;
+  border-bottom-color: rgba(255,255,255,.25);
+}
+.masthead-nav > .active > a,
+.masthead-nav > .active > a:hover,
+.masthead-nav > .active > a:focus {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+@media (min-width: 768px) {
+  .masthead-brand {
+    float: left;
+  }
+  .masthead-nav {
+    float: right;
+  }
+}
+/*
+ * Cover
+ */
+
+.cover {
+  padding: 0 20px;
+}
+.cover-heading{
+  font-family: 'Nanum Pen Script', serif;
+  font-size:100px;
+}
+
+.cover-logo{
+	
+}
+.cover .btn-lg {
+  padding: 10px 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  width : 250px;
+  
+}
+
+.indexInstruction{
+	color : white;
+}
+.blliInst{
+	color : white;
+}
+.indexLogin{
+	color: black;
+}
+.indexLogin a{
+	color: red;
+}
+.modal-title{
+	color: black;
+	font-weight: bold;
+}
+.modal-body{
+	color: black;
+	font-weight: bold;
+	text-align: left;
+}
+.modal-footer{
+	color: white;
+	font-weight: bold;
+}
+.personInfoForJoin{
+	text-align: left;
+}
+/*글쓰기 창 길이제한 보여주는 부분 length*/
+.limitLength{
+	text-align: right;
+	color: gray;
+}
+/*카드 디테입 뷰의 컨텐츠 제한*/
+.cardDetailViewContent{
+	padding-left: 10%;
+	padding-right: 10%;
+}
+/*카드 디테일 뷰의 창작자 아이디 표기*/
+.writersNickNameAtDetail{
+	color: gray;
+}
+/*
+	로그인 모달 창 css
+*/
+#loginModal{
+	font: black;
+}
+
+/*
+ * Footer
+ */
+.copyrightOfBlli{
+	color:white;
+}
+.mastfoot {
+  color: #999; /* IE8 proofing */
+  color: rgba(255,255,255,.5);
+}
+
+
+/*
+ * Affix and center
+ */
+
+@media (min-width: 768px) {
+  /* Pull out the header and footer */
+  .masthead {
+    position: fixed;
+    top: 0;
+  }
+  .mastfoot {
+    position: fixed;
+    bottom: 0;
+  }
+  /* Start the vertical centering */
+  .site-wrapper-inner {
+    vertical-align: middle;
+  }
+  /* Handle the widths */
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 100%; /* Must be percentage or pixels for horizontal alignment */
+  }
+}
+
+@media (min-width: 992px) {
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 700px;
+  }
+  .leftList{
+  width: 100%;
+  }
+  .mainList{
+  color:black;
+  width:100%; 
+ text-align:center;   
+  }
+}
+/**
+* @author JeSeong Lee
+* 닉네임 호버부분
+*/
+.myPage{
+   width:25%;
+   margin-top: 52px;
+   height:40px;
+    color: #000000;
+    text-align: center;
+    font-family: 'Nanum Pen Script', serif;
+    line-height: 50px;
+    /* text-indent: 20px;  들여쓰기*/
+    padding-top: 0px;
+}
+.gradeImg{
+   width: 45px;
+   height: 35px;
+}
+a.myProfileDetail{
+   font-size: 25px;
+    font-weight: 600;
+}
+
+a.myProfileDetail.data-content{
+   color: #000000;   
+}
+
+a.myProfileDetail:hover{
+   color: #000000;
+   /* color: #FFA07A; */
+}
+
+.popover-title {
+    color: #000000;
+    font-size: 15px;
+}
+
+.popover-content {
+    color: #23aedc;
+    font-size: 12px;
+}
+a.myNickDetail{
+   font-size:15px;
+   padding: 0px;
+   border: 0px;
+}
+/* end */
+
+/**
+* @author JeSeong Lee
+* Img(로고, 등급), 팝오버, 마이페이지
+*/
+.gradeImg{
+   width: 75px;
+   height: 50px;
+}
+.logoImg{
+	margin-top : -10px;
+	margin-left: 1px;
+	padding: 0px;
+	height: 40px;
+}
+.popover-title {
+    color: #000000;
+    font-size: 15px;
+}
+
+.popover-content {
+    color: #23aedc;
+    font-size: 12px;
+}
+a.myNickDetail{
+   font-size:15px;
+   padding: 0px;
+   border: 0px;
+}
+/**
+* 마이페이지 프로필 수정 css
+* @author JeSeong Lee
+*/
+.myprofile{
+   margin: 0px;
+   padding: 0px;
+}
+ .profileCard {
+    margin-top: 60px;
+    padding: 30px;
+     background-color: rgba(214, 224, 226, 0.2);
+   -webkit-border-top-left-radius:5px;
+    -moz-border-top-left-radius:5px;
+    border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-top-right-radius:5px;
+    border-top-right-radius:5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* 마이페이지 사진이 들어가는 네모칸 */
+.profileCard.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, 1);
+    height: 240px;
+}
+.profileCard.hovercard .profileCard-background {
+    height: 130px;
+}
+.profileCard-background img {
+    -webkit-filter: blur(25px);
+    -moz-filter: blur(25px);
+    -o-filter: blur(25px);
+    -ms-filter: blur(25px);
+    filter: blur(25px);
+    margin-left: -100px;
+    margin-top: -200px;
+    min-width: 130%;
+}
+
+/* 마이페이지 사진 위치*/
+.profileCard.hovercard .useravatar {
+   margin-top:5px;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+}
+
+/* 마이페이지 사진 사이즈*/
+.profileCard.hovercard .useravatar img {
+    width: 150px;
+    height: 150px;
+    max-width: 150px;
+    max-height: 150px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+/* 마이페이지 사진 아래 간단한 내용 */
+.profileCard.hovercard .profileCard-info {
+   font-family: 'Jeju Gothic', sans-serif;
+    margin-bottom:15px;
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+}
+.profileCard.hovercard .profileCard-info .profileCard-title {
+    padding:0 5px;
+    font-size: 20px;
+    font-weight:bold;
+    line-height: 1;
+    color: #262626;
+    background-color: rgba(255, 255, 255, 0.1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+/*등급은 따로 css줌*/
+.profileCard.hovercard .profileCard-titleGrade{
+   font-family: 'Jeju Gothic', sans-serif;
+   text-align: left;
+   margin-bottom:5px;
+   margin-left:90px;
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+   color:black;
+}
+.profileCard.hovercard .profileCard-titleGrade .gradePoint{
+   font-size: 16px;
+   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.profileCard.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+}
+.btn-pref .btn {
+    -webkit-border-radius:0 !important;
+}
+
+
+/*
+  Hide radio button (the round disc)
+  we will use just the label to create pushbutton effect
+*/
+input[type=radio] {
+    display:none; 
+    margin:10px;
+}
+ 
+/*
+  Change the look'n'feel of labels (which are adjacent to radiobuttons).
+  Add some margin, padding to label
+*/
+input[type=radio] + label {
+    display:inline-block;
+    margin:-2px;
+    padding: 4px 12px;
+    background-color: #e7e7e7;
+    border-color: #ddd;
+}
+/*
+ Change background color for label next to checked radio button
+ to make it look like highlighted button
+*/
+input[type=radio]:checked + label { 
+   background-image: none;
+    background-color:#d0d0d0;
+}
