@@ -67,6 +67,7 @@ $(document).ready(function(){ //DOM이 준비되고
 			}
 		}
 	}, 1000);
+	
 	//main 부분
 	//무한 스크롤 (테스트 완료 ajax와 연동 필요)
 	// hipster 카드에서 동적으로 style을 입혀주지 못하는 문제점이 있어서 반드시 소스를 넣을 때 style을 수기로 기록해줘야함
@@ -229,7 +230,43 @@ $(document).ready(function(){ //DOM이 준비되고
 	          					'<button class="btn btn-social btn-twitter itja">'+
 	           					'<span class="itjaCount"><i class="fa fa-chain-broken"></i><br>'+data.newMainArticleArrayList[i].mainArticleTotalLike+' it</span></button>'
 	             			}
-							
+							// alert(data.pickedList);
+	            			// 찜 버튼을 위한 조건문
+	            			var pickMainArticleHTML="";
+	            			if(data.pickedList!=null){
+								var pickFlag=true;
+	              			for(var j=0;j<data.pickedList.length;j++){
+	              				if(data.pickedList[j].mainArticleNo == data.newMainArticleArrayList[i].mainArticleNo){
+	              					pickMainArticleHTML 
+	              					="<button class='btn btn-social btn-google pickBtn'>"
+	              						+"<span class='pickSpan'><i class='fa fa-heart'></i><br>찜!"
+	              						+"</span></button>"
+	              						+"<form name='pickInfo'>"
+	              						+"<input type='hidden' name='memberEmail' value='"+data.pickedList[0].memberEmail+"'>"
+	              						+"<input type='hidden' name='mainArticleNo' value='"+data.newMainArticleArrayList[i].mainArticleNo+"'>"
+	              						+"</form>";
+	           						pickFlag=false;
+	       							break;
+	      						}	
+	       					}
+	        				if(pickFlag){
+	        					pickMainArticleHTML 
+	           					="<button class='btn btn-social btn-google pickBtn'>"
+		           					+"<span class='pickSpan'><i class='fa fa-heart-o'></i><br>찜하자!"
+              						+"</span></button>"
+              						+"<form name='pickInfo'>"
+              						+"<input type='hidden' name='memberEmail' value='"+data.pickedList[0].memberEmail+"'>"
+              						+"<input type='hidden' name='mainArticleNo' value='"+data.newMainArticleArrayList[i].mainArticleNo+"'>"
+              						+"</form>";
+	           					}
+	           				}
+	            			if(pickMainArticleHTML==""){
+	            				pickMainArticleHTML 
+	           					="<button class='btn btn-social btn-google pickBtn'>"
+		           					+"<span class='pickSpan'><i class='fa fa-heart-o'></i><br>찜하자!"
+									+"</span></button>";
+	             			}
+	            			
 							
 							//추가될 카드 html문
 							infinityScrollTestSource +=
@@ -237,7 +274,7 @@ $(document).ready(function(){ //DOM이 준비되고
 								+ '<div class="card card-with-border" data-background="image" data-src="resources/img/snow.jpg" style="background-image: url(resources/img/snow.jpg); background-size: cover; background-position: 50% 50%;">' 
 								+ '<div class="content">' 
 								+ '<h6 class="category">' + data.newMainArticleArrayList[i].tagName + '</h6><br>' 
-								+ '<h5 class="title">[미완]' + mainArticleTitle + '</h5>' 
+								+ '<h5 class="title">' + mainArticleTitle + '</h5>' 
 								+ ' <p class="description">' + mainArticleContent + '</p>' 
 								+ '<span class="writersNickName">- '+data.newMainArticleArrayList[i].memberVO.memberNickName+' -</span>'
 								+ '<input type="hidden" class="mainArticleTitleNO" value="'+ data.newMainArticleArrayList[i].mainArticleNo +'">'
@@ -246,8 +283,8 @@ $(document).ready(function(){ //DOM이 준비되고
 								+ '</div>' 
 								+ '<div class="social-line social-line-visible" data-buttons="4">' 
 								+ '<button class="btn btn-social btn-pinterest">05:22<br> 빨리!</button>' 
-								+  mainLikeItHTML
-								+ '<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>' 
+								+ mainLikeItHTML
+								+ pickMainArticleHTML 
 								+ '<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button>' 
 								+ '</div>  <!-- end social-line social-line-visible --></div></div> <!-- end card --></div><!-- card-box col-md-4 -->'
 						}
@@ -409,6 +446,7 @@ $(document).ready(function(){ //DOM이 준비되고
               						'<button class="btn btn-social btn-twitter itja">'+
               						'<span class="itjaCount"><i class="fa fa-chain-broken"></i><br>'+data.newMainArticleArrayList[i].mainArticleTotalLike+' it</span></button>'
               				}
+              				
               				//잇자버튼 조건 문 끝
 						//추가될 카드 html문
 						infinityScrollTestSource +=
@@ -957,6 +995,8 @@ $(document).ready(function(){ //DOM이 준비되고
 	
 	//index부분
 	//회원 가입 모달창 띄우는 부분
+	//index부분
+	//회원 가입 모달창 띄우는 부분
 	$('.memberJoinByEmailBtn').click(function(){
 		$('#memberJoinByEmailModal').modal({
 			//취소버튼으로만 창을 끌 수 있도록 지정
@@ -1154,6 +1194,7 @@ $(document).ready(function(){ //DOM이 준비되고
 			});
 			
 		});//모달 유효성 체크
+
 	//로그아웃 confirm
 	$("#memberLogout").click(function(){
 
@@ -1174,36 +1215,30 @@ $(document).ready(function(){ //DOM이 준비되고
 		  e.preventDefault()
 		  $(this).tab('show')
 		})
-
-    /**
+	/**
      * 관리자가 회원리스트에서 해당 회원을
      * Block 하는 스크립트
      */
-    $('.memberBlock').click(function () {
+    $('#memberReportList').on('click','.memberBlock',function () {
     	var memberEmail=$(this).parent().parent().children().eq(0).text();
-    	var falg=confirm("해당 회원을 Block 하시겠습니까?");
-    	if(falg){
+    	if(confirm("해당 회원을 Block 하시겠습니까?")){
     		document.location.href = "memberBlock.neon?memberEmail="+memberEmail;
     	}
 		return false;
 	});
     /**
-    * 관리자가 회원리스트에서 해당 회원을
-    * Block해제 하는 스크립트
-    */
-   $('.memberService').click(function () {
+     * 관리자가 회원리스트에서 해당 회원을
+     * Block 해제 하는 스크립트
+     */
+	$('#blockMemberReportList').on('click','.memberService',function () {
    	var memberEmail=$(this).parent().parent().children().eq(0).text();
-   	var falg=confirm("해당 회원을 Block해제 하시겠습니까?");
-   	if(falg){
+   	if(confirm("해당 회원을 Block해제 하시겠습니까?")){
    		document.location.href = "memberBlockRelease.neon?memberEmail="+memberEmail;
    	}
 		return false;
 	});
-    /**
-	 * 관리자가 신고리스트에서 
-	 * 신고처리를 하는 스크립트
-	 */
-	$('.boardReport').click(function () {
+
+	$('#mainReportList').on('click','.boardReport',function () {
 		var subArticleNO=$(this).parent().parent().children().eq(4).text();
 		var articleNO=$(this).parent().parent().children().eq(2).text();
 		var reportNO=$(this).parent().parent().children().eq(1).text();
@@ -1212,11 +1247,28 @@ $(document).ready(function(){ //DOM이 준비되고
 			"&command=report";
 		}
 	});
-	/**
-	 * 관리자가 신고리스트에서 
-	 * 반려처리를 하는 스크립트
-	 */
-	$('.ReportCancle').click(function () {
+	
+	$('#mainReportList').on('click','.ReportCancle',function () {
+		var subArticleNO=$(this).parent().parent().children().eq(4).text();
+		var articleNO=$(this).parent().parent().children().eq(2).text();
+		var reportNO=$(this).parent().parent().children().eq(1).text();
+		if(confirm("반려처리 하시겠습니까?")){
+			location.href="adminPageDeleteArticle.neon?reportNO="+reportNO+"&articleNO="+articleNO+"&subArticleNO="+subArticleNO+
+			"&command=cancle";
+		}
+	});
+   
+	$('#subReportList').on('click','.boardReport',function () {
+		var subArticleNO=$(this).parent().parent().children().eq(4).text();
+		var articleNO=$(this).parent().parent().children().eq(2).text();
+		var reportNO=$(this).parent().parent().children().eq(1).text();
+		if(confirm("신고처리 하시겠습니까?")){
+			location.href="adminPageDeleteArticle.neon?reportNO="+reportNO+"&articleNO="+articleNO+"&subArticleNO="+subArticleNO+
+			"&command=report";
+		}
+	});
+
+	$('#subReportList').on('click','.ReportCancle',function () {
 		var subArticleNO=$(this).parent().parent().children().eq(4).text();
 		var articleNO=$(this).parent().parent().children().eq(2).text();
 		var reportNO=$(this).parent().parent().children().eq(1).text();
@@ -1226,35 +1278,127 @@ $(document).ready(function(){ //DOM이 준비되고
 		}
 	});
 	
+	$('.articleReportPaging').click(function () {
+		var articleReportList="";
+		var pageNo=$($(this).next().children()).val();
+		var pageType=$($(this).next().children().eq(1)).val();
+		var reportIndex=(pageNo-1)*13;
+		alert("type : "+pageType);
+		$.ajax({
+			type:"post",
+			url:"mainreportListPaging.neon",
+			data:"pageNo="+pageNo+"&pageType="+pageType,
+			dataType:"json",
+			success:function(data){ 
+				if(pageType=="mainArticleList"){
+					alert("주제글");
+					for(var i=0; i<data.list.length;i++){
+						articleReportList=articleReportList+"<tr><td>"+(reportIndex+i)+"</td><td>"+
+						data.list[i].reportNo+"</td><td>"+data.list[i].mainArticleNo+"</td><td>"+
+						data.list[i].mainArticleVO[0].mainArticleTitle+"</td><td>"+
+						data.list[i].mainArticleVO[0].memberVO.memberNickName+"</td><td>"+
+						data.list[i].reportDate+"</td><td>"+data.list[i].reportAmount+"</td><td>"+
+						data.list[i].stagesOfProcess+"</td><td><input type='button' value='신고처리' class='boardReport'></td>"+
+						"<td><input type='button' value='반려처리' class='ReportCancle'></td></tr>"
+					}
+					$('#mainReportList').html(articleReportList);
+				}else{
+					alert("잇는글");
+					for(var i=0; i<data.list.length;i++){
+						articleReportList=articleReportList+"<tr><td>"+(reportIndex+i)+"</td><td>"+
+						data.list[i].reportNo+"</td><td>"+data.list[i].mainArticleNo+"</td><td>"+
+						data.list[i].mainArticleVO[0].mainArticleTitle+"</td><td>"+
+						data.list[i].mainArticleVO[0].subArticle[0].subArticleNo+"</td><td>"+
+						data.list[i].mainArticleVO[0].subArticle[0].subArticleContent+"</td><td>"+
+						data.list[i].mainArticleVO[0].subArticle[0].memberVO.memberNickName+"</td><td>"+
+						data.list[i].reportDate+"</td><td>"+data.list[i].reportAmount+"</td><td>"+
+						data.list[i].stagesOfProcess+"</td><td><input type='button' value='신고처리' class='boardReport'></td>"+
+						"<td><input type='button' value='반려처리' class='ReportCancle'></td></tr>"
+					}
+					$('#subReportList').html(articleReportList);
+				}
+			}
+		});
+	});
+	$('.memberReportPaging').click(function () {
+		var memberReportList="";
+		var pageNo=$($(this).next().children()).val();
+		var pageType=$($(this).next().children().eq(1)).val();
+		$.ajax({
+			type:"post",
+			url:"memberReportListPaging.neon",
+			data:"pageNo="+pageNo+"&pageType="+pageType,
+			dataType:"json",
+			success:function(data){ 
+				if(pageType=="memberList"){
+					for(var i=0; i<data.list.length; i++){
+						memberReportList=memberReportList+"<tr><td>"+
+						data.list[i].memberEmail+"</td><td>"+data.list[i].memberNickName+"</td><td>"+
+						data.list[i].memberJoinDate+"</td><td>"+data.list[i].memberPoint+"</td><td>"+
+						data.list[i].memberReportAmount+"</td><td>"+
+						"<input type='button' value='서비스정지' class='memberBlock'></td>";	
+					}
+					$('#memberReportList').html(memberReportList);
+					
+				}else{
+					for(var i=0;i<data.list.length;i++){
+						memberReportList=memberReportList+"<tr><td>"+
+						data.list[i].memberEmail+"</td><td>"+data.list[i].memberNickName+"</td><td>"+
+						data.list[i].memberJoinDate+"</td><td>"+data.list[i].memberPoint+"</td><td>"+
+						data.list[i].memberReportAmount+"</td><td>"+
+						"<input type='button' value='서비스시작' class='memberService'></td>";	
+					}
+					$('#blockMemberReportList').html(memberReportList);
+					
+				}
+			}
+		});
+	});
+	
 	/**
 	 * @author JeSeong Lee
 	 * 찜 수정
 	 * */
+	
+	// 메인 페이지 동적으로 생성된 카드 찜 클릭 시 발동하기
+	$('.newItjaList').on('click','.pickBtn',function(){
+		var formData = $($(this).next()).serialize();
+		var pickSpan = $(this).children('.pickSpan');
+		pickBtnClick(formData, pickSpan);
+	});
 	// alert("파워ON!!!@@@@@");
-	$(".pickBtn").on('click',function(){
-		// alert($(this).parent().siblings().eq(0).children().eq(5).val());
-		var mainArticleNo = $(this).parent().siblings().eq(0).children().eq(5).val();
-		var memberEmail = $(this).parent().siblings().eq(0).children().eq(6).val();
-		var pickBtn = $(this);
-		// alert(pickBtn);
-		alert(mainArticleNo + ", " + memberEmail);
+	function pickBtnClick(formData, pickSpan){
+		// alert(formData);
+		// alert(pickSpan.html);
 		$.ajax({
 			type:"post",
 			url:"auth_updatePickedVO.neon",
-			data:"mainArticleNo="+mainArticleNo+"&memberEmail=" + memberEmail,
+			data:formData,
 			success:function(data){
 				// alert(data);
 				// alert("data : " + pickBtn.html());
-				if(data=="insert"){
+				// alert(data.pickResult);
+				if(data.pickResult == "insert"){
 					// alert("인서트했다");
-					pickBtn.html("<i class='fa fa-heart'></i><br>찜!");
+					pickSpan.html("<i class='fa fa-heart'></i><br>찜!");
 				}else{
 					// alert("delete 햇다");
-					pickBtn.html("<i class='fa fa-heart-o'></i><br>찜하자!");
+					pickSpan.html("<i class='fa fa-heart-o'></i><br>찜하자!");
+				}
+			},
+			beforeSend : function(xmlHttpRequest){
+		           xmlHttpRequest.setRequestHeader("AJAX", "true");
+		
+			},
+			error:function(xhr, textStatus, error){
+				if(xhr.status=="901"){
+					if(confirm('로그인이 필요합니다. 가입하시겠어요?')){
+						location.href="loginPage.neon"
+					}
 				}
 			}
 		}); // ajax
-	}); // pickBtn click
+	}; // pickBtn click
 	
 	/**
 	 * @author JeSeong Lee
@@ -1497,6 +1641,66 @@ $(document).ready(function(){ //DOM이 준비되고
 	});
 	});
 
+
+
+
+
+
+	//<!--회원탈퇴모달--!>
+	$('.memberDelete').click(function(){
+		$("#memberDeleteModal").modal({
+			//취소버튼으로만 창을 끌 수 있도록 지정
+			backdrop: 'static',
+			keyboard: false
+		});
+	});
+
+	var userCheckFlag=false;
+	$("#memberDeleteModal").on('show.bs.modal', function () {
+		 
+	 
+	$("#password").keyup(function () {
+		var PassComp = $(this).val();
+		var mailComp=$('#memberDeleteEmail').val();
+
+		if(PassComp==""){
+			userCheckFlag = false;
+			$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-error');
+			$('.checkpassInput > .control-label').html('현재비밀번호를 입력해 주세요');
+			$('.checkpassInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
+		}else if(PassComp.length<8 || PassComp.length>19){
+			userPassFlag = false;
+			$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-error');
+			$('.checkpassInput > .control-label').html('비밀번호 확인중 입니다');
+			$('.checkpassInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
+		}else{					
+			$.ajax({
+				type:"post",
+				url:"findByPassword.neon",				
+				data:"mailComp="+mailComp,	
+				success:function(result){
+					if(result.memberPassword!=PassComp){
+						userCheckFlag = false;
+						$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-error');
+						$('.checkpassInput > .control-label').html("현재 비밀번호 오류");
+						$('.checkpassInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
+						  
+					}else{
+						userCheckFlag = true;
+						$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-success');
+						$('.checkpassInput > .control-label').html("확인 되었습니다");	
+						$('.checkpassInput > .glyphicon').attr('class','glyphicon glyphicon-ok form-control-feedback');
+						   
+					}//else2			
+				}//success			
+			});//ajax
+		
+		}//else1
+
+
+	});
+	});
+
 	$("#memberDeleteSubmit").click(function(){		
 		alert(userCheckFlag);
 			if(userCheckFlag==true){
@@ -1529,22 +1733,6 @@ $(document).ready(function(){ //DOM이 준비되고
     	}else{return;
     	}
     }
-
-$("#navbar").ready( function () {
-	$("#serch_result").click( function () {
-		//keyword
-	var text=$("#serch").val();
-	//alert(text);
-	//select
-	var check=$('#search_concept').text();
-	alert(check);
-	
-	location.href = "findBy.neon?selector="+check+"&keyword="+text;
-	
-	
-	
-	});//click
-	});//serch click
 
 });//document.ready
 	
