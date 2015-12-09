@@ -1,6 +1,6 @@
 package org.cobro.neonsign.vo;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class MainArticleVO {
@@ -14,6 +14,7 @@ public class MainArticleVO {
 	private String mainArticleDate;
 	private String mainArticleUpdateDate;
 	private String mainArticleComplete;
+	private int block;
 	//MainArticleVO는 MemberVO와 SubArticleVO를 가진다.
 	private MemberVO memberVO;
 	private List<SubArticleVO> subArticleList;
@@ -27,7 +28,7 @@ public class MainArticleVO {
 			String mainArticleTitle, String mainArticleContent,
 			int mainArticleHIt, int mainArticleLike, int mainArticleTotalLike,
 			String mainArticleDate, String mainArticleUpdateDate,
-			String mainArticleComplete, MemberVO memberVO,
+			String mainArticleComplete, int block, MemberVO memberVO,
 			List<SubArticleVO> subArticleList, List<TagBoardVO> tagBoardVOList,
 			String tagName) {
 		super();
@@ -41,6 +42,7 @@ public class MainArticleVO {
 		this.mainArticleDate = mainArticleDate;
 		this.mainArticleUpdateDate = mainArticleUpdateDate;
 		this.mainArticleComplete = mainArticleComplete;
+		this.block = block;
 		this.memberVO = memberVO;
 		this.subArticleList = subArticleList;
 		this.tagBoardVOList = tagBoardVOList;
@@ -106,6 +108,12 @@ public class MainArticleVO {
 	public void setMainArticleComplete(String mainArticleComplete) {
 		this.mainArticleComplete = mainArticleComplete;
 	}
+	public int getBlock() {
+		return block;
+	}
+	public void setBlock(int block) {
+		this.block = block;
+	}
 	public MemberVO getMemberVO() {
 		return memberVO;
 	}
@@ -140,8 +148,8 @@ public class MainArticleVO {
 				+ ", mainArticleTotalLike=" + mainArticleTotalLike
 				+ ", mainArticleDate=" + mainArticleDate
 				+ ", mainArticleUpdateDate=" + mainArticleUpdateDate
-				+ ", mainArticleComplete=" + mainArticleComplete
-				+ ", memberVO=" + memberVO + ", subArticleList="
+				+ ", mainArticleComplete=" + mainArticleComplete + ", block="
+				+ block + ", memberVO=" + memberVO + ", subArticleList="
 				+ subArticleList + ", tagBoardVOList=" + tagBoardVOList
 				+ ", tagName=" + tagName + "]";
 	}

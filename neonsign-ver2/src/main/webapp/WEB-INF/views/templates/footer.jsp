@@ -81,9 +81,9 @@
 				</div>
 					<div class="modal-body">
 						<table class="table">
-						<thead>
+						<thead id='detailMainArticle'>
 							<tr class="success">
-								<td colspan="5">주제글</td>
+								<td colspan="5" ><font color="gray" ></font>주제글</td>
 							</tr>
 							<tr>
 								<td class="mainCardDetailViewContentNo" width="5%"></td>
@@ -99,7 +99,7 @@
 							<form action="auth_writeSubArticle.neon" class="form-horizontal">
 							</form>
 							</DIV>
-							<tbody id="mainSubArticle" >
+							<tbody id="detailMainSubArticle" >
 								
 							</tbody>
 								
@@ -108,7 +108,7 @@
 								<td colspan="5">잇는글</td>
 							</tr>
 							</thead>
-							<tbody id='subTable'>
+							<tbody id='detailSubTable'>
 							
 							</tbody>
 						</table>

@@ -9,6 +9,7 @@ public class SubArticleVO {
 	private int isEnd;
 	private int subArticleLike;
 	private int isConnect;
+	private int block;
 	private String subArticleDate;
 	private MemberVO memberVO;
 	public SubArticleVO() {
@@ -16,7 +17,7 @@ public class SubArticleVO {
 	}
 	public SubArticleVO(int subArticleNo, int mainArticleNo,
 			String memberEmail, int subAtricleGrade, String subArticleContent,
-			int isEnd, int subArticleLike, int isConnect,
+			int isEnd, int subArticleLike, int isConnect, int block,
 			String subArticleDate, MemberVO memberVO) {
 		super();
 		this.subArticleNo = subArticleNo;
@@ -27,6 +28,7 @@ public class SubArticleVO {
 		this.isEnd = isEnd;
 		this.subArticleLike = subArticleLike;
 		this.isConnect = isConnect;
+		this.block = block;
 		this.subArticleDate = subArticleDate;
 		this.memberVO = memberVO;
 	}
@@ -78,6 +80,12 @@ public class SubArticleVO {
 	public void setIsConnect(int isConnect) {
 		this.isConnect = isConnect;
 	}
+	public int getBlock() {
+		return block;
+	}
+	public void setBlock(int block) {
+		this.block = block;
+	}
 	public String getSubArticleDate() {
 		return subArticleDate;
 	}
@@ -97,9 +105,10 @@ public class SubArticleVO {
 				+ memberEmail + ", subAtricleGrade=" + subAtricleGrade
 				+ ", subArticleContent=" + subArticleContent + ", isEnd="
 				+ isEnd + ", subArticleLike=" + subArticleLike + ", isConnect="
-				+ isConnect + ", subArticleDate=" + subArticleDate
-				+ ", memberVO=" + memberVO + "]";
+				+ isConnect + ", block=" + block + ", subArticleDate="
+				+ subArticleDate + ", memberVO=" + memberVO + "]";
 	}
 
+	
 	
 }

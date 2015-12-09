@@ -227,7 +227,7 @@
 							     <%--
                                잇자 버튼 클릭시 전달 할 정보를 위한 히든 폼 끝
                              --%>
-					<!-- 찜하기 -->
+				<!-- 찜하기 -->
                   <button class="btn btn-social btn-google pickBtn">
                            <c:set var="breakCheck" value="false"/>
                      <c:forEach var="pickCheck" items="${sessionScope.memberVO.pickedVOList}">

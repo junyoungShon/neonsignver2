@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="mainArticleDate" column="MAIN_ARTICLE_DATE" />
 		<result property="mainArticleUpdateDate" column="MAIN_ARTICLE_UPDATE_DATE" />
 		<result property="mainArticleComplete" column="MAIN_ARTICLE_COMPLETE" />
+		<result property="block" column="MAIN_ARTICLE_BLOCK" />
 		<result property="memberEmail" column="MEMBER_EMAIL"/>
 		<collection property="memberVO" column="MEMBER_EMAIL"
 			ofType="memberVO" javaType="memberVO" resultMap="memberResultMap" />
@@ -31,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="isEnd" column="IS_END" />
 		<result property="subArticleLike" column="SUBARTICLE_LIKE" />
 		<result property="isConnect" column="IS_CONNECT" />
+		<result property="block" column="SUB_ARTICLE_BLOCK" />
 		<result property="subArticleDate" column="SUB_ARTICLE_DATE" />
 		<collection property="memberVO" column="MEMBER_EMAIL"
 			ofType="memberVO" javaType="memberVO" resultMap="memberResultMap" />
@@ -210,6 +212,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 m.MAIN_ARTICLE_NO=#{mainArticleNo} 
 		and b.MEMBER_EMAIL=m.MEMBER_EMAIL
 	</select>
+	
 	<!-- 이어진 SubArticle을 select해줍니다 -->
 	<select id="likingSubArticleFindByMainArticleNo" resultType="subArticleVO" parameterType="subArticleVO" resultMap="subArticleResultMap">
 	select * from sub_article sa , BRAIN_MEMBER bm 
@@ -223,6 +226,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from sub_article sa, BRAIN_MEMBER bm 
 		where sa.MEMBER_EMAIL=bm.MEMBER_EMAIL 
 		and sa.MAIN_ARTICLE_NO=#{mainArticleNo} and  sa.SUB_ARTICLE_GRADE=#{subAtricleGrade}
+		order by sub_article_date asc
 	</select>
 	
 	<!-- 현재 진행 중인 글의 현재 단계를 말해줍니다. -->
@@ -453,34 +457,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 </mapper> 		
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

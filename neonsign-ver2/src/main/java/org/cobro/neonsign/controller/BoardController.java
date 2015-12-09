@@ -495,7 +495,7 @@ public class BoardController {
 	 * @return
 	 * @author 윤택
 	 */
-	@RequestMapping("ArticleReport.neon")
+	@RequestMapping("auth_ArticleReport.neon")
 	@ResponseBody
 	public Map<String,Object> ArticleReport(MainArticleVO mainArticleVO, SubArticleVO subArticleVO , MemberVO memberVO){
 		Map<String, Object> map=new HashMap<String, Object>();
