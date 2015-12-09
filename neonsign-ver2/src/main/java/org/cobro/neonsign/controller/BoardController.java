@@ -480,6 +480,14 @@ public class BoardController {
 		List<MainArticleVO> writeMainArticleList
 			= boardService.getWriteMainArticleByEmailOrderByDate(memberVO);
 		mav.addObject("writeMainArticleList", writeMainArticleList);
+		// email 주소로 작성한 글의 태그 리스트 받기 : 태그 수 확인
+		List<TagBoardVO> writeTagListbyEmailList
+			= boardService.writeTagListbyEmail(memberVO);
+		mav.addObject("writeTagListbyEmailList", writeTagListbyEmailList);
+		// email 주소로 가장 많이 작성한 태그이름 받기
+		TagBoardVO tagBoardVO
+			= boardService.getMostWriteTagByEmail(memberVO);
+		mav.addObject("tagBoardVO", tagBoardVO);
 		// email 주소로 참여한 글 받아오기
 		List<MainArticleVO> joinMainArticleList
 			= boardService.getJoinMainArticleByEmailOrderByDate(memberVO);
@@ -487,6 +495,7 @@ public class BoardController {
 		mav.setViewName("mypage");
 		return mav;
 	}
+	
 	/**
 	 * 회원이 게시물을 신고할때 사용 하는 컨트롤러
 	 * @param mainArticleVO

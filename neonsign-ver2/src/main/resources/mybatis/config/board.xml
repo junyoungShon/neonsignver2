@@ -68,7 +68,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="tagBoardVO" id="tagBoardResultMap">
 		<result property="tagName" column="TAG_NAME" />
 		<result property="mainArticleNo" column="MAIN_ARTICLE_NO" />
+		<result property="useTagCount" column="SUM_COUNT"/>
 	</resultMap>
+	
 	<!-- tagVO resultMap -->
 	<resultMap type="tagVO" id="tagResultMap">
 		<result property="tagName" column="TAG_NAME"/>
@@ -454,6 +456,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 마이페이지 참여한 주제글 번호 불러오기 by email -->
 	<select id="getJoinMainArticleNoByEmail" resultType="int">
 		select MAIN_ARTICLE_NO from sub_article where MEMBER_EMAIL = #{memberEmail}
+	</select>
+	
+		<!-- 마이페이지 작성한 태그List 불러오기 by email -->
+	<select id="writeTagListbyEmail" resultMap="tagBoardResultMap">
+		select tb.MAIN_ARTICLE_NO, tb.TAG_NAME
+		from main_article ma, brain_member bm, tag_board tb 
+		where bm.MEMBER_EMAIL = ma.MEMBER_EMAIL and ma.MAIN_ARTICLE_NO = tb.MAIN_ARTICLE_NO
+		and bm.MEMBER_EMAIL = #{memberEmail}
+	</select>
+	
+	<!-- 마이페이지에서 Most TagName 불러오기 by email -->
+	<select id="getMostWriteTagByEmail" resultMap="tagBoardResultMap">
+	select TAG_NAME, sum(TAG_COUNT) as SUM_COUNT from(
+	select tb.MAIN_ARTICLE_NO as MAIN_ARTICLE_NO, tb.TAG_NAME as TAG_NAME, count(tb.TAG_NAME) as TAG_COUNT
+	from main_article ma, brain_member bm, tag_board tb
+	where bm.MEMBER_EMAIL = ma.MEMBER_EMAIL and ma.MAIN_ARTICLE_NO = tb.MAIN_ARTICLE_NO
+	and bm.MEMBER_EMAIL = #{memberEmail}
+	group by tb.MAIN_ARTICLE_NO, tb.TAG_NAME
+	)
+	group by TAG_NAME order by SUM_COUNT desc
 	</select>
 	
 </mapper> 		

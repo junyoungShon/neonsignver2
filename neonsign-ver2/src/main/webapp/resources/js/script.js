@@ -1573,12 +1573,21 @@ $(document).ready(function(){ //DOM이 준비되고
 	
 	/**
 	 * @author JeSeong Lee
-	 * 닉네임 팝오버 - 호버
+	 * 랭킹 팝오버
 	 */
 	
-	/*$('[data-toggle="popover"]').popover({
-        placement : 'bottom',
-	});*/
+	  $('.popover2').popover({ 
+		  	trigger:'focus',
+		  	placement: 'top',
+		  	content: $('#rankingPopover').html(),
+		    html: true
+	  });
+	
+	  
+	/**
+	 * @author JeSeong Lee
+	 * 닉네임 팝오버 - 호버
+	 */
 	
 	var popOverSettings = {
 			trigger:'hover',

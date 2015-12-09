@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
    
 <%--    <!-- 누구페이지인지 -->
@@ -367,14 +367,64 @@
                     <i class="fa fa-link itja"></i>
                 </div>
                 <div class="text">
-                    <var>54</var>
+                    <var>${requestScope.rankMemberVO.memberPoint}</var>
                     <label class="text-muted">잇자 포인트</label>
                 </div>
-                <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-trophy"></i>
-         다음 레벨 ${requestScope.rankMemberVO.rankingVO.maxPoint}</a>
-                </div>
-            </div>
+				<div class="options">
+				<a class="btn btn-lg btn-danger popover2" title="뇌OnSign Grade" href='#'>
+						<i class="fa fa-trophy"></i> Next Point
+						${requestScope.rankMemberVO.rankingVO.maxPoint}</a>
+						<div id="rankingPopover" style="display: none">
+						<table class="rankingTable">
+							<tr>
+								<td>Grade</td><td>점수범위</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_UNRANKED.png">
+								UNRANKED
+								</td>
+								<td>0 ~ 49</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_BRONZE.png">
+								BRONZE
+								</td>
+								<td>50 ~ 149</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_SILVER.png">
+								SILVER
+								</td>
+								<td>150 ~ 349</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_GOLD.png">
+								GOLD
+								</td>
+								<td>350 ~ 749</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_PLATINUM.png">
+								PLATINUM
+								</td>
+								<td>750 ~ 1549</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_DIAMOND.png">
+								DIAMOND
+								</td>
+								<td>1500 ~ 상위 10명</td>
+							</tr>
+						</table>
+						</div>
+				</div>
+			</div>
 		</div>
     	
        	<div class="col-sm-3">
@@ -383,11 +433,11 @@
                      <i class="fa fa-lightbulb-o write"></i>
                 </div>
                 <div class="text">
-                    <var>14</var>
+                    <var>${fn:length(requestScope.writeMainArticleList)} </var>
                     <label class="text-muted">작성한 잇는글</label>
                 </div>
                 <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
+                   <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
                 </div>
             </div>
 		</div>
@@ -398,11 +448,11 @@
                      <i class="fa fa-reply join"></i>
                 </div>
                 <div class="text">
-                    <var>34</var>
+                    <var>${fn:length(requestScope.joinMainArticleList)}</var>
                     <label class="text-muted">참여한 잇는글</label>
                 </div>
                 <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
+                    <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
                 </div>
             </div>
 		</div>
@@ -413,11 +463,12 @@
                      <i class="fa fa-star pick"></i>
                 </div>
                 <div class="text">
-                    <var>73</var>
+                    <var>${fn:length(requestScope.pickedMainArticleList)}</var>
                     <label class="text-muted">찜한게시물</label>
                 </div>
                 <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
+                    <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg">
+                    <i class="fa fa-desktop"></i>&nbsp;View Info</a>
                 </div>
             </div>
     	</div>
@@ -428,14 +479,45 @@
                      <i class="fa fa-tags tags"></i>
                 </div>
                 <div class="text">
-                    <var>87</var>
+                    <var>${fn:length(writeTagListbyEmailList)}</var>
                     <label class="text-muted">작성 TAGs</label>
                 </div>
                 <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg">Most&nbsp;<i class="fa fa-tag"></i>&nbsp;#19</a>
+                    <a href="javascript:;" class="btn btn-default btn-lg">Most&nbsp;<i class="fa fa-tag"></i>&nbsp;#${requestScope.tagBoardVO.tagName} ${requestScope.tagBoardVO.useTagCount}회</a>
                 </div>
             </div>
 		</div>
+		
+		<div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="fa fa-exclamation-triangle ready"></i>
+                </div>
+                <div class="text">
+                    <var>-</var>
+                    <label class="text-muted">준비중입니다</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-wrench"></i></a>
+                </div>
+            </div>
+		</div>
+		
+		<div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="fa fa-exclamation-triangle ready"></i>
+                </div>
+                <div class="text">
+                    <var>-</var>
+                    <label class="text-muted">준비중입니다</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-wrench"></i></a>
+                </div>
+            </div>
+		</div>
+		
 </div>
 </div>
 

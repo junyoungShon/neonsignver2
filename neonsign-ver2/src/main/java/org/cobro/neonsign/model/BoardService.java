@@ -63,6 +63,7 @@ public interface BoardService {
 			MemberVO memberVO);
 	public void articleReport(MainArticleVO mainArticleVO,
 			SubArticleVO subArticleVO, MemberVO memberVO);
-	
+	public List<TagBoardVO> writeTagListbyEmail(MemberVO memberVO);
+	public TagBoardVO getMostWriteTagByEmail(MemberVO memberVO);
 	
 }

@@ -229,7 +229,9 @@ body {
   }
 }
 
+
 /**
+********************************************************************************************
 * @author JeSeong Lee
 * 닉네임 호버부분
 */
@@ -417,6 +419,8 @@ input[type=radio]:checked + label {
    background-image: none;
     background-color:#d0d0d0;
 }
+
+
 /* 마이페이지 INFO */
 
 .hero-widget { text-align: center; padding-top: 20px; padding-bottom: 20px; }
@@ -433,3 +437,18 @@ input[type=radio]:checked + label {
 .hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal; }
 .hero-widget label { font-size: 17px; }
 .hero-widget .options { margin-top: 10px; }
+
+/* 랭킹테이블 */
+.popover2{
+	text-align: center;
+}
+.rankingTable{
+	text-align: center;
+}
+.rankingTable .gradeTd{
+	text-align: left;
+}
+.rankingTable .gradeImg{
+	width: 55px;
+	height: 40px;
+}

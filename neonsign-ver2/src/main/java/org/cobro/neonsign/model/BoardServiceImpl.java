@@ -625,5 +625,28 @@ public class BoardServiceImpl implements BoardService{
 		utilService.articleReport(mainArticleVO, subArticleVO, memberVO);
 	
 	}
+	
+	/**
+	 * 작성한 태그 리스트를 불러옴 by email
+	 * 마이페이지에서 작성한 태그수 확인용
+	 * @author Je Seong Lee
+	 */
+	@Override
+	public List<TagBoardVO> writeTagListbyEmail(MemberVO memberVO) {
+		return boardDAO.writeTagListbyEmail(memberVO);
+	}
+	
+	/**
+	 * 작성한 태그중 가장 많이 사용한 Tag를 불러옴
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public TagBoardVO getMostWriteTagByEmail(MemberVO memberVO) {
+		ArrayList<TagBoardVO> mostWriteTagByEmailList
+		= (ArrayList<TagBoardVO>) boardDAO.getMostWriteTagByEmail(memberVO);
+		TagBoardVO tagBoardVO = mostWriteTagByEmailList.get(0);
+		return tagBoardVO;
+	}
 
+	
 }

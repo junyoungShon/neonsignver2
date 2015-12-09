@@ -1,3 +1,13 @@
+
+select TAG_NAME, sum(TAG_COUNT) as SUM_COUNT from(
+select tb.MAIN_ARTICLE_NO as MAIN_ARTICLE_NO, tb.TAG_NAME as TAG_NAME, count(tb.TAG_NAME) as TAG_COUNT
+from main_article ma, brain_member bm, tag_board tb
+where bm.MEMBER_EMAIL = ma.MEMBER_EMAIL and ma.MAIN_ARTICLE_NO = tb.MAIN_ARTICLE_NO
+and bm.MEMBER_EMAIL = 'a@gmail.com'
+group by tb.MAIN_ARTICLE_NO, tb.TAG_NAME
+)
+group by TAG_NAME order by SUM_COUNT desc
+
 select ma.MAIN_ARTICLE_NO, ma.MAIN_ARTICLE_TITLE, ma.MAIN_ARTICLE_CONTENT, 
 ma.MAIN_ARTICLE_TOTAL_LIKE, to_char(ma.MAIN_ARTICLE_DATE, 'YYYY/MM/DD HH24:MI:SS') as ma_date, 
 ma.MAIN_ARTICLE_UPDATE_DATE, ma.MAIN_ARTICLE_COMPLETE, bm.MEMBER_NICKNAME, tb.TAG_NAME, bm.MEMBER_EMAIL

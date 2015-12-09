@@ -548,4 +548,23 @@ public class BoardDAOImpl implements BoardDAO{
 	public List<TagBoardVO> getMainArticleTagList(int mainArticleNo) {
 		return sqlSessionTemplate.selectList("board.getMainArticleTagList", mainArticleNo);
 	}
+	
+	/**
+	 * email로 마이페이지 Tag갯수 불러옴
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public List<TagBoardVO> writeTagListbyEmail(MemberVO memberVO) {
+		return sqlSessionTemplate.selectList("board.writeTagListbyEmail", memberVO);
+	}
+	
+	/**
+	 * Most Tag명 받아옴
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public List<TagBoardVO> getMostWriteTagByEmail(MemberVO memberVO) {
+		return sqlSessionTemplate.selectList("board.getMostWriteTagByEmail", memberVO);
+	}
+	
 }

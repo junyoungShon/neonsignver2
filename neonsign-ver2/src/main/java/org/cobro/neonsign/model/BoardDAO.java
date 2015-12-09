@@ -78,4 +78,6 @@ public interface BoardDAO {
 	public void updateBestToCompletArticle(int mainArticleNo);
 	public void updateIsConnect(SubArticleVO subArticleVO);
 	public List<TagBoardVO> getMainArticleTagList(int mainArticleNo);
+	public List<TagBoardVO> writeTagListbyEmail(MemberVO memberVO);
+	public List<TagBoardVO> getMostWriteTagByEmail(MemberVO memberVO);
 }
