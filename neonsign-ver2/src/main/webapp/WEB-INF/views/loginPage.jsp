@@ -37,17 +37,26 @@
  <!-- 잇자 또는 공지를 사이트 측면에서 띄워주는 간이모달 CSS -->
  <link rel="stylesheet" type="text/css" href="${initParam.root}resources/css/toasty-min.css">
 <style type="text/css">
-	 /* 로그인 페이지*/
+/* 로그인 페이지*/
  @import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
+
+body{
+	background-image: url("${initParam.root}resources/img/loginbg.jpg");
+}
+.loginPageLoginForm{
+	margin-top: 10%;
+}
+
 
 .myForm {
     width: 30%;
     margin: 0 auto;
     padding-top: 50px;
+    height: 400px;
 }
 
 .myForm h1 {
-    color: #5BC0DE;
+    color: white;
     font-weight: bold;
     text-transform: uppercase;
     padding-bottom: 30px;
@@ -119,23 +128,23 @@
 <!-- 부트스트랩 사용을 위한 상단 설정 완료 -->
 </head>
 <section>
-    <div class="container">
-        <div class="row">
+	<div class="loginPageLoginForm"></div>
+     <div class="row">
     	    <div class="col-xs-12">
                 <div class="myForm">
-                    <h1 class="text-center">NeonSign In</h1>
-                    <form role="form" action="javascript:;" method="post" id="login-form" autocomplete="off">
+                    <h1 class="text-center">NeonSign Login</h1><br>
+                    ${requestScope.fail}
+                    <form role="form" action="memberLogin.neon" method="post" id="login-form" autocomplete="off">
                         <div class="form-group">
-                            <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control input-md" placeholder="Email">
+                            <label for="email" class="sr-only">이메일 아이디</label>
+                            <input type="email" name=memberEmail id="email" class="form-control input-md" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <label for="key" class="sr-only">Password</label>
-                            <input type="password" name="key" id="key" class="form-control input-md" placeholder="Password">
+                            <label for="key" class="sr-only">암호</label>
+                            <input type="password" name="memberPassword" id="key" class="form-control input-md" placeholder="Password">
                         </div>
-                        <div class="checkbox">
-                            <span class="mycheckbox" onclick="showPassword()"></span>
-                            <span class="label">Show password</span>
+                        <div>
+                        <a href="#" class="memberJoinByEmailBtn top-menu"> <i class="label"></i>Register</a>
                         </div>
                         <input type="submit" id="btn-login" class="btn btn-info btn-lg btn-block" value="Log in"><br>
                         <a href="javascript:;" class="forget" data-toggle="modal" data-target=".forget-modal">Forgot your password?</a>
@@ -143,8 +152,11 @@
                     <hr>
                 </div>
     		</div> <!-- /.col-xs-12 -->
+    		   <div class="col-xs-12 text-center">
+                <p>Page © - 2015</p>
+                <p>Powered by <strong><a href="${initParam.root}getMainList.neon" target="_blank">NeonSign</a></strong></p>
+            </div>
     	</div> <!-- /.row -->
-    </div> <!-- /.container -->
 </section>
 
 <div class="modal fade forget-modal" tabindex="-1" role="dialog" aria-labelledby="myForgetModalLabel" aria-hidden="true">
@@ -169,17 +181,7 @@
 	</div> <!-- /.modal-dialog -->
 </div> <!-- /.modal -->
 
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 text-center">
-                <p>Page © - 2015</p>
-                <p>Powered by <strong><a href="${initParam.root}getMainList.neon" target="_blank">NeonSign</a></strong></p>
-            </div>
-        </div>
-    </div>
-</footer>
-<body>
+
    
 <!-- 부트 스트랩 사용을 위한 하단 설정 -->
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->

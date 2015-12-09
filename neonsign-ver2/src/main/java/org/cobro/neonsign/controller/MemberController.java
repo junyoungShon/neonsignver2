@@ -74,6 +74,7 @@ public class MemberController {
 	public ModelAndView memberLogin(HttpServletRequest request, MemberVO memberVO){
 		MemberVO memberVO1 = memberVO;
 		memberVO=memberService.memberLogin(memberVO);
+		ModelAndView mav = new ModelAndView();
 		if(memberVO==null){
 			memberVO=memberService.defaultMemberLogin(memberVO1);
 		}
@@ -85,8 +86,13 @@ public class MemberController {
 				memberVO.setItjaMemberList(list);
 			}
 			request.getSession().setAttribute("memberVO",memberVO);		
+			mav = new ModelAndView("redirect:getMainList.neon");
+		}else{
+			memberVO=memberService.defaultMemberLogin(memberVO1);
+			String fail="아이디와 비밀번호가 맞지 않습니다.";
+			mav=new ModelAndView("loginPage","fail",fail);
 		}
-		return new ModelAndView("redirect:getMainList.neon");
+		return mav;
 	}
 	
 	@RequestMapping("memberLogout.neon")
