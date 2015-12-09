@@ -145,6 +145,43 @@ $(document).ready(function(){ //DOM이 준비되고
               						'<span class="itjaCount"><i class="fa fa-chain-broken"></i><br>'+data.completeMainArticleArrayList[i].mainArticleTotalLike+' it</span></button>'
               				}
               				//잇자버튼 조건 문 끝
+              				
+              			// 찜 버튼을 위한 조건문
+	            			var pickMainArticleHTML="";
+	            			if(data.pickedList!=null){
+								var pickFlag=true;
+	              			for(var j=0;j<data.pickedList.length;j++){
+	              				if(data.pickedList[j].mainArticleNo == data.completeMainArticleArrayList[i].mainArticleNo){
+	              					pickMainArticleHTML 
+	              					="<button class='btn btn-social btn-google pickBtn'>"
+	              						+"<span class='pickSpan'><i class='fa fa-heart'></i><br>찜!"
+	              						+"</span></button>"
+	              						+"<form name='pickInfo'>"
+	              						+"<input type='hidden' name='memberEmail' value='"+data.pickedList[0].memberEmail+"'>"
+	              						+"<input type='hidden' name='mainArticleNo' value='"+data.completeMainArticleArrayList[i].mainArticleNo+"'>"
+	              						+"</form>";
+	           						pickFlag=false;
+	       							break;
+	      						}	
+	       					}
+	        				if(pickFlag){
+	        					pickMainArticleHTML 
+	           					="<button class='btn btn-social btn-google pickBtn'>"
+		           					+"<span class='pickSpan'><i class='fa fa-heart-o'></i><br>찜하자!"
+              						+"</span></button>"
+              						+"<form name='pickInfo'>"
+              						+"<input type='hidden' name='memberEmail' value='"+data.pickedList[0].memberEmail+"'>"
+              						+"<input type='hidden' name='mainArticleNo' value='"+data.completeMainArticleArrayList[i].mainArticleNo+"'>"
+              						+"</form>";
+	           					}
+	           				}
+	            			if(pickMainArticleHTML==""){
+	            				pickMainArticleHTML 
+	           					="<button class='btn btn-social btn-google pickBtn'>"
+		           					+"<span class='pickSpan'><i class='fa fa-heart-o'></i><br>찜하자!"
+									+"</span></button>";
+	             			}
+              				
 						//추가될 카드 html문
 						infinityScrollTestSource +=
 							'<div class="card-box col-md-4" name="completeCardBox">' 
@@ -162,7 +199,7 @@ $(document).ready(function(){ //DOM이 준비되고
 							+ '<div class="social-line social-line-visible" data-buttons="4">' 
 							+ '<button class="btn btn-social btn-pinterest">완결된<br>잇자!</button>' 
 							+  mainLikeItHTML
-							+ '<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>' 
+							+ pickMainArticleHTML  
 							+ '<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button>' 
 							+ '</div>  <!-- end social-line social-line-visible --></div></div> <!-- end card --></div><!-- card-box col-md-4 -->'
 					}
@@ -230,6 +267,7 @@ $(document).ready(function(){ //DOM이 준비되고
 	          					'<button class="btn btn-social btn-twitter itja">'+
 	           					'<span class="itjaCount"><i class="fa fa-chain-broken"></i><br>'+data.newMainArticleArrayList[i].mainArticleTotalLike+' it</span></button>'
 	             			}
+	            			
 							// alert(data.pickedList);
 	            			// 찜 버튼을 위한 조건문
 	            			var pickMainArticleHTML="";
@@ -370,22 +408,61 @@ $(document).ready(function(){ //DOM이 준비되고
               				}
               				//잇자버튼 조건 문 끝
 						
-						//추가될 카드 html문
-						infinityScrollTestSource +=
-							'<div class="card-box col-md-4" name="completeCardBox">'
-							+ '<div class="card card-with-border" data-background="image" data-src="resources/img/snow.jpg" style="background-image: url(resources/img/snow.jpg); background-size: cover; background-position: 50% 50%;">' 
-							+ '<div class="content">' 
-							+ '<h6 class="category">' + data.completeMainArticleArrayList[i].tagName + '</h6><br>' 
-							+ '<h5 class="title">[완결]' + mainArticleTitle + '</h5>' 
-							+ ' <p class="description">' + mainArticleContent + '</p>' 
-							+ '<span class="writersNickName">- '+data.completeMainArticleArrayList[i].memberVO.memberNickName+' -</span>'
-							+ '<input type="hidden" class="mainArticleTitleNO" value="'+ data.completeMainArticleArrayList[i].mainArticleNo +'">'
-							+ '<div class="actions">'
-							+ '<button class="btn btn-round btn-fill btn-neutral btn-modern" data-toggle="modal" data-target="#cardDetailView">Read Article</button>' 
-							+ '</div>' 
-							+ '<div class="social-line social-line-visible" data-buttons="4">' 
-							+ '<button class="btn btn-social btn-pinterest">05:22<br> 빨리!</button>' 
-							+  mainLikeItHTML 
+              			// alert(data.pickedList);
+	            			// 찜 버튼을 위한 조건문
+	            			var pickMainArticleHTML="";
+	            			if(data.pickedList!=null){
+								var pickFlag=true;
+	              			for(var j=0;j<data.pickedList.length;j++){
+	              				if(data.pickedList[j].mainArticleNo == data.newMainArticleArrayList[i].mainArticleNo){
+	              					pickMainArticleHTML 
+	              					="<button class='btn btn-social btn-google pickBtn'>"
+	              						+"<span class='pickSpan'><i class='fa fa-heart'></i><br>찜!"
+	              						+"</span></button>"
+	              						+"<form name='pickInfo'>"
+	              						+"<input type='hidden' name='memberEmail' value='"+data.pickedList[0].memberEmail+"'>"
+	              						+"<input type='hidden' name='mainArticleNo' value='"+data.newMainArticleArrayList[i].mainArticleNo+"'>"
+	              						+"</form>";
+	           						pickFlag=false;
+	       							break;
+	      						}	
+	       					}
+	        				if(pickFlag){
+	        					pickMainArticleHTML 
+	           					="<button class='btn btn-social btn-google pickBtn'>"
+		           					+"<span class='pickSpan'><i class='fa fa-heart-o'></i><br>찜하자!"
+              						+"</span></button>"
+              						+"<form name='pickInfo'>"
+              						+"<input type='hidden' name='memberEmail' value='"+data.pickedList[0].memberEmail+"'>"
+              						+"<input type='hidden' name='mainArticleNo' value='"+data.newMainArticleArrayList[i].mainArticleNo+"'>"
+              						+"</form>";
+	           					}
+	           				}
+	            			if(pickMainArticleHTML==""){
+	            				pickMainArticleHTML 
+	           					="<button class='btn btn-social btn-google pickBtn'>"
+		           					+"<span class='pickSpan'><i class='fa fa-heart-o'></i><br>찜하자!"
+									+"</span></button>";
+	             			}
+	            			
+							
+							//추가될 카드 html문
+							infinityScrollTestSource +=
+								'<div class="card-box col-md-4" name="newCardBox">' 
+								+ '<div class="card card-with-border" data-background="image" data-src="resources/img/snow.jpg" style="background-image: url(resources/img/snow.jpg); background-size: cover; background-position: 50% 50%;">' 
+								+ '<div class="content">' 
+								+ '<h6 class="category">' + data.newMainArticleArrayList[i].tagName + '</h6><br>' 
+								+ '<h5 class="title">' + mainArticleTitle + '</h5>' 
+								+ ' <p class="description">' + mainArticleContent + '</p>' 
+								+ '<span class="writersNickName">- '+data.newMainArticleArrayList[i].memberVO.memberNickName+' -</span>'
+								+ '<input type="hidden" class="mainArticleTitleNO" value="'+ data.newMainArticleArrayList[i].mainArticleNo +'">'
+								+ '<div class="actions">'
+								+ '<button class="btn btn-round btn-fill btn-neutral btn-modern" data-toggle="modal" data-target="#cardDetailView">Read Article</button>' 
+								+ '</div>' 
+								+ '<div class="social-line social-line-visible" data-buttons="4">' 
+								+ '<button class="btn btn-social btn-pinterest">05:22<br> 빨리!</button>' 
+								+ mainLikeItHTML
+								+ pickMainArticleHTML 
 							+ '<button class="btn btn-social btn-twitter">' + data.completeMainArticleArrayList[i].mainArticleTotalLike + '<br>잇자!</button>' 
 							+ '<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>' 
 							+ '<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button>' 
@@ -448,22 +525,62 @@ $(document).ready(function(){ //DOM이 준비되고
               				}
               				
               				//잇자버튼 조건 문 끝
-						//추가될 카드 html문
-						infinityScrollTestSource +=
-							'<div class="card-box col-md-4" name="newCardBox">' 
-							+ '<div class="card card-with-border" data-background="image" data-src="resources/img/snow.jpg" style="background-image: url(resources/img/snow.jpg); background-size: cover; background-position: 50% 50%;">' 
-							+ '<div class="content">' 
-							+ '<h6 class="category">' + data.newMainArticleArrayList[i].tagName + '</h6><br>' 
-							+ '<h5 class="title">[미완]' + mainArticleTitle + '</h5>' 
-							+ ' <p class="description">' + mainArticleContent + '</p>' 
-							+ '<span class="writersNickName">- '+data.newMainArticleArrayList[i].memberVO.memberNickName+' -</span>'
-							+ '<input type="hidden" class="mainArticleTitleNO" value="'+ data.newMainArticleArrayList[i].mainArticleNo +'">'
-							+ '<div class="actions">'
-							+ '<button class="btn btn-round btn-fill btn-neutral btn-modern" data-toggle="modal" data-target="#cardDetailView">Read Article</button>' 
-							+ '</div>' 
-							+ '<div class="social-line social-line-visible" data-buttons="4">' 
-							+ '<button class="btn btn-social btn-pinterest">05:22<br> 빨리!</button>' 
-							+  mainLikeItHTML
+              				
+              			// alert(data.pickedList);
+	            			// 찜 버튼을 위한 조건문
+	            			var pickMainArticleHTML="";
+	            			if(data.pickedList!=null){
+								var pickFlag=true;
+	              			for(var j=0;j<data.pickedList.length;j++){
+	              				if(data.pickedList[j].mainArticleNo == data.newMainArticleArrayList[i].mainArticleNo){
+	              					pickMainArticleHTML 
+	              					="<button class='btn btn-social btn-google pickBtn'>"
+	              						+"<span class='pickSpan'><i class='fa fa-heart'></i><br>찜!"
+	              						+"</span></button>"
+	              						+"<form name='pickInfo'>"
+	              						+"<input type='hidden' name='memberEmail' value='"+data.pickedList[0].memberEmail+"'>"
+	              						+"<input type='hidden' name='mainArticleNo' value='"+data.newMainArticleArrayList[i].mainArticleNo+"'>"
+	              						+"</form>";
+	           						pickFlag=false;
+	       							break;
+	      						}	
+	       					}
+	        				if(pickFlag){
+	        					pickMainArticleHTML 
+	           					="<button class='btn btn-social btn-google pickBtn'>"
+		           					+"<span class='pickSpan'><i class='fa fa-heart-o'></i><br>찜하자!"
+              						+"</span></button>"
+              						+"<form name='pickInfo'>"
+              						+"<input type='hidden' name='memberEmail' value='"+data.pickedList[0].memberEmail+"'>"
+              						+"<input type='hidden' name='mainArticleNo' value='"+data.newMainArticleArrayList[i].mainArticleNo+"'>"
+              						+"</form>";
+	           					}
+	           				}
+	            			if(pickMainArticleHTML==""){
+	            				pickMainArticleHTML 
+	           					="<button class='btn btn-social btn-google pickBtn'>"
+		           					+"<span class='pickSpan'><i class='fa fa-heart-o'></i><br>찜하자!"
+									+"</span></button>";
+	             			}
+	            			
+							
+							//추가될 카드 html문
+							infinityScrollTestSource +=
+								'<div class="card-box col-md-4" name="newCardBox">' 
+								+ '<div class="card card-with-border" data-background="image" data-src="resources/img/snow.jpg" style="background-image: url(resources/img/snow.jpg); background-size: cover; background-position: 50% 50%;">' 
+								+ '<div class="content">' 
+								+ '<h6 class="category">' + data.newMainArticleArrayList[i].tagName + '</h6><br>' 
+								+ '<h5 class="title">' + mainArticleTitle + '</h5>' 
+								+ ' <p class="description">' + mainArticleContent + '</p>' 
+								+ '<span class="writersNickName">- '+data.newMainArticleArrayList[i].memberVO.memberNickName+' -</span>'
+								+ '<input type="hidden" class="mainArticleTitleNO" value="'+ data.newMainArticleArrayList[i].mainArticleNo +'">'
+								+ '<div class="actions">'
+								+ '<button class="btn btn-round btn-fill btn-neutral btn-modern" data-toggle="modal" data-target="#cardDetailView">Read Article</button>' 
+								+ '</div>' 
+								+ '<div class="social-line social-line-visible" data-buttons="4">' 
+								+ '<button class="btn btn-social btn-pinterest">05:22<br> 빨리!</button>' 
+								+ mainLikeItHTML
+								+ pickMainArticleHTML 
 							+ '<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>' 
 							+ '<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button>' 
 							+ '</div>  <!-- end social-line social-line-visible --></div></div> <!-- end card --></div><!-- card-box col-md-4 -->'
@@ -1359,13 +1476,28 @@ $(document).ready(function(){ //DOM이 준비되고
 	 * @author JeSeong Lee
 	 * 찜 수정
 	 * */
+		
+	// 베스트 찜 클릭 시 발동하기
+	$('.staticPick').on('click',function(){
+		var formData = $($(this).next()).serialize();
+		var pickSpan = $(this).children('.pickSpan');
+		pickBtnClick(formData, pickSpan);
+	});
 	
-	// 메인 페이지 동적으로 생성된 카드 찜 클릭 시 발동하기
+	// 메인 페이지 동적으로 생성된 새로운 잇자 카드 찜 클릭 시 발동하기
 	$('.newItjaList').on('click','.pickBtn',function(){
 		var formData = $($(this).next()).serialize();
 		var pickSpan = $(this).children('.pickSpan');
 		pickBtnClick(formData, pickSpan);
 	});
+	
+	// 완결 페이지 동적으로 생성된 새로운 잇자 카드 찜 클릭 시 발동하기
+	$('.completeItjaList').on('click','.pickBtn',function(){
+		var formData = $($(this).next()).serialize();
+		var pickSpan = $(this).children('.pickSpan');
+		pickBtnClick(formData, pickSpan);
+	});
+	
 	// alert("파워ON!!!@@@@@");
 	function pickBtnClick(formData, pickSpan){
 		// alert(formData);

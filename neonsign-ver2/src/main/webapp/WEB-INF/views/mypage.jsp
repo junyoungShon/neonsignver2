@@ -49,8 +49,11 @@
          PTS(${requestScope.rankMemberVO.memberPoint} / ${requestScope.rankMemberVO.rankingVO.maxPoint})
          </span>
          </div>
-        
+        <!-- 우측 팔로우 표시 -->
+		
+        <!-- 우측 팔로우 표시 끝 -->
     </div>
+    
     <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
         <div class="btn-group" role="group">
             <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><i class="fa fa-th-large"></i>
@@ -117,7 +120,7 @@
                                   잇자!
                             </button>
                             
-                        <button class="btn btn-social btn-google pickBtn">
+                        <button class="btn btn-social btn-google staticPick">
                            <c:set var="breakCheck" value="false"/>
                      <c:forEach var="pickCheck" items="${sessionScope.memberVO.pickedVOList}">
                      <c:choose>
@@ -130,17 +133,23 @@
                             </c:forEach>
                             <c:choose>
                                <c:when test="${breakCheck == true}">
-                                  <i class="fa fa-heart"></i><br>찜!
+                                   <span class="pickSpan"><i class="fa fa-heart"></i><br>찜!</span>
                                </c:when>
                                <c:otherwise>
-                                  <i class="fa fa-heart-o"></i><br>찜하자!
+                                   <span class="pickSpan"><i class="fa fa-heart-o"></i><br>찜하자!</span>
                                </c:otherwise>
                             </c:choose>
-                        </button>
+                           </button>
+                        <!-- 찜 정보를 전달하기 위한 폼 시작 -->
+                        <form name="pickInfo">
+                           <input type="hidden" name="memberEmail" value="${sessionScope.memberVO.memberEmail}">
+                           <input type="hidden" name="mainArticleNo" value="${pickMainArticle.mainArticleNo}">
+                      	</form>
+                        <!-- 찜 정보를 전달하기 위한 폼 끝 -->
                         
                         <button class="btn btn-social btn-facebook">
                                <i class="fa fa-facebook-official"></i><br>
-                                 공유하자!
+                                 공유!
                         </button>
                     </div>  <!-- end social-line social-line-visible -->
                   <div class="filter"></div>
@@ -198,7 +207,7 @@
                                   잇자!
                             </button>
                             
-                        <button class="btn btn-social btn-google pickBtn">
+                        <button class="btn btn-social btn-google staticPick">
                            <c:set var="breakCheck" value="false"/>
                      <c:forEach var="pickCheck" items="${sessionScope.memberVO.pickedVOList}">
                      <c:choose>
@@ -211,13 +220,19 @@
                             </c:forEach>
                             <c:choose>
                                <c:when test="${breakCheck == true}">
-                                  <i class="fa fa-heart"></i><br>찜!
+                                   <span class="pickSpan"><i class="fa fa-heart"></i><br>찜!</span>
                                </c:when>
                                <c:otherwise>
-                                  <i class="fa fa-heart-o"></i><br>찜하자!
+                                   <span class="pickSpan"><i class="fa fa-heart-o"></i><br>찜하자!</span>
                                </c:otherwise>
                             </c:choose>
-                        </button>
+                           </button>
+                        <!-- 찜 정보를 전달하기 위한 폼 시작 -->
+                        <form name="pickInfo">
+                           <input type="hidden" name="memberEmail" value="${sessionScope.memberVO.memberEmail}">
+                           <input type="hidden" name="mainArticleNo" value="${writeMainArticle.mainArticleNo}">
+                      	</form>
+                        <!-- 찜 정보를 전달하기 위한 폼 끝 -->
                         
                         <button class="btn btn-social btn-facebook">
                                <i class="fa fa-facebook-official"></i><br>
@@ -280,7 +295,7 @@
                                   잇자!
                             </button>
                             
-                        <button class="btn btn-social btn-google pickBtn">
+                        <button class="btn btn-social btn-google staticPick">
                            <c:set var="breakCheck" value="false"/>
                      <c:forEach var="pickCheck" items="${sessionScope.memberVO.pickedVOList}">
                      <c:choose>
@@ -293,13 +308,19 @@
                             </c:forEach>
                             <c:choose>
                                <c:when test="${breakCheck == true}">
-                                  <i class="fa fa-heart"></i><br>찜!
+                                   <span class="pickSpan"><i class="fa fa-heart"></i><br>찜!</span>
                                </c:when>
                                <c:otherwise>
-                                  <i class="fa fa-heart-o"></i><br>찜하자!
+                                   <span class="pickSpan"><i class="fa fa-heart-o"></i><br>찜하자!</span>
                                </c:otherwise>
                             </c:choose>
-                        </button>
+                           </button>
+                        <!-- 찜 정보를 전달하기 위한 폼 시작 -->
+                        <form name="pickInfo">
+                           <input type="hidden" name="memberEmail" value="${sessionScope.memberVO.memberEmail}">
+                           <input type="hidden" name="mainArticleNo" value="${joinMainArticle.mainArticleNo}">
+                      	</form>
+                        <!-- 찜 정보를 전달하기 위한 폼 끝 -->
                         
                         <button class="btn btn-social btn-facebook">
                                <i class="fa fa-facebook-official"></i><br>
@@ -318,14 +339,112 @@
     <!-- 끝 참여주제글 -->
         </div> <!-- Tab1 끝 -->
         
+        
+        
+        
       <!-- Tab2 개인정보 시작 -->
       <div class="tab-pane fade in" id="tab2">
+      
+<div class="container">
+	<div class="row">
+		<div class="col-sm-3">
+    	    <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="fa fa-user user"></i>
+                </div>
+                <div class="text">
+                    <var>3</var>
+                    <label class="text-muted">Followers</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i>Follow Member!</a>
+                </div>
+            </div>
+		</div>
+        <div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                    <i class="fa fa-link itja"></i>
+                </div>
+                <div class="text">
+                    <var>54</var>
+                    <label class="text-muted">잇자 포인트</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-trophy"></i>
+         다음 레벨 ${requestScope.rankMemberVO.rankingVO.maxPoint}</a>
+                </div>
+            </div>
+		</div>
+    	
+       	<div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="fa fa-lightbulb-o write"></i>
+                </div>
+                <div class="text">
+                    <var>14</var>
+                    <label class="text-muted">작성한 잇는글</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
+                </div>
+            </div>
+		</div>
+		
+        <div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="fa fa-reply join"></i>
+                </div>
+                <div class="text">
+                    <var>34</var>
+                    <label class="text-muted">참여한 잇는글</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
+                </div>
+            </div>
+		</div>
+		
+		        <div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="fa fa-star pick"></i>
+                </div>
+                <div class="text">
+                    <var>73</var>
+                    <label class="text-muted">찜한게시물</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
+                </div>
+            </div>
+    	</div>
+		
+		<div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="fa fa-tags tags"></i>
+                </div>
+                <div class="text">
+                    <var>87</var>
+                    <label class="text-muted">작성 TAGs</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg">Most&nbsp;<i class="fa fa-tag"></i>&nbsp;#19</a>
+                </div>
+            </div>
+		</div>
+</div>
+</div>
 
       </div> <!-- Tab2 끝 -->
         
        <!-- Tab3 구독 정보 시작 -->
         <div class="tab-pane fade in" id="tab3">
-        
+        	
+
         </div> <!-- Tab3 끝 -->
       </div>
     </div>

@@ -99,11 +99,12 @@
                                <input type="hidden" name="subArticleNo" value=0>
                             </form>
                             
-                <button class="btn btn-social btn-google pickBtn">
-                       <c:set var="breakCheck" value="false"/>
+					<!-- 찜하기 -->
+                  <button class="btn btn-social btn-google pickBtn">
+                           <c:set var="breakCheck" value="false"/>
                      <c:forEach var="pickCheck" items="${sessionScope.memberVO.pickedVOList}">
                      <c:choose>
-                        <c:when test="${pickCheck.mainArticleNo == bestMainArticle.mainArticleNo}">
+                        <c:when test="${pickCheck.mainArticleNo == completeMainArticle.mainArticleNo}">
                                  <c:set var="breakCheck" value="true"/>
                                </c:when>
                                <c:otherwise>
@@ -112,13 +113,19 @@
                             </c:forEach>
                             <c:choose>
                                <c:when test="${breakCheck == true}">
-                                  <i class="fa fa-heart"></i><br>찜!
+                                  <span class="pickSpan"><i class="fa fa-heart"></i><br>찜!</span>
                                </c:when>
                                <c:otherwise>
-                                  <i class="fa fa-heart-o"></i><br>찜하자!
+                                  <span class="pickSpan"><i class="fa fa-heart-o"></i><br>찜하자!</span>
                                </c:otherwise>
                             </c:choose>
-                           </button>
+                        </button>
+                        <!-- 찜 정보를 전달하기 위한 폼 시작 -->
+                        <form name="pickInfo">
+                           <input type="hidden" name="memberEmail" value="${sessionScope.memberVO.memberEmail}">
+                           <input type="hidden" name="mainArticleNo" value="${completeMainArticle.mainArticleNo}">
+                      	</form>
+                        <!-- 찜 정보를 전달하기 위한 폼 끝 -->
                            
                   <button class="btn btn-social btn-facebook">
                      <i class="fa fa-facebook-official"></i><br> 공유하자!

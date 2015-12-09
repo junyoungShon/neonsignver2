@@ -10,8 +10,7 @@
          data-flickity-options='{ "freeScroll": true, "wrapAround": true ,"pageDots": false}'>
          <!-- el 문 및 ajax로 베스트글이 표시되는 슬라이드 지역 -->
          <!-- 카드 1개 -->
-         <c:forEach var="bestMainArticle"
-            items="${requestScope.bestMainArticleVOListOrderByDate}">
+         <c:forEach var="bestMainArticle"  items="${requestScope.bestMainArticleVOListOrderByDate}">
             <div class="card-box col-lg-2">
                <div class="card card-with-border" data-background="image"
                   data-src="${initParam.root}resources/img/snow.jpg">
@@ -77,7 +76,7 @@
                                잇자 버튼 클릭시 전달 할 정보를 위한 히든 폼 끝
                              --%>
                              
-                     <button class="btn btn-social btn-google pickBtn">
+                     <button class="btn btn-social btn-google staticPick">
                            <c:set var="breakCheck" value="false"/>
                      <c:forEach var="pickCheck" items="${sessionScope.memberVO.pickedVOList}">
                      <c:choose>
@@ -90,13 +89,20 @@
                             </c:forEach>
                             <c:choose>
                                <c:when test="${breakCheck == true}">
-                                  <i class="fa fa-heart"></i><br>찜!
+                                   <span class="pickSpan"><i class="fa fa-heart"></i><br>찜!</span>
                                </c:when>
                                <c:otherwise>
-                                  <i class="fa fa-heart-o"></i><br>찜하자!
+                                   <span class="pickSpan"><i class="fa fa-heart-o"></i><br>찜하자!</span>
                                </c:otherwise>
                             </c:choose>
                            </button>
+                        <!-- 찜 정보를 전달하기 위한 폼 시작 -->
+                        <form name="pickInfo">
+                           <input type="hidden" name="memberEmail" value="${sessionScope.memberVO.memberEmail}">
+                           <input type="hidden" name="mainArticleNo" value="${bestMainArticle.mainArticleNo}">
+                      	</form>
+                        <!-- 찜 정보를 전달하기 위한 폼 끝 -->
+                        
                         
                      <button class="btn btn-social btn-facebook">
                         <i class="fa fa-facebook-official"></i><br> 공유!
@@ -221,7 +227,7 @@
 							     <%--
                                잇자 버튼 클릭시 전달 할 정보를 위한 히든 폼 끝
                              --%>
-                                                        
+					<!-- 찜하기 -->
                   <button class="btn btn-social btn-google pickBtn">
                            <c:set var="breakCheck" value="false"/>
                      <c:forEach var="pickCheck" items="${sessionScope.memberVO.pickedVOList}">
