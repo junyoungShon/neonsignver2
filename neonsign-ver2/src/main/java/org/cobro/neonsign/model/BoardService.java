@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.cobro.neonsign.vo.ItjaMemberVO;
+import org.cobro.neonsign.vo.MainArticleImgVO;
 import org.cobro.neonsign.vo.MainArticleVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.RankingVO;
@@ -66,4 +67,10 @@ public interface BoardService {
 	public List<TagBoardVO> writeTagListbyEmail(MemberVO memberVO);
 	public TagBoardVO getMostWriteTagByEmail(MemberVO memberVO);
 	
+	//2015-12-08 대협추가
+	//이미지추가 관련 메소드
+	public void insertMainArticleImg(int articleNo, String imgName);
+	public void insertProfileImg(String memberEmail, String imgName);
+	//이미지 로드 관련 메소드
+	public MainArticleImgVO selectMainArticleImg(int articleNo);
 }

@@ -320,7 +320,7 @@ $(document).ready(function(){ //DOM이 준비되고
 								+ '<button class="btn btn-round btn-fill btn-neutral btn-modern" data-toggle="modal" data-target="#cardDetailView">Read Article</button>' 
 								+ '</div>' 
 								+ '<div class="social-line social-line-visible" data-buttons="4">' 
-								+ '<button class="btn btn-social btn-pinterest">05:22<br> 빨리!</button>' 
+								+ '<button class="btn btn-social btn-pinterest">새로운<br>잇자!</button>' 
 								+ mainLikeItHTML
 								+ pickMainArticleHTML 
 								+ '<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button>' 
@@ -451,22 +451,20 @@ $(document).ready(function(){ //DOM이 준비되고
 								'<div class="card-box col-md-4" name="newCardBox">' 
 								+ '<div class="card card-with-border" data-background="image" data-src="resources/img/snow.jpg" style="background-image: url(resources/img/snow.jpg); background-size: cover; background-position: 50% 50%;">' 
 								+ '<div class="content">' 
-								+ '<h6 class="category">' + data.newMainArticleArrayList[i].tagName + '</h6><br>' 
+								+ '<h6 class="category">' + data.completeMainArticleArrayList[i].tagName + '</h6><br>' 
 								+ '<h5 class="title">' + mainArticleTitle + '</h5>' 
 								+ ' <p class="description">' + mainArticleContent + '</p>' 
-								+ '<span class="writersNickName">- '+data.newMainArticleArrayList[i].memberVO.memberNickName+' -</span>'
-								+ '<input type="hidden" class="mainArticleTitleNO" value="'+ data.newMainArticleArrayList[i].mainArticleNo +'">'
+								+ '<span class="writersNickName">- '+data.completeMainArticleArrayList[i].memberVO.memberNickName+' -</span>'
+								+ '<input type="hidden" class="mainArticleTitleNO" value="'+ data.completeMainArticleArrayList[i].mainArticleNo +'">'
 								+ '<div class="actions">'
 								+ '<button class="btn btn-round btn-fill btn-neutral btn-modern" data-toggle="modal" data-target="#cardDetailView">Read Article</button>' 
 								+ '</div>' 
 								+ '<div class="social-line social-line-visible" data-buttons="4">' 
-								+ '<button class="btn btn-social btn-pinterest">05:22<br> 빨리!</button>' 
+								+ '<button class="btn btn-social btn-pinterest">완결된<br>잇자!</button>' 
 								+ mainLikeItHTML
 								+ pickMainArticleHTML 
-							+ '<button class="btn btn-social btn-twitter">' + data.completeMainArticleArrayList[i].mainArticleTotalLike + '<br>잇자!</button>' 
-							+ '<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>' 
-							+ '<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button>' 
-							+ '</div>  <!-- end social-line social-line-visible --></div></div> <!-- end card --></div><!-- card-box col-md-4 -->'
+								+ '<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button>' 
+								+ '</div>  <!-- end social-line social-line-visible --></div></div> <!-- end card --></div><!-- card-box col-md-4 -->'
 					}
 					$('.ajaxLoader').fadeOut(300);
 					$('.completeItjaList').html(infinityScrollTestSource);
@@ -578,12 +576,11 @@ $(document).ready(function(){ //DOM이 준비되고
 								+ '<button class="btn btn-round btn-fill btn-neutral btn-modern" data-toggle="modal" data-target="#cardDetailView">Read Article</button>' 
 								+ '</div>' 
 								+ '<div class="social-line social-line-visible" data-buttons="4">' 
-								+ '<button class="btn btn-social btn-pinterest">05:22<br> 빨리!</button>' 
+								+ '<button class="btn btn-social btn-pinterest">새로운<br>잇자!</button>' 
 								+ mainLikeItHTML
 								+ pickMainArticleHTML 
-							+ '<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>' 
-							+ '<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button>' 
-							+ '</div>  <!-- end social-line social-line-visible --></div></div> <!-- end card --></div><!-- card-box col-md-4 -->'
+								+ '<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button>' 
+								+ '</div>  <!-- end social-line social-line-visible --></div></div> <!-- end card --></div><!-- card-box col-md-4 -->'
 					}
 					$('.ajaxLoader').fadeOut(300);
 					$('.newItjaList').html(infinityScrollTestSource);

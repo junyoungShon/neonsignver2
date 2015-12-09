@@ -147,8 +147,9 @@
          <!-- name은 script.js에서 카드 현재 카드의 수를 구하기 위해 사용 -대협- -->
          <div class="card-box col-md-4" name="newCardBox">
             <input type="hidden" id="orderBy" value="date">
+            <!-- 2015-12-08 대협추가 이미지 링크 -->
             <div class="card card-with-border" data-background="image"
-               data-src="${initParam.root}resources/img/fashion-1.jpg">
+               data-src="${initParam.root}resources/uploadImg/articleBg/${newMainArticle.mainArticleImgVO.mainArticleImgName}">
                <div class="content">
                   <h6 class="category">
                       ${newMainArticle.tagName}

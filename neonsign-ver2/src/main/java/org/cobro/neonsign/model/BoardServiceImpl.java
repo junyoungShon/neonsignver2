@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import org.cobro.neonsign.utility.StoryLinker;
 import org.cobro.neonsign.vo.ItjaMemberVO;
+import org.cobro.neonsign.vo.MainArticleImgVO;
 import org.cobro.neonsign.vo.MainArticleVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.RankingVO;
@@ -204,6 +205,7 @@ public class BoardServiceImpl implements BoardService{
 	 */
 	public List<MainArticleVO> selectListNotCompleteMainArticle(int pageNo,
 			String orderBy, String getTagName) {
+		System.out.println("service selectListNotCompleteMainArticle getTagName : " + getTagName);
 		List<MainArticleVO> newMainArticleList = null;
 		if (orderBy.equals("date")) {
 			newMainArticleList
@@ -648,5 +650,30 @@ public class BoardServiceImpl implements BoardService{
 		return tagBoardVO;
 	}
 
+	/**2015-12-08 대협추가
+	 * 글 등록시 배경이미지를 등록하는 메소드
+	 * @author daehyeop
+	 */
+	@Override
+	public void insertMainArticleImg(int articleNo, String imgName){
+		boardDAO.insertMainArticleImg(articleNo, imgName);
+	}
 	
+	/**2015-12-08 대협추가
+	 * 프로필이미지를 등록하는 메소드
+	 * @author daehyeop
+	 */
+	@Override
+	public void insertProfileImg(String memberEmail, String imgName){
+		boardDAO.insertProfileImg(memberEmail, imgName);
+	}
+	/**2015-12-08 대협추가
+	 * 주제글 배경이미지를 불러오는 메소드
+	 * @author daehyeop
+	 */
+	@Override
+	public MainArticleImgVO selectMainArticleImg(int articleNo){
+		MainArticleImgVO mainArticleImgVO = boardDAO.selectMainArticleImg(articleNo);
+		return mainArticleImgVO;
+	}
 }

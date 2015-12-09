@@ -733,7 +733,22 @@ insert into ranking(MEMBER_GRADE, MIN_POINT, MAX_POINT) values('GOLD', 350, 749)
 insert into ranking(MEMBER_GRADE, MIN_POINT, MAX_POINT) values('PLATINUM', 750, 1549);
 -- DIAMOND 나중에 추가
 
-
+-- 2015-12-08 대협추가
+----------------------------------------------------------------------------------------
+-- ** 주제글 배경이미지 테이블 ** -------------------------------------------------------------
+create table MAIN_ARTICLE_IMG(
+	MAIN_ARTICLE_NO number primary key,
+	MAIN_ARTICLE_IMG_NAME clob not null,
+	constraint fk_img_main_article_no foreign key(MAIN_ARTICLE_NO) references MAIN_ARTICLE(MAIN_ARTICLE_NO)	
+)
+-- 2015-12-08 대협추가
+----------------------------------------------------------------------------------------
+-- ** 프로필이미지 테이블 ** -------------------------------------------------------------
+create table PROFILE_IMG(
+	MEMBER_EMAIL varchar2(50) primary key,
+	PROFILE_IMG_NAME clob not null,
+	constraint fk_img_member_email foreign key(MEMBER_EMAIL) references BRAIN_MEMBER(MEMBER_EMAIL)	
+)
 
 
 

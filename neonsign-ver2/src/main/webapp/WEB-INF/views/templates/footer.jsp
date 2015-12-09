@@ -142,7 +142,8 @@
 					<h4 class="modal-title" id="writeMainArticleLabel">뇌 On Sign 주제글 작성하기</h4>
 				</div>
 				<div class="modal-body">
-				<form action="auth_insertNewMainArticle.neon" method="post">
+			      <!-- 2015-12-08 대협추가 enctype -->
+				<form action="auth_insertNewMainArticle.neon" enctype="multipart/form-data" method="post">
 					<input type="hidden" name="memberEmail" value="${sessionScope.memberVO.memberEmail}">
 					<table class="table">
 						<tr>
@@ -163,6 +164,12 @@
 							<td>
 							<textarea class="form-control" rows="10" placeholder="주제글 입력해주세요 ! (200자로 제한됩니다.)" name="mainArticleContent"></textarea>
 							<div class="limitLength">작성 후 잇자 10개시 베스트로 이동되며,타임체크가 발동됩니다!<span class="userLength"></span>Byte/400Byte</div>
+							</td>
+						</tr>
+						<!-- 2015-12-08 대협추가 <tr> -->
+						<tr>
+							<td>
+							<input type="file" name="file">
 							</td>
 						</tr>
 					</table>
