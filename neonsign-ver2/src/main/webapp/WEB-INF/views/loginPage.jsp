@@ -49,7 +49,7 @@ body{
 
 
 .myForm {
-    width: 30%;
+    width: 25%;
     margin: 0 auto;
     padding-top: 50px;
     height: 400px;
@@ -81,7 +81,10 @@ body{
     pointer-events: none;
     font-family: FontAwesome;
 }
-
+.bottomMenu{
+	color: WHITE;
+	font-weight: bold;
+}
 .myForm .checkbox .mycheckbox {
     width: 25px;
     height: 25px;
@@ -107,7 +110,7 @@ body{
     :: Footer
 	-------------------------------------------------- */
 #footer {
-    color: #6d6d6d;
+    color: red;
     font-size: 12px;
     text-align: center;
 }
@@ -133,7 +136,7 @@ body{
     	    <div class="col-xs-12">
                 <div class="myForm">
                     <h1 class="text-center">NeonSign Login</h1><br>
-                    ${requestScope.fail}
+                    <h4>${requestScope.fail}</h4>
                     <form role="form" action="memberLogin.neon" method="post" id="login-form" autocomplete="off">
                         <div class="form-group">
                             <label for="email" class="sr-only">이메일 아이디</label>
@@ -144,16 +147,17 @@ body{
                             <input type="password" name="memberPassword" id="key" class="form-control input-md" placeholder="Password">
                         </div>
                         <div>
-                        <a href="#" class="memberJoinByEmailBtn top-menu"> <i class="label"></i>Register</a>
+                       
                         </div>
-                        <input type="submit" id="btn-login" class="btn btn-info btn-lg btn-block" value="Log in"><br>
-                        <a href="javascript:;" class="forget" data-toggle="modal" data-target=".forget-modal">Forgot your password?</a>
+                        <input type="submit" id="btn-login" class="btn btn-default btn-lg btn-block" value="Log in"><br>
+                        <span><a href="#" class="memberJoinByEmailBtn top-menu"><h4 class="bottomMenu">회원가입</h4></a>
+                        <a href="javascript:;" class="forget" data-toggle="modal" data-target=".forget-modal"><h4 class="bottomMenu">비밀번호 복구</h4></a></span>
                     </form>
-                    <hr>
+                    <hr><br><br>
                 </div>
     		</div> <!-- /.col-xs-12 -->
     		   <div class="col-xs-12 text-center">
-                <p>Page © - 2015</p>
+                <p></p><br><br>
                 <p>Powered by <strong><a href="${initParam.root}getMainList.neon" target="_blank">NeonSign</a></strong></p>
             </div>
     	</div> <!-- /.row -->
@@ -181,7 +185,69 @@ body{
 	</div> <!-- /.modal-dialog -->
 </div> <!-- /.modal -->
 
-
+         <!-- Modal Email join   -->
+			<div class="modal fade" id="memberJoinByEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">뇌온사인 회원가입</h4>
+			      </div>
+			      <div class="modal-body">
+			        <form id="memberJoinByEmail" action="memberJoinByEmail.neon">
+			        	<!-- 개인정보 입력 부분 -->
+			        	<div class="personInfoForJoin">
+			        	<!-- 
+			        		이 폼그룹은에 has-success,has-error,has-feedback,has-warning에 따라 폼의 색이 달라진다.
+			        		따라서 폼 그룹의 클래스 명을 변경시켜줌으로서 입력폼의 색을 바꿔 준다.
+			        		이후 메시지는 control-label(폼그룹의 has-~상태에 따라 색이 바뀐다.)에 출력시키며
+			        		아이콘을 출력하는 span클래스의 이름을 바꿔줌으로서 유효성 검사를 완성한다.
+			        	-->
+			        	<div class="form-group has-feedback emailInput">
+						  	<label class="control-label" for="inputSuccess2">이메일</label>
+							<input type="email" class="form-control" id="memberJoinInputEmail" name="memberEmail"
+							  		placeholder="아이디로 사용할 이메일을 입력해주세요">
+							<span class="glyphicon form-control-feedback" aria-hidden="ture"></span>
+							  	<!-- 이름 입력 양식 /nameInputSuccess,nameInputFail 클래스 성공 실패의 경우를 나눠준다 -->
+						</div>
+			        	<div class="form-group has-feedback nameInput">
+						  	<label class="control-label" for="inputSuccess2">닉네임</label>
+					    	<input type="text" class="form-control" id="memberJoinInputName" placeholder="회원님의 닉네임을 입력해주세요" name="memberNickName">
+					    	<span class="glyphicon form-control-feedback" aria-hidden="ture"></span>
+						</div>
+					   		<div class="form-group has-feedback passInput">	
+						    	<label class="control-label" for="inputSuccess2">암호</label>
+						    	<input type="password" class="form-control" id="memberJoinInputpassword" placeholder="암호" name="memberPassword">
+						    	<span class="glyphicon form-control-feedback" aria-hidden="ture"></span>
+						    	
+					    	</div>
+					   		<div class="form-group has-feedback rePassInput">	
+						    	<label class="control-label" for="memberJoinInputpassword">암호 확인</label>
+						    	<input type="password" class="form-control" id="memberJoinInputRePassword" placeholder="암호를 한번 더 입력해주세요!">
+						    	<span class="glyphicon form-control-feedback" aria-hidden="ture"></span>
+					    	</div>
+					 	</div>
+			        </form>
+			      </div>
+			      <div class="modal-footer">
+			        
+			      <div class="modal-footer" id="babyInfoForJoin">
+			      	<!-- 개인정보 입력 시 출력되는  버튼-->
+			      	<button type="button" class="personInfoForJoin InfoForJoinCancel btn btn-default">Close</button>
+			        <button type="button" class="personInfoForJoin btn btn-primary" id="submitInfo">가입 완료</button>
+			      	<div class="col-6 .col-md-offset-3">
+				      	<h6>	
+				      		가입과 동시에 귀하는 쿠키 사용을 포함해 
+				      		이용약관과 개인정보 취급방침에 동의하는 것입니다.
+				      	</h6>
+			      	</div>
+			        
+			      </div>
+			    </div>
+			  </div>
+			</div>
+          </div>
+          <!-- 회원가입 모달 끝 -->
    
 <!-- 부트 스트랩 사용을 위한 하단 설정 -->
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
