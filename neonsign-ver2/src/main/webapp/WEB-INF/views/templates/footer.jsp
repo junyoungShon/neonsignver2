@@ -97,6 +97,7 @@
 							
 							<DIV class="itjaWriteForm">
 							<form action="auth_writeSubArticle.neon" class="form-horizontal">
+								
 							</form>
 							</DIV>
 							<tbody id="detailMainSubArticle" >

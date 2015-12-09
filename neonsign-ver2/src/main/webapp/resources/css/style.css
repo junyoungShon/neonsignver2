@@ -452,3 +452,14 @@ input[type=radio]:checked + label {
 	width: 55px;
 	height: 40px;
 }
+
+/*글 쓰기 폼*/
+.userlength{
+	color: red;	
+}
+:form[action='auth_writeSubArticle.neon'] :input[type='radio'],:input[type='button']{
+	text-align: right;
+}
+.itjaWriteForm{
+	display:none;
+}
