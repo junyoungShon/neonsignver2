@@ -633,6 +633,33 @@ $(document).ready(function(){ //DOM이 준비되고
 				/*$('form[action="auth_writeSubArticle.neon"]').children('input[name="memberEmail"]').val(data.itjaMemberList[0].memberEmail);*/
 				$('form[action="auth_writeSubArticle.neon"]').children('input[name="mainArticleNo"]').val(mainArticleNO);
 				
+				// 찜 버튼을 위한 조건문
+    			var pickMainArticleHTML="";
+    			if(data.pickedList!=null){
+					var pickFlag=true;
+      			for(var j=0;j<data.pickedList.length;j++){
+      				if(data.pickedList[j].mainArticleNo ==mainArticleNO){
+      					pickMainArticleHTML 
+      					="<button class='btn btn-social btn-google pickBtn'>"
+      						+"<span class='pickSpan'><i class='fa fa-heart'></i><br>찜!"
+      						+"</span></button>"
+   						pickFlag=false;
+							break;
+						}	
+					}
+				if(pickFlag){
+					pickMainArticleHTML 
+   					="<button class='btn btn-social btn-google pickBtn'>"
+       					+"<span class='pickSpan'><i class='fa fa-heart-o'></i><br>찜하자!"
+  						+"</span></button>"
+   					}
+   				}
+    			if(pickMainArticleHTML==""){
+    				pickMainArticleHTML 
+   					="<button class='btn btn-social btn-google pickBtn'>"
+       					+"<span class='pickSpan'><i class='fa fa-heart-o'></i><br>찜하자!"
+						+"</span></button>";
+     			}
 				
 				if(data.itjaMemberList!=null){
 					//잇는글폼 활성화
@@ -660,7 +687,7 @@ $(document).ready(function(){ //DOM이 준비되고
 							='<div class="social-line social-line-visible" data-buttons="4"><button class="btn btn-social btn-pinterest">05:22<br>빨리!</button>'
 							+'<button class="btn btn-social btn-twitter itja">'
 							+'<span class="itjaCount"><i class="fa fa-link"></i><br>'+data.mainArticle.mainArticleTotalLike+'it</span></button>'
-							+'<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>'
+							+pickMainArticleHTML
 							+'<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유!</button>'
 							+'<form name="itJaInfo"><input type="hidden" name="memberEmail" value="'+data.itjaMemberList[0].memberEmail
 							+'"><input type="hidden" name="mainArticleNo" value="'+data.mainArticle.mainArticleNo
@@ -684,7 +711,7 @@ $(document).ready(function(){ //DOM이 준비되고
 						modalFooterLikeHTML 
 						='<div class="social-line social-line-visible" data-buttons="4"><button class="btn btn-social btn-pinterest">05:22<br>빨리!</button><button class="btn btn-social btn-twitter itja">'
 							+'<span class="itjaCount"><i class="fa fa-chain-broken"></i><br>'+data.mainArticle.mainArticleTotalLike+'it</span></button>'
-							+'<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>'
+							+pickMainArticleHTML
 							+'<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유!</button>'
 							+'<form name="itJaInfo"><input type="hidden" name="memberEmail" value="'+data.itjaMemberList[0].memberEmail
 							+'"><input type="hidden" name="mainArticleNo" value="'+data.mainArticle.mainArticleNo
@@ -700,7 +727,7 @@ $(document).ready(function(){ //DOM이 준비되고
 					modalFooterLikeHTML = 
 						'<div class="social-line social-line-visible" data-buttons="4"><button class="btn btn-social btn-pinterest">05:22<br>빨리!</button><button class="btn btn-social btn-twitter itja">'+
 						'<span class="itjaCount"><i class="fa fa-chain-broken"></i><br>'+data.mainArticle.mainArticleTotalLike+'it</span></button>'
-						+'<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>'
+						+pickMainArticleHTML
 						+'<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button><div>';
 					//잇는글 폼 비활성화
 					$('.itjaWriteForm').css('display','none');	
@@ -1572,6 +1599,13 @@ $(document).ready(function(){ //DOM이 준비되고
 	// 완결 페이지 동적으로 생성된 새로운 잇자 카드 찜 클릭 시 발동하기
 	$('.completeItjaList').on('click','.pickBtn',function(){
 		var formData = $($(this).next()).serialize();
+		var pickSpan = $(this).children('.pickSpan');
+		pickBtnClick(formData, pickSpan);
+	});
+	
+	// 디테일 뷰의 동적으로 생성된 찜 클릭 시 발동하기
+	$('.utilInDetailModal').on('click','.pickBtn',function(){
+		var formData = $($(this).next().next()).serialize(); 
 		var pickSpan = $(this).children('.pickSpan');
 		pickBtnClick(formData, pickSpan);
 	});
