@@ -640,13 +640,17 @@ public class BoardServiceImpl implements BoardService{
 	
 	/**
 	 * 작성한 태그중 가장 많이 사용한 Tag를 불러옴
+	 * 새로가입한 사람 마이페이지 오류를 수정함(2015.12.10)
 	 * @author JeSeong Lee
 	 */
 	@Override
 	public TagBoardVO getMostWriteTagByEmail(MemberVO memberVO) {
 		ArrayList<TagBoardVO> mostWriteTagByEmailList
 		= (ArrayList<TagBoardVO>) boardDAO.getMostWriteTagByEmail(memberVO);
-		TagBoardVO tagBoardVO = mostWriteTagByEmailList.get(0);
+		TagBoardVO tagBoardVO = null;
+		if(mostWriteTagByEmailList.size()!=0){
+			tagBoardVO = mostWriteTagByEmailList.get(0);
+		}
 		return tagBoardVO;
 	}
 

@@ -630,6 +630,8 @@ $(document).ready(function(){ //DOM이 준비되고
 				var memberEmail=$('#memberUserEmail').val();
 				//잇는 글 폼 히든 input에 데이터 할당 
 				
+				/*$('form[action="auth_writeSubArticle.neon"]').children('input[name="memberEmail"]').val(data.itjaMemberList[0].memberEmail);*/
+				$('form[action="auth_writeSubArticle.neon"]').children('input[name="mainArticleNo"]').val(mainArticleNO);
 				
 				
 				if(data.itjaMemberList!=null){
@@ -975,7 +977,6 @@ $(document).ready(function(){ //DOM이 준비되고
 	// 모달 창에서 주제글  잇자 클릭 시 발동하기 (토탈 증가)
 	$('.utilInDetailModal').on('click','.itja',function(){
 		var formData =  $(this).siblings().eq(3).serialize();
-		alert(formData);
 		var itjaCountSpan = $(this).children('.itjaCount');
 		itjaClick(formData,itjaCountSpan,'total');
 	});
