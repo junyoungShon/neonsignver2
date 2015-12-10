@@ -1920,5 +1920,3 @@ $(document).ready(function(){ //DOM이 준비되고
 	 });
     // 비밀번호 찾기를 위한 요청 폼 검증 끝
 });//document.ready
-	
-
