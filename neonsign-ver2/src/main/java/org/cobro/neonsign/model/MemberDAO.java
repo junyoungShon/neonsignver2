@@ -33,4 +33,6 @@ public interface MemberDAO {
 	public void memberUpdatePassword(MemberVO memberVO);
 	public MemberVO confirmPasswordFindRequest(FindPasswordVO findPasswordVO);
 	public void deletePasswordFindRequest(FindPasswordVO findPasswordVO);
+	public void memberPointPlusUpdater(String memberEmail, int i);
+	public void memberPointMinusUpdater(String memberEmail, int i);
 }

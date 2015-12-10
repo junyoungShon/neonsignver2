@@ -150,7 +150,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     set MEMBER_PASSWORD=#{memberPassword} , MEMBER_NICKNAME=#{memberNickName}
     where MEMBER_EMAIL=#{memberEmail} 
     </update>
-    
+     <!-- 회원 포인트 플러스 -->
+    <update id="memberPointPlusUpdater" parameterType="map">
+    	update brain_member set MEMBER_POINT = MEMBER_POINT + #{memberPoint} where MEMBER_EMAIL = #{memberEmail}
+    </update>
+  
+    <!-- 회원 포인트 마이너스 -->
+    <update id="memberPointMinusUpdater" parameterType="map">
+    	update brain_member set MEMBER_POINT = MEMBER_POINT - #{memberPoint} where MEMBER_EMAIL = #{memberEmail}
+    </update>
     
   
     

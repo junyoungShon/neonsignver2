@@ -124,7 +124,7 @@ public class BoardController {
 		for(int i=0;i<tagNameList.length;i++){
 			list.add(tagNameList[i]);
 		}
-		boardService.insertMainArticle(mainArticleVO,list,tagBoardVO);
+		boardService.pointInsertMainArticle(mainArticleVO,list,tagBoardVO);
 		//2015-12-08 대협추가
 		MultipartFile file = fvo.getFile();
 		String fileOrgName = file.getOriginalFilename();
@@ -206,7 +206,7 @@ public class BoardController {
 			}
 			session.setAttribute("memberVO",memberVO);
 		}
-		HashMap<String, Object> map = boardService.selectItjaState(itjaMemberVO,subArticleVO);
+		HashMap<String, Object> map = boardService.pointSelectItjaState(itjaMemberVO,subArticleVO);
 		return map;
 	}
 	/**Controller2
@@ -369,7 +369,7 @@ public class BoardController {
 		HashMap<String, Object> map = new HashMap<String, Object>();	
 		//memberBoardInfo(request);
 		System.out.println(subArticleVO);
-		boolean result = boardService.insertSubArticle(subArticleVO);
+		boolean result = boardService.pointInsertSubArticle(subArticleVO);
 		map.put("result",result);
 		map.put("subArticleVO",subArticleVO);
 		return map;

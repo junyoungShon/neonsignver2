@@ -35,7 +35,7 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.findMemberByNickName(nameComp);
 	}
 	@Override
-	public int memberRegister(MemberVO memberVO) {
+	public int pointMemberRegister(MemberVO memberVO) {
 		return memberDAO.memberRegister(memberVO);
 	}
 	

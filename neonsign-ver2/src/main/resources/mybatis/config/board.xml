@@ -181,6 +181,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into sub_article (MAIN_ARTICLE_NO, SUB_ARTICLE_NO, MEMBER_EMAIL,SUB_ARTICLE_CONTENT,IS_CONNECT,SUB_ARTICLE_DATE,SUB_ARTICLE_GRADE,IS_END) 
 		values(#{mainArticleNo},sub_article_seq.nextval,#{memberEmail},#{subArticleContent}, 0 , sysdate,#{subAtricleGrade},#{isEnd})
 	</insert>
+	<!-- 주제글 번호로 작성자 이메일 꺼내옴 -->
+	<select id="selectWriterEmailByMainArticleNO" parameterType="itjaMemberVO" resultType="string">
+		select Member_EMAIL from Main_Article where MAIN_ARTICLE_NO = #{mainArticleNo}
+	</select>
+	<!-- 잇는글 번호로 작성자 이메일 꺼내옴 -->
+	<select id="selectWriterEmailBySubArticleNO" parameterType="itjaMemberVO" resultType="string">
+		select Member_EMAIL from SUB_Article where SUB_ARTICLE_NO = #{subArticleNo}
+	</select>
 	
 	<!-- 메인 아티클의 현재 update_date를 출력해준다. -->
 	<select id="selectOneMainArticleUpdateDate" resultType="string">

@@ -18,7 +18,7 @@ import org.cobro.neonsign.vo.TagVO;
 
 public interface BoardService {
 	//main article 관련 메서드
-	public int insertMainArticle(MainArticleVO mainArticleVO, ArrayList<String> list,
+	public int pointInsertMainArticle(MainArticleVO mainArticleVO, ArrayList<String> list,
 			TagBoardVO tagBoardVO);
 	public int updateMainArticle(MainArticleVO mainArticleVO);
 	public void deleteMainArticle(MainArticleVO mainArticleVO);
@@ -32,7 +32,7 @@ public interface BoardService {
 	public List<TagVO> selectListTagNameOrderBySearchCount();
 	
 	//sub article 관련 메서드
-	public boolean insertSubArticle(SubArticleVO subArticleVO);
+	public boolean pointInsertSubArticle(SubArticleVO subArticleVO);
 	public int updateSubArticle(SubArticleVO subArticleVO);
 	public void deleteSubArticle(SubArticleVO subArticleVO);
 	public List<SubArticleVO> selectListSubArticleByMainArticleNo(SubArticleVO subArticleVO);
@@ -47,7 +47,7 @@ public interface BoardService {
 	public void articleNotify(MainArticleVO mainArticleVO);
 	ReportListVO mainArticleReportList(int pageNumber);
 	ReportListVO subArticleReportList(int pageNumber);
-	HashMap<String, Object> selectItjaState(ItjaMemberVO itjaMemberVO, SubArticleVO subArticleVO);
+	HashMap<String, Object> pointSelectItjaState(ItjaMemberVO itjaMemberVO, SubArticleVO subArticleVO);
 	void articleBlock(MainArticleVO mavo, int reportNumber);
 	void reportListDelete(ReportVO nvo);
 	public void subArticleBlock(int subArticleNumber, int articleNumber, int reportNumber);

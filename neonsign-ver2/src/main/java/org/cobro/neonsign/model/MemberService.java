@@ -13,7 +13,7 @@ import org.cobro.neonsign.vo.PickedVO;
 public interface MemberService {
 	public MemberVO findMemberByEmail(String emailComp);
 	public MemberVO findMemberByNickName(String nameComp);
-	public int memberRegister(MemberVO mvo);
+	public int pointMemberRegister(MemberVO mvo);
 	public int memberUpdate(MemberVO memberVO);
 	public MemberVO memberLogin(MemberVO mvo);
 	public String memberDelete(MemberVO mvo);

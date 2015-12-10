@@ -1,7 +1,9 @@
 package org.cobro.neonsign.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -206,5 +208,28 @@ public class MemberDAOImpl implements MemberDAO{
 	public MemberVO requestTemporaryPasswordCheckRandomSentence(
 			FindPasswordVO findPasswordVO) {
 		return sqlSessionTemplate.selectOne("member.requestTemporaryPasswordCheckRandomSentence", findPasswordVO);
+	}
+	/**
+	 * 회원의 이름과 점수를 받아서 점수를 플러스 업로드 해준다.
+	 * @author junyoung
+	 */
+	@Override
+	public void memberPointPlusUpdater(String memberEmail, int point) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(memberEmail+" 여기는 DAO"+point);
+		map.put( "memberEmail", memberEmail );
+		map.put( "memberPoint", point );
+		sqlSessionTemplate.update("member.memberPointPlusUpdater",map);
+	}
+	/**
+	 * 회원의 이름과 점수를 받아서 점수를 마이너스 업로드 해준다.
+	 * @author junyoung
+	 */
+	@Override
+	public void memberPointMinusUpdater(String memberEmail, int point) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put( "memberEmail", memberEmail );
+		map.put( "memberPoint", point );
+		sqlSessionTemplate.update("member.memberPointMinusUpdater",map);
 	}
 }
