@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import org.cobro.neonsign.utility.StoryLinker;
 import org.cobro.neonsign.vo.ItjaMemberVO;
+import org.cobro.neonsign.vo.MainArticleImgVO;
 import org.cobro.neonsign.vo.MainArticleVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.RankingVO;
@@ -204,6 +205,7 @@ public class BoardServiceImpl implements BoardService{
 	 */
 	public List<MainArticleVO> selectListNotCompleteMainArticle(int pageNo,
 			String orderBy, String getTagName) {
+		System.out.println("service selectListNotCompleteMainArticle getTagName : " + getTagName);
 		List<MainArticleVO> newMainArticleList = null;
 		if (orderBy.equals("date")) {
 			newMainArticleList
@@ -625,5 +627,57 @@ public class BoardServiceImpl implements BoardService{
 		utilService.articleReport(mainArticleVO, subArticleVO, memberVO);
 	
 	}
+	
+	/**
+	 * 작성한 태그 리스트를 불러옴 by email
+	 * 마이페이지에서 작성한 태그수 확인용
+	 * @author Je Seong Lee
+	 */
+	@Override
+	public List<TagBoardVO> writeTagListbyEmail(MemberVO memberVO) {
+		return boardDAO.writeTagListbyEmail(memberVO);
+	}
+	
+	/**
+	 * 작성한 태그중 가장 많이 사용한 Tag를 불러옴
+	 * 새로가입한 사람 마이페이지 오류를 수정함(2015.12.10)
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public TagBoardVO getMostWriteTagByEmail(MemberVO memberVO) {
+		ArrayList<TagBoardVO> mostWriteTagByEmailList
+		= (ArrayList<TagBoardVO>) boardDAO.getMostWriteTagByEmail(memberVO);
+		TagBoardVO tagBoardVO = null;
+		if(mostWriteTagByEmailList.size()!=0){
+			tagBoardVO = mostWriteTagByEmailList.get(0);
+		}
+		return tagBoardVO;
+	}
 
+	/**2015-12-08 대협추가
+	 * 글 등록시 배경이미지를 등록하는 메소드
+	 * @author daehyeop
+	 */
+	@Override
+	public void insertMainArticleImg(int articleNo, String imgName){
+		boardDAO.insertMainArticleImg(articleNo, imgName);
+	}
+	
+	/**2015-12-08 대협추가
+	 * 프로필이미지를 등록하는 메소드
+	 * @author daehyeop
+	 */
+	@Override
+	public void insertProfileImg(String memberEmail, String imgName){
+		boardDAO.insertProfileImg(memberEmail, imgName);
+	}
+	/**2015-12-08 대협추가
+	 * 주제글 배경이미지를 불러오는 메소드
+	 * @author daehyeop
+	 */
+	@Override
+	public MainArticleImgVO selectMainArticleImg(int articleNo){
+		MainArticleImgVO mainArticleImgVO = boardDAO.selectMainArticleImg(articleNo);
+		return mainArticleImgVO;
+	}
 }

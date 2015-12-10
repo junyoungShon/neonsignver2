@@ -2,6 +2,7 @@ package org.cobro.neonsign.controller;
 
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.cobro.neonsign.model.BoardService;
+import org.cobro.neonsign.vo.FileVO;
 import org.cobro.neonsign.vo.ItjaMemberVO;
+import org.cobro.neonsign.vo.MainArticleImgVO;
 import org.cobro.neonsign.vo.MainArticleVO;
 import org.cobro.neonsign.vo.MemberListVO;
 import org.cobro.neonsign.vo.MemberVO;
@@ -26,6 +29,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -58,6 +62,11 @@ public class BoardController {
 		List<MainArticleVO> newMainArticleVOList
 			= boardService.selectListNotCompleteMainArticle(pageNo, orderBy, tagName);
 		// System.out.println("con잇자수 10개이하 주제글 : " + newMainArticleVOListOrderByDate);
+		//2015-12-08 대협추가
+		for(int i=0; i<newMainArticleVOList.size(); i++){
+			MainArticleImgVO mainArticleImgVO =boardService.selectMainArticleImg(newMainArticleVOList.get(i).getMainArticleNo());
+			newMainArticleVOList.get(i).setMainArticleImgVO(mainArticleImgVO);
+		}
 		mav.addObject("newMainArticleVOList", newMainArticleVOList);
 		// 베스트 주제글 날짜순 + Tag
 		List<MainArticleVO> bestMainArticleVOListOrderByDate = boardService.getBestMainArticleVOListOrderByDate();
@@ -79,6 +88,7 @@ public class BoardController {
 	@ResponseBody
 	public HashMap<String, Object> getNewMainArticle(HttpServletRequest request, 
 			int pageNo, String orderBy,String tagName) {
+		System.out.println("con getNewMainArticle.neon tagName : " + tagName);
 		HashMap<String, Object> map = memberBoardInfo(request);
 		if (orderBy == null||orderBy.equals("")||orderBy.equals("undefined")) {
 			orderBy = "date";
@@ -90,6 +100,14 @@ public class BoardController {
 		return map;
 	}
 	//main article 관련 메서드
+	/**
+	 * 글카드 배경파일을 업로드하기 위한 멤버변수
+	 * 2015-12-08 대협추가
+	 * @author daehyeop
+	 */
+	@Resource(name="articleImgUploadPath")
+	private String articleImgPath; 
+	
 	/**Controller1
 	 * 사용자가 주제글을 작성할 때 사용한다.
 	 * 태그와 주제글 테이블 동시에 적용
@@ -98,15 +116,39 @@ public class BoardController {
 	 * @return
 	 */
 	@RequestMapping("auth_insertNewMainArticle.neon")
-	public ModelAndView insertMainArticle(MainArticleVO mainArticleVO,HttpServletRequest request,TagBoardVO tagBoardVO){
+	public ModelAndView insertMainArticle(FileVO fvo, MainArticleVO mainArticleVO,HttpServletRequest request,TagBoardVO tagBoardVO){
 		String[] tagNameList = request.getParameterValues("tagName") ;
 		ArrayList<String> list = new ArrayList<String>();
-		System.out.println(tagBoardVO);
-		System.out.println(tagNameList.toString());
+		//System.out.println(tagBoardVO);
+		//System.out.println(tagNameList.toString());
 		for(int i=0;i<tagNameList.length;i++){
 			list.add(tagNameList[i]);
 		}
 		boardService.insertMainArticle(mainArticleVO,list,tagBoardVO);
+		//2015-12-08 대협추가
+		MultipartFile file = fvo.getFile();
+		String fileOrgName = file.getOriginalFilename();
+		String fileName = "";
+		if (!fileOrgName.equals("")) {
+			try {
+				fileName = mainArticleVO.getMemberEmail()+"_"+fileOrgName;
+				file.transferTo(new File(articleImgPath + fileName));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			//태그별 테마 배경화면을 보내준다.
+			String firstTag = "";
+			if(list.get(0).equals("게임")){
+				firstTag = "/basicBg/"+list.get(0) + ".png";
+			}else{
+				firstTag = "/basicBg/"+list.get(0) + ".jpg";
+			}
+			System.out.println("firstTag : " + firstTag);
+			fileName = firstTag;
+			System.out.println("fileName : " + fileName);
+		}
+		boardService.insertMainArticleImg(mainArticleVO.getMainArticleNo(), fileName);
 		return new ModelAndView("redirect:getMainList.neon");
 	}
 	/**
@@ -480,6 +522,14 @@ public class BoardController {
 		List<MainArticleVO> writeMainArticleList
 			= boardService.getWriteMainArticleByEmailOrderByDate(memberVO);
 		mav.addObject("writeMainArticleList", writeMainArticleList);
+		// email 주소로 작성한 글의 태그 리스트 받기 : 태그 수 확인
+		List<TagBoardVO> writeTagListbyEmailList
+			= boardService.writeTagListbyEmail(memberVO);
+		mav.addObject("writeTagListbyEmailList", writeTagListbyEmailList);
+		// email 주소로 가장 많이 작성한 태그이름 받기
+		TagBoardVO tagBoardVO
+			= boardService.getMostWriteTagByEmail(memberVO);
+		mav.addObject("tagBoardVO", tagBoardVO);
 		// email 주소로 참여한 글 받아오기
 		List<MainArticleVO> joinMainArticleList
 			= boardService.getJoinMainArticleByEmailOrderByDate(memberVO);
@@ -487,6 +537,7 @@ public class BoardController {
 		mav.setViewName("mypage");
 		return mav;
 	}
+	
 	/**
 	 * 회원이 게시물을 신고할때 사용 하는 컨트롤러
 	 * @param mainArticleVO

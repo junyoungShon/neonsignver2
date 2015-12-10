@@ -1,28 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
    
-<%--    <!-- 누구페이지인지 -->
    
-   <div class="myPage">
-   <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" style="" 
-   tabindex="0" class="btn btn-lg btn-warning myProfileDetail" role="button" data-toggle="popover" 
-   title="${requestScope.rankMemberVO.memberNickName}님, PTS(${requestScope.rankMemberVO.memberPoint} / ${requestScope.rankMemberVO.rankingVO.maxPoint})" 
-   data-content="${requestScope.rankMemberVO.memberNickName}님 Click하여 페이지 보기">
-   <span class="myProfile"> 
-      ${requestScope.rankMemberVO.memberNickName}님 의 페이지 [
-      <c:forEach var="rankingList" items="${requestScope.rankingVOList}">
-         <c:if test="${rankingList.memberGrade == requestScope.rankMemberVO.rankingVO.memberGrade}">
-            <img class="gradeImg" src="${initParam.root}resources/img/GRADE_${requestScope.rankMemberVO.rankingVO.memberGrade}.png"> ${requestScope.rankMemberVO.rankingVO.memberGrade} ]
-         </c:if>
-      </c:forEach>
-   </span>
-   </a>
-   </div> --%>
    
-   <!-- 마이페이지  -->
+<!-- 마이페이지  -->
 <div class="container-fluid">
 <div class="col-lg-12 col-sm-12 myprofile">
     <div class="profileCard hovercard">
@@ -111,14 +95,44 @@
                     
                     <div class="social-line social-line-visible" data-buttons="4">
                             <button class="btn btn-social btn-pinterest">
-                                 05:22<br>
-                                 빨리!
+                                 내가<br>
+                                 찜한글
                             </button>
-                            <button class="btn btn-social btn-twitter">
-                                  51
-                                  <br>
-                                  잇자!
+                    <button class="btn btn-social btn-twitter bestItja">
+                                <c:set var="count" value="false" />
+                        <c:forEach var="itjaList" items="${sessionScope.memberVO.itjaMemberList}">
+                           <c:choose>
+                              <c:when test="${itjaList.mainArticleNo== pickMainArticle.mainArticleNo}">
+                                 <c:set var="count" value="true" />
+                              </c:when>
+                              <c:otherwise>
+                              </c:otherwise>
+                           </c:choose>
+                        </c:forEach>
+                        <c:choose>
+                           <c:when test="${count==true}">
+                              <span class="itjaCount"><i class="fa fa-link"></i><br>${pickMainArticle.mainArticleTotalLike }it</span>
+                           </c:when>
+                           <c:otherwise>
+                              <span class="itjaCount"><i class="fa fa-chain-broken"></i><br>${pickMainArticle.mainArticleTotalLike }it</span>
+                           </c:otherwise>
+                        </c:choose>
                             </button>
+                                <%--
+                               잇자 버튼 클릭시 전달 할 정보를 위한 히든 폼
+                               주제글의 잇자 클릭이므로 subArticleNo=0으로 넘어간다.
+                             --%>
+                     
+                              
+                            <form name="itJaInfo">
+                               <input type="hidden" name="memberEmail" value="${sessionScope.memberVO.memberEmail}">
+                               <input type="hidden" name="mainArticleNo" value="${pickMainArticle.mainArticleNo}">
+                               <input type="hidden" name="subArticleNo" value=0>
+                            </form>
+                            <%--
+                               잇자 버튼 클릭시 전달 할 정보를 위한 히든 폼 끝
+                             --%>
+                             
                             
                         <button class="btn btn-social btn-google staticPick">
                            <c:set var="breakCheck" value="false"/>
@@ -198,14 +212,44 @@
                     
                     <div class="social-line social-line-visible" data-buttons="4">
                             <button class="btn btn-social btn-pinterest">
-                                 05:22<br>
-                                 빨리!
+                                나의<br>
+                                 주제글
                             </button>
-                            <button class="btn btn-social btn-twitter">
-                                  51
-                                  <br>
-                                  잇자!
+                         <button class="btn btn-social btn-twitter bestItja">
+                                <c:set var="count" value="false" />
+                        <c:forEach var="itjaList" items="${sessionScope.memberVO.itjaMemberList}">
+                           <c:choose>
+                              <c:when test="${itjaList.mainArticleNo== writeMainArticle.mainArticleNo}">
+                                 <c:set var="count" value="true" />
+                              </c:when>
+                              <c:otherwise>
+                              </c:otherwise>
+                           </c:choose>
+                        </c:forEach>
+                        <c:choose>
+                           <c:when test="${count==true}">
+                              <span class="itjaCount"><i class="fa fa-link"></i><br>${writeMainArticle.mainArticleTotalLike }it</span>
+                           </c:when>
+                           <c:otherwise>
+                              <span class="itjaCount"><i class="fa fa-chain-broken"></i><br>${writeMainArticle.mainArticleTotalLike }it</span>
+                           </c:otherwise>
+                        </c:choose>
                             </button>
+                                <%--
+                               잇자 버튼 클릭시 전달 할 정보를 위한 히든 폼
+                               주제글의 잇자 클릭이므로 subArticleNo=0으로 넘어간다.
+                             --%>
+                     
+                              
+                            <form name="itJaInfo">
+                               <input type="hidden" name="memberEmail" value="${sessionScope.memberVO.memberEmail}">
+                               <input type="hidden" name="mainArticleNo" value="${writeMainArticle.mainArticleNo}">
+                               <input type="hidden" name="subArticleNo" value=0>
+                            </form>
+                            <%--
+                               잇자 버튼 클릭시 전달 할 정보를 위한 히든 폼 끝
+                             --%>
+                             
                             
                         <button class="btn btn-social btn-google staticPick">
                            <c:set var="breakCheck" value="false"/>
@@ -236,7 +280,7 @@
                         
                         <button class="btn btn-social btn-facebook">
                                <i class="fa fa-facebook-official"></i><br>
-                                 공유하자!
+                                 공유!
                         </button>
                     </div>  <!-- end social-line social-line-visible -->
                   <div class="filter"></div>
@@ -286,14 +330,42 @@
                     
                     <div class="social-line social-line-visible" data-buttons="4">
                             <button class="btn btn-social btn-pinterest">
-                                 05:22<br>
-                                 빨리!
+                                 나의<br>
+                                 참여글
                             </button>
-                            <button class="btn btn-social btn-twitter">
-                                  51
-                                  <br>
-                                  잇자!
+                          <button class="btn btn-social btn-twitter bestItja">
+                                <c:set var="count" value="false" />
+                        <c:forEach var="itjaList" items="${sessionScope.memberVO.itjaMemberList}">
+                           <c:choose>
+                              <c:when test="${itjaList.mainArticleNo== joinMainArticle.mainArticleNo}">
+                                 <c:set var="count" value="true" />
+                              </c:when>
+                              <c:otherwise>
+                              </c:otherwise>
+                           </c:choose>
+                        </c:forEach>
+                        <c:choose>
+                           <c:when test="${count==true}">
+                              <span class="itjaCount"><i class="fa fa-link"></i><br>${joinMainArticle.mainArticleTotalLike }it</span>
+                           </c:when>
+                           <c:otherwise>
+                              <span class="itjaCount"><i class="fa fa-chain-broken"></i><br>${joinMainArticle.mainArticleTotalLike }it</span>
+                           </c:otherwise>
+                        </c:choose>
                             </button>
+                                <%--
+                               잇자 버튼 클릭시 전달 할 정보를 위한 히든 폼
+                               주제글의 잇자 클릭이므로 subArticleNo=0으로 넘어간다.
+                             --%>
+                            <form name="itJaInfo">
+                               <input type="hidden" name="memberEmail" value="${sessionScope.memberVO.memberEmail}">
+                               <input type="hidden" name="mainArticleNo" value="${joinMainArticle.mainArticleNo}">
+                               <input type="hidden" name="subArticleNo" value=0>
+                            </form>
+                            <%--
+                               잇자 버튼 클릭시 전달 할 정보를 위한 히든 폼 끝
+                             --%>
+                             
                             
                         <button class="btn btn-social btn-google staticPick">
                            <c:set var="breakCheck" value="false"/>
@@ -324,7 +396,7 @@
                         
                         <button class="btn btn-social btn-facebook">
                                <i class="fa fa-facebook-official"></i><br>
-                                 공유하자!
+                                 공유!
                         </button>
                     </div>  <!-- end social-line social-line-visible -->
                   <div class="filter"></div>
@@ -367,14 +439,64 @@
                     <i class="fa fa-link itja"></i>
                 </div>
                 <div class="text">
-                    <var>54</var>
+                    <var>${requestScope.rankMemberVO.memberPoint}</var>
                     <label class="text-muted">잇자 포인트</label>
                 </div>
-                <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-trophy"></i>
-         다음 레벨 ${requestScope.rankMemberVO.rankingVO.maxPoint}</a>
-                </div>
-            </div>
+				<div class="options">
+				<a class="btn btn-lg btn-danger popover2" title="뇌OnSign Grade" href='#'>
+						<i class="fa fa-trophy"></i> Next Point
+						${requestScope.rankMemberVO.rankingVO.maxPoint}</a>
+						<div id="rankingPopover" style="display: none">
+						<table class="rankingTable">
+							<tr>
+								<td>Grade</td><td>점수범위</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_UNRANKED.png">
+								UNRANKED
+								</td>
+								<td>0 ~ 49</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_BRONZE.png">
+								BRONZE
+								</td>
+								<td>50 ~ 149</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_SILVER.png">
+								SILVER
+								</td>
+								<td>150 ~ 349</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_GOLD.png">
+								GOLD
+								</td>
+								<td>350 ~ 749</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_PLATINUM.png">
+								PLATINUM
+								</td>
+								<td>750 ~ 1549</td>
+							</tr>
+							<tr>
+								<td class="gradeTd">
+								<img class="gradeImg" src="${initParam.root}resources/img/GRADE_DIAMOND.png">
+								DIAMOND
+								</td>
+								<td>1500 ~ 상위 10명</td>
+							</tr>
+						</table>
+						</div>
+				</div>
+			</div>
 		</div>
     	
        	<div class="col-sm-3">
@@ -383,11 +505,11 @@
                      <i class="fa fa-lightbulb-o write"></i>
                 </div>
                 <div class="text">
-                    <var>14</var>
+                    <var>${fn:length(requestScope.writeMainArticleList)} </var>
                     <label class="text-muted">작성한 잇는글</label>
                 </div>
                 <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
+                   <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
                 </div>
             </div>
 		</div>
@@ -398,11 +520,11 @@
                      <i class="fa fa-reply join"></i>
                 </div>
                 <div class="text">
-                    <var>34</var>
+                    <var>${fn:length(requestScope.joinMainArticleList)}</var>
                     <label class="text-muted">참여한 잇는글</label>
                 </div>
                 <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
+                    <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
                 </div>
             </div>
 		</div>
@@ -413,11 +535,12 @@
                      <i class="fa fa-star pick"></i>
                 </div>
                 <div class="text">
-                    <var>73</var>
+                    <var>${fn:length(requestScope.pickedMainArticleList)}</var>
                     <label class="text-muted">찜한게시물</label>
                 </div>
                 <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
+                    <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg">
+                    <i class="fa fa-desktop"></i>&nbsp;View Info</a>
                 </div>
             </div>
     	</div>
@@ -428,14 +551,54 @@
                      <i class="fa fa-tags tags"></i>
                 </div>
                 <div class="text">
-                    <var>87</var>
+                    <var>${fn:length(writeTagListbyEmailList)}</var>
                     <label class="text-muted">작성 TAGs</label>
                 </div>
                 <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg">Most&nbsp;<i class="fa fa-tag"></i>&nbsp;#19</a>
+                    <a href="javascript:;" class="btn btn-default btn-lg">Most&nbsp;<i class="fa fa-tag"></i>&nbsp;
+                    <c:choose>
+                    	<c:when test="${requestScope.tagBoardVO.tagName != null}">
+                    		#${requestScope.tagBoardVO.tagName} ${requestScope.tagBoardVO.useTagCount}회
+                    	</c:when>
+                    	<c:otherwise>
+                    		없음
+                    	</c:otherwise>
+                    </c:choose>
+                    </a>
                 </div>
             </div>
 		</div>
+		
+		<div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="fa fa-exclamation-triangle ready"></i>
+                </div>
+                <div class="text">
+                    <var>-</var>
+                    <label class="text-muted">준비중입니다</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-wrench"></i></a>
+                </div>
+            </div>
+		</div>
+		
+		<div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="fa fa-exclamation-triangle ready"></i>
+                </div>
+                <div class="text">
+                    <var>-</var>
+                    <label class="text-muted">준비중입니다</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-wrench"></i></a>
+                </div>
+            </div>
+		</div>
+		
 </div>
 </div>
 

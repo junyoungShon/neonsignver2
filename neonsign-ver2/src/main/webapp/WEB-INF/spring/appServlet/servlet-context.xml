@@ -36,4 +36,22 @@
 			value="org.springframework.web.servlet.view.tiles2.TilesView" />
 		<property name="order" value="0" />
 	</bean>
+	<!-- 2015-12-08 대협추가 -->
+	<!-- 파일 업로드 설정 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<!-- -1은 제한 없음 5*1024*1024 -->
+		<property name="maxUploadSize" value="-1"></property>
+	</bean>
+	<!-- upload path 개발시에는 workspace 경로를 주입시키고 운영시에는 실제 서버 경로를 주입시킨다. -->
+	<bean id="articleImgUploadPath" class="java.lang.String">
+		<constructor-arg>
+			<value>C:\\neon_sign_project\\neonsign_daehyeop_20151208\\src\\main\\webapp\\resources\\uploadImg\\articleBg\\</value>
+		</constructor-arg>
+	</bean>
+	<bean id="beanNameViewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="1"></property>
+	</bean>
 </beans>

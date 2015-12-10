@@ -68,7 +68,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="tagBoardVO" id="tagBoardResultMap">
 		<result property="tagName" column="TAG_NAME" />
 		<result property="mainArticleNo" column="MAIN_ARTICLE_NO" />
+		<result property="useTagCount" column="SUM_COUNT"/>
 	</resultMap>
+	
 	<!-- tagVO resultMap -->
 	<resultMap type="tagVO" id="tagResultMap">
 		<result property="tagName" column="TAG_NAME"/>
@@ -79,6 +81,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="mainArticleNo" column="MAIN_ARTICLE_NO"/>
 		<result property="subArticleNo" column="SUB_ARTICLE_NO"/>
 		<result property="memberEmail" column="MEMBER_EMAIL"/>
+	</resultMap>
+	<!-- 2015-12-08 대협추가 -->
+	<!-- mainArticleImgVO resultMap -->
+	<resultMap type="mainArticleImgVO" id="mainArticleImgResultMap">
+		<result property="mainArticleNo" column="MAIN_ARTICLE_NO"/>
+		<result property="mainArticleImgName" column="MAIN_ARTICLE_IMG_NAME"/>
 	</resultMap>
 	
 	<!-- 준영 -->
@@ -363,27 +371,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <select id="selectListNotCompleteMainArticleOrderByTag" resultMap="mainArticleResultMap" parameterType="map">
    select MAIN_ARTICLE_NO, MAIN_ARTICLE_TITLE, MAIN_ARTICLE_CONTENT, MAIN_ARTICLE_TOTAL_LIKE, 
       MAIN_ARTICLE_DATE, MAIN_ARTICLE_UPDATE_DATE,MAIN_ARTICLE_COMPLETE, MEMBER_NICKNAME,
-      MEMBER_EMAIL, MEMBER_POINT
-	from(
-		select MAIN_ARTICLE_NO, MAIN_ARTICLE_TITLE, 
-		MAIN_ARTICLE_CONTENT, MAIN_ARTICLE_TOTAL_LIKE, 
-		MAIN_ARTICLE_DATE, MAIN_ARTICLE_UPDATE_DATE, 
-		MAIN_ARTICLE_COMPLETE, MEMBER_NICKNAME,
-		MEMBER_EMAIL, MEMBER_POINT, ceil(rownum/9) as page
+      TAG_NAME, MEMBER_EMAIL, MEMBER_POINT
 		from(
-			select ma.MAIN_ARTICLE_NO, ma.MAIN_ARTICLE_TITLE, 
-			ma.MAIN_ARTICLE_CONTENT, ma.MAIN_ARTICLE_TOTAL_LIKE, 
-			to_char(ma.MAIN_ARTICLE_DATE,'YYYY/MM/DD HH24:MI:SS') as MAIN_ARTICLE_DATE, 
-			to_char(ma.MAIN_ARTICLE_UPDATE_DATE,'YYYY-MM-DD HH24:MI:SS') as MAIN_ARTICLE_UPDATE_DATE, 
-			ma.MAIN_ARTICLE_COMPLETE, bm.MEMBER_NICKNAME as MEMBER_NICKNAME,
-			bm.MEMBER_EMAIL as MEMBER_EMAIL, bm.MEMBER_POINT as MEMBER_POINT
-			from main_article ma, brain_member bm
-			where ma.MEMBER_EMAIL = bm.MEMBER_EMAIL
-			and ma.MAIN_ARTICLE_COMPLETE = 0 and tb.TAG_NAME=#{tagName}
-			order by MAIN_ARTICLE_DATE desc
+			select MAIN_ARTICLE_NO, MAIN_ARTICLE_TITLE, 
+			MAIN_ARTICLE_CONTENT, MAIN_ARTICLE_TOTAL_LIKE, 
+			MAIN_ARTICLE_DATE, MAIN_ARTICLE_UPDATE_DATE, 
+			MAIN_ARTICLE_COMPLETE, MEMBER_NICKNAME, TAG_NAME,
+			MEMBER_EMAIL, MEMBER_POINT, ceil(rownum/9) as page
+			from(
+				select ma.MAIN_ARTICLE_NO, ma.MAIN_ARTICLE_TITLE, 
+				ma.MAIN_ARTICLE_CONTENT, ma.MAIN_ARTICLE_TOTAL_LIKE, 
+				to_char(ma.MAIN_ARTICLE_DATE,'YYYY/MM/DD HH24:MI:SS') as MAIN_ARTICLE_DATE, 
+				to_char(ma.MAIN_ARTICLE_UPDATE_DATE,'YYYY-MM-DD HH24:MI:SS') as MAIN_ARTICLE_UPDATE_DATE, 
+				ma.MAIN_ARTICLE_COMPLETE, bm.MEMBER_NICKNAME as MEMBER_NICKNAME, tb.TAG_NAME as TAG_NAME,
+				bm.MEMBER_EMAIL as MEMBER_EMAIL, bm.MEMBER_POINT as MEMBER_POINT
+				from main_article ma, brain_member bm, tag_board tb
+				where ma.MEMBER_EMAIL = bm.MEMBER_EMAIL and ma.MAIN_ARTICLE_NO = tb.MAIN_ARTICLE_NO 
+				and ma.MAIN_ARTICLE_COMPLETE = 0 and tb.TAG_NAME=#{tagName}
+				order by MAIN_ARTICLE_DATE desc
+			)
 		)
-	)
-	where page=#{pageNo}
+		where page=#{pageNo}
    </select>
 
    
@@ -456,4 +464,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select MAIN_ARTICLE_NO from sub_article where MEMBER_EMAIL = #{memberEmail}
 	</select>
 	
+		<!-- 마이페이지 작성한 태그List 불러오기 by email -->
+	<select id="writeTagListbyEmail" resultMap="tagBoardResultMap">
+		select tb.MAIN_ARTICLE_NO, tb.TAG_NAME
+		from main_article ma, brain_member bm, tag_board tb 
+		where bm.MEMBER_EMAIL = ma.MEMBER_EMAIL and ma.MAIN_ARTICLE_NO = tb.MAIN_ARTICLE_NO
+		and bm.MEMBER_EMAIL = #{memberEmail}
+	</select>
+	
+	<!-- 마이페이지에서 Most TagName 불러오기 by email -->
+	<select id="getMostWriteTagByEmail" resultMap="tagBoardResultMap">
+	select TAG_NAME, sum(TAG_COUNT) as SUM_COUNT from(
+	select tb.MAIN_ARTICLE_NO as MAIN_ARTICLE_NO, tb.TAG_NAME as TAG_NAME, count(tb.TAG_NAME) as TAG_COUNT
+	from main_article ma, brain_member bm, tag_board tb
+	where bm.MEMBER_EMAIL = ma.MEMBER_EMAIL and ma.MAIN_ARTICLE_NO = tb.MAIN_ARTICLE_NO
+	and bm.MEMBER_EMAIL = #{memberEmail}
+	group by tb.MAIN_ARTICLE_NO, tb.TAG_NAME
+	)
+	group by TAG_NAME order by SUM_COUNT desc
+	</select>
+	
+	<!-- 2015-12-08 대협추가 -->
+	<!-- 대협 -->
+	<insert id="insertMainArticleImg" parameterType="map">
+		insert into MAIN_ARTICLE_IMG(MAIN_ARTICLE_NO, MAIN_ARTICLE_IMG_NAME) values(#{articleNo}, #{imgName})
+	</insert>
+	<!-- 2015-12-08 대협추가 -->
+	<insert id="insertProfileImg" parameterType="map">
+		insert into MAIN_ARTICLE_IMG(MEMBER_EMAIL, PROFILE_IMG_NAME) values(#{memberEmail}, #{imgName})
+	</insert>
+	<!-- 2015-12-08 대협추가 -->
+	<select id="selectMainArticleImg" resultMap="mainArticleImgResultMap">
+		select MAIN_ARTICLE_NO, MAIN_ARTICLE_IMG_NAME from MAIN_ARTICLE_IMG where MAIN_ARTICLE_NO=#{value}	
+	</select>
 </mapper> 		

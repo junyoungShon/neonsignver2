@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.cobro.neonsign.vo.ItjaMemberVO;
+import org.cobro.neonsign.vo.MainArticleImgVO;
 import org.cobro.neonsign.vo.MainArticleVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.RankingVO;
@@ -126,9 +127,12 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public List<MainArticleVO> selectListNotCompleteMainArticleOrderByTag(int pageNo, String getTagName){
 		HashMap<String,String> map = new HashMap<String,String>();
+		System.out.println("dao selectListNotCompleteMainArticleOrderByTag getTagName : " + getTagName);
 		String strPageNo = String.valueOf(pageNo);
 		map.put("pageNo", strPageNo);
 		map.put("tagName", getTagName);
+		System.out.println("map : " + map);
+		System.out.println("dao!! : " + sqlSessionTemplate.selectList("board.selectListNotCompleteMainArticleOrderByTag",map));
 		return sqlSessionTemplate.selectList("board.selectListNotCompleteMainArticleOrderByTag",map);
 	}
 
@@ -547,5 +551,57 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public List<TagBoardVO> getMainArticleTagList(int mainArticleNo) {
 		return sqlSessionTemplate.selectList("board.getMainArticleTagList", mainArticleNo);
+	}
+	
+	/**
+	 * email로 마이페이지 Tag갯수 불러옴
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public List<TagBoardVO> writeTagListbyEmail(MemberVO memberVO) {
+		return sqlSessionTemplate.selectList("board.writeTagListbyEmail", memberVO);
+	}
+	
+	/**
+	 * Most Tag명 받아옴
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public List<TagBoardVO> getMostWriteTagByEmail(MemberVO memberVO) {
+		return sqlSessionTemplate.selectList("board.getMostWriteTagByEmail", memberVO);
+	}
+	
+	/**2015-12-08 대협추가
+	 * 글 등록시 배경이미지를 등록하는 메소드
+	 * @author daehyeop
+	 */
+	@Override
+	public void insertMainArticleImg(int articleNo, String imgName){
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("articleNo", String.valueOf(articleNo));
+		map.put("imgName", imgName);
+		sqlSessionTemplate.insert("board.insertMainArticleImg", map);
+	}
+	
+	/**2015-12-08 대협추가
+	 * 프로필이미지를 등록하는 메소드
+	 * @author daehyeop
+	 */
+	@Override
+	public void insertProfileImg(String memberEmail, String imgName){
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("memberEmail", memberEmail);
+		map.put("imgName", imgName);
+		sqlSessionTemplate.insert("board.insertProfileImg", map);
+	}
+	
+	/**2015-12-08 대협추가
+	 * 주제글 배경이미지를 불러오는 메소드
+	 * @author daehyeop
+	 */
+	@Override
+	public MainArticleImgVO selectMainArticleImg(int articleNo){
+		MainArticleImgVO mainArticleImgVO = sqlSessionTemplate.selectOne("board.selectMainArticleImg", articleNo);
+		return mainArticleImgVO;
 	}
 }

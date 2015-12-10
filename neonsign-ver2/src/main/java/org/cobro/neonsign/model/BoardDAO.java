@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cobro.neonsign.vo.ItjaMemberVO;
+import org.cobro.neonsign.vo.MainArticleImgVO;
 import org.cobro.neonsign.vo.MainArticleVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.RankingVO;
@@ -78,4 +79,13 @@ public interface BoardDAO {
 	public void updateBestToCompletArticle(int mainArticleNo);
 	public void updateIsConnect(SubArticleVO subArticleVO);
 	public List<TagBoardVO> getMainArticleTagList(int mainArticleNo);
+	public List<TagBoardVO> writeTagListbyEmail(MemberVO memberVO);
+	public List<TagBoardVO> getMostWriteTagByEmail(MemberVO memberVO);
+	
+	//2015-12-08 대협추가
+	//이미지 저장 관련 메소드
+	public void insertMainArticleImg(int articleNo, String imgName);
+	public void insertProfileImg(String memberEmail, String imgName);
+	//이미지 로드 관련 메소드
+	public MainArticleImgVO selectMainArticleImg(int articleNo);
 }
