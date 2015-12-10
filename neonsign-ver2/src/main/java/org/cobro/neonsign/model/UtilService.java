@@ -36,4 +36,7 @@ public interface UtilService {
 
 
 	int articleBlock(SubArticleVO subArticleVO);
+
+
+	public List<MainArticleVO> SearchOnTopMenu(String selector, String keyword);
 }

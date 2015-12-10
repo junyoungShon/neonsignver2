@@ -73,4 +73,5 @@ public interface BoardService {
 	public void insertProfileImg(String memberEmail, String imgName);
 	//이미지 로드 관련 메소드
 	public MainArticleImgVO selectMainArticleImg(int articleNo);
+	public List<MainArticleVO> SearchOnTopMenu(String selector, String keyword);
 }

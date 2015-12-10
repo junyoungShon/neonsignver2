@@ -554,4 +554,34 @@ public class BoardController {
 		return map;
 		
 	}
+	
+	/**
+	 * 
+	 * 검색 
+	 *@author 한솔
+	 */
+	@RequestMapping("findBy.neon")
+	public ModelAndView SearchOnTopMenu(String selector, String keyword){	
+		System.out.println("selector : "+ selector+" keyword : "+keyword);
+		List<MainArticleVO> list= boardService.SearchOnTopMenu(selector,keyword);		
+			//MainArticleVO의 포문
+			for(int i=0;i<list.size();i++){
+				String txt = "";
+			//MainArticle 안에 있는 TagBoardVOList의 사이즈
+				for(int j=0;j<list.get(i).getTagBoardVOList().size();j++){
+					txt+="#"+list.get(i).getTagBoardVOList().get(j).getTagName()+" ";
+				}
+		//		System.out.println(i+"번째 "+txt);
+				list.get(i).setTagName(txt);
+			}
+		
+		ModelAndView mv = new ModelAndView();
+		List<TagVO> tagVOList = boardService.getTagVOList();
+		// System.out.println("conmain 전체 Tag : " + tagVOList);
+		mv.addObject("tagVOList", tagVOList);
+		mv.addObject("list", list);
+		mv.setViewName("findBy");
+	    return mv;	
+	}
+
 }
