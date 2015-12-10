@@ -629,11 +629,20 @@ $(document).ready(function(){ //DOM이 준비되고
 				var subArticleWriteFormHTML = "";
 				var memberEmail=$('#memberUserEmail').val();
 				//잇는 글 폼 히든 input에 데이터 할당 
-				$('form[action="auth_writeSubArticle.neon"]').children('input[name="memberEmail"]').val(data.itjaMemberList[0].memberEmail);
-				$('form[action="auth_writeSubArticle.neon"]').children('input[name="mainArticleNo"]').val(mainArticleNO);
+				
 				
 				
 				if(data.itjaMemberList!=null){
+					//잇는글폼 활성화
+					subArticleWriteFormHTML // 잇는글 쓰는 폼
+					='<span class=limitLength>잇자를 누르셨기 때문에 잇는글을 작성하실 수 있습니다! 사용자님의 잇는글 이후로 글을 이어갈지 결말 지을지 정해주세요!</span><br>'
+					+'<textarea class="form-control" name="subArticleContent" rows="5" placeholder="잇는글을 입력해주세요 ! (200자로 제한됩니다.)"></textarea>'
+					+'<input type="radio" id="radio1" name="isEnd" value="0" checked><label for="radio1">ing</label>'
+					+'<input type="radio" id="radio2" name="isEnd" value="1"><label for="radio2">end</label>'
+					+'<input type="hidden" name="memberEmail" value="'+data.itjaMemberList[0].memberEmail+'">'
+					+'<input type="button" value="잇는글 쓰기" class="subArticleSubmit">'
+					+'<input type="hidden" name="mainArticleNo" value="'+data.mainArticle.mainArticleNo+'">'
+					+'<div class="limitLength">작성 후 잇자 10개시 베스트로 이동되며,타임체크가 발동됩니다!<span class="userLength"></span>Byte/400Byte</div>'
 					var flag=true;
 					for(var i=0;i<data.itjaMemberList.length;i++){
 						if(data.itjaMemberList[i].mainArticleNo == mainArticleNO){
@@ -650,17 +659,10 @@ $(document).ready(function(){ //DOM이 준비되고
 							+'<button class="btn btn-social btn-twitter itja">'
 							+'<span class="itjaCount"><i class="fa fa-link"></i><br>'+data.mainArticle.mainArticleTotalLike+'it</span></button>'
 							+'<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>'
-							+'<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button></div>'
-							//잇는글폼 활성화
-							subArticleWriteFormHTML // 잇는글 쓰는 폼
-							='<span class=limitLength>잇자를 누르셨기 때문에 잇는글을 작성하실 수 있습니다! 사용자님의 잇는글 이후로 글을 이어갈지 결말 지을지 정해주세요!</span><br>'
-							+'<textarea class="form-control" name="subArticleContent" rows="5" placeholder="잇는글을 입력해주세요 ! (200자로 제한됩니다.)"></textarea>'
-							+'<input type="radio" id="radio1" name="isEnd" value="0" checked><label for="radio1">ing</label>'
-							+'<input type="radio" id="radio2" name="isEnd" value="1"><label for="radio2">end</label>'
-							+'<input type="hidden" name="memberEmail" value="'+data.itjaMemberList[0].memberEmail+'">'
-							+'<input type="button" value="잇는글 쓰기" class="subArticleSubmit">'
-							+'<input type="hidden" name="mainArticleNo" value="'+data.mainArticle.mainArticleNo+'">'
-							+'<div class="limitLength">작성 후 잇자 10개시 베스트로 이동되며,타임체크가 발동됩니다!<span class="userLength"></span>Byte/400Byte</div>'
+							+'<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유!</button>'
+							+'<form name="itJaInfo"><input type="hidden" name="memberEmail" value="'+data.itjaMemberList[0].memberEmail
+							+'"><input type="hidden" name="mainArticleNo" value="'+data.mainArticle.mainArticleNo
+							+'"><input type="hidden" name="subArticleNo" value=0></form></div>'
 							flag=false;
 							break;
 							$('.itjaWriteForm').css('display','block');	
@@ -678,10 +680,13 @@ $(document).ready(function(){ //DOM이 준비되고
 						+'"><input type="hidden" name="subArticleNo" value=0></form>'
 						
 						modalFooterLikeHTML 
-						='<div class="social-line social-line-visible" data-buttons="4"><button class="btn btn-social btn-pinterest">05:22<br>빨리!</button><button class="btn btn-social btn-twitter itja">'+
-						'<span class="itjaCount"><i class="fa fa-chain-broken"></i><br>'+data.mainArticle.mainArticleTotalLike+'it</span></button>'
-						+'<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>'
-						+'<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유하자!</button></div>'
+						='<div class="social-line social-line-visible" data-buttons="4"><button class="btn btn-social btn-pinterest">05:22<br>빨리!</button><button class="btn btn-social btn-twitter itja">'
+							+'<span class="itjaCount"><i class="fa fa-chain-broken"></i><br>'+data.mainArticle.mainArticleTotalLike+'it</span></button>'
+							+'<button class="btn btn-social btn-google"><i class="fa fa-heart-o"></i><br>찜하자!</button>'
+							+'<button class="btn btn-social btn-facebook"><i class="fa fa-facebook-official"></i><br>공유!</button>'
+							+'<form name="itJaInfo"><input type="hidden" name="memberEmail" value="'+data.itjaMemberList[0].memberEmail
+							+'"><input type="hidden" name="mainArticleNo" value="'+data.mainArticle.mainArticleNo
+							+'"><input type="hidden" name="subArticleNo" value=0></form></div>'
 						//잇는글 폼 비활성화
 						$('.itjaWriteForm').css('display','none');	
 					}
@@ -716,7 +721,7 @@ $(document).ready(function(){ //DOM이 준비되고
 					$('.mainCardDetailViewContent').text(data.mainArticle.mainArticleContent);
 					$('.mainWritersNickNameAtDetail').text(data.mainArticle.memberVO.memberNickName);
 					$('.reportIt').html("<button class='articleReport'><span id='mainArticleReportOn'><i class='fa fa-ban'></i></span></button>" +
-							"<form id='subArticleInfo'><input type='hidden' name='mainArticleNo' value="
+						"<form id='subArticleInfo'><input type='hidden' name='mainArticleNo' value="
 							+data.mainArticle.mainArticleNo+"><input type='hidden' name='memberEmail' value="+memberEmail+"></form>");
 					var mainLikeItHTML = "";
 					//이어진 글들은 작성자가 쓴 주제글 밑에 넘어간다
@@ -779,6 +784,9 @@ $(document).ready(function(){ //DOM이 준비되고
 		                           mainLikeItHTML 
 		                           ='<button class="btn btn-social btn-twitter itja">'
 		                           +'<span class="itjaCount"><i class="fa fa-link"></i><br>'+data.subArticleVO[i].subArticleLike+'it</span></button>'
+		                           +'<form name="itJaInfo"><input type="hidden" name="memberEmail" value="'+data.itjaMemberList[0].memberEmail
+									+'"><input type="hidden" name="mainArticleNo" value="'+data.subArticleVO[i].mainArticleNo
+									+'"><input type="hidden" name="subArticleNo" value='+data.subArticleVO[i].subArticleNo+'></form>'
 		                           flag=false;
 		                           break;
 		                        }
@@ -787,6 +795,9 @@ $(document).ready(function(){ //DOM이 준비되고
 		                        mainLikeItHTML 
 		                        ='<button class="btn btn-social btn-twitter itja">'+
 		                        '<span class="itjaCount"><i class="fa fa-chain-broken"></i><br>'+data.subArticleVO[i].subArticleLike+'it</span></button>'
+		                        +'<form name="itJaInfo"><input type="hidden" name="memberEmail" value="'+data.itjaMemberList[0].memberEmail
+								+'"><input type="hidden" name="mainArticleNo" value="'+data.subArticleVO[i].mainArticleNo
+								+'"><input type="hidden" name="subArticleNo" value='+data.subArticleVO[i].subArticleNo+'></form>'
 		                     }
 		                  }
 		                  if(mainLikeItHTML==""){
@@ -963,10 +974,12 @@ $(document).ready(function(){ //DOM이 준비되고
 	
 	// 모달 창에서 주제글  잇자 클릭 시 발동하기 (토탈 증가)
 	$('.utilInDetailModal').on('click','.itja',function(){
-		var formData =  $($(this).next()).serialize();
+		var formData =  $(this).siblings().eq(3).serialize();
+		alert(formData);
 		var itjaCountSpan = $(this).children('.itjaCount');
 		itjaClick(formData,itjaCountSpan,'total');
 	});
+	
 	// 모달창에서 주제글 잇자 버튼
 	$('.mainLikeIt').on('click','.itja',function(){
 		var formData =  $($(this).next()).serialize();
@@ -983,7 +996,6 @@ $(document).ready(function(){ //DOM이 준비되고
 	$('#detailSubTable').on('click','.itja',function(){
 		var formData =  $($(this).next()).serialize();
 		var itjaCountSpan = $(this).children('.itjaCount');
-		alert(formData);
 		itjaClick(formData,itjaCountSpan,'one');
 	});
 	// 메인 페이지에서  잇자 클릭 시 발동하기
