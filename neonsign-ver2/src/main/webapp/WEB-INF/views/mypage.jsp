@@ -4,25 +4,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
    
-<%--    <!-- 누구페이지인지 -->
    
-   <div class="myPage">
-   <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" style="" 
-   tabindex="0" class="btn btn-lg btn-warning myProfileDetail" role="button" data-toggle="popover" 
-   title="${requestScope.rankMemberVO.memberNickName}님, PTS(${requestScope.rankMemberVO.memberPoint} / ${requestScope.rankMemberVO.rankingVO.maxPoint})" 
-   data-content="${requestScope.rankMemberVO.memberNickName}님 Click하여 페이지 보기">
-   <span class="myProfile"> 
-      ${requestScope.rankMemberVO.memberNickName}님 의 페이지 [
-      <c:forEach var="rankingList" items="${requestScope.rankingVOList}">
-         <c:if test="${rankingList.memberGrade == requestScope.rankMemberVO.rankingVO.memberGrade}">
-            <img class="gradeImg" src="${initParam.root}resources/img/GRADE_${requestScope.rankMemberVO.rankingVO.memberGrade}.png"> ${requestScope.rankMemberVO.rankingVO.memberGrade} ]
-         </c:if>
-      </c:forEach>
-   </span>
-   </a>
-   </div> --%>
    
-   <!-- 마이페이지  -->
+<!-- 마이페이지  -->
 <div class="container-fluid">
 <div class="col-lg-12 col-sm-12 myprofile">
     <div class="profileCard hovercard">
@@ -571,7 +555,16 @@
                     <label class="text-muted">작성 TAGs</label>
                 </div>
                 <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg">Most&nbsp;<i class="fa fa-tag"></i>&nbsp;#${requestScope.tagBoardVO.tagName} ${requestScope.tagBoardVO.useTagCount}회</a>
+                    <a href="javascript:;" class="btn btn-default btn-lg">Most&nbsp;<i class="fa fa-tag"></i>&nbsp;
+                    <c:choose>
+                    	<c:when test="${requestScope.tagBoardVO.tagName != null}">
+                    		#${requestScope.tagBoardVO.tagName} ${requestScope.tagBoardVO.useTagCount}회
+                    	</c:when>
+                    	<c:otherwise>
+                    		없음
+                    	</c:otherwise>
+                    </c:choose>
+                    </a>
                 </div>
             </div>
 		</div>
