@@ -983,6 +983,7 @@ $(document).ready(function(){ //DOM이 준비되고
 	$('#detailSubTable').on('click','.itja',function(){
 		var formData =  $($(this).next()).serialize();
 		var itjaCountSpan = $(this).children('.itjaCount');
+		alert(formData);
 		itjaClick(formData,itjaCountSpan,'one');
 	});
 	// 메인 페이지에서  잇자 클릭 시 발동하기
