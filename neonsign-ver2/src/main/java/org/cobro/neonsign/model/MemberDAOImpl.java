@@ -48,9 +48,9 @@ public class MemberDAOImpl implements MemberDAO{
 
 
 	@Override
-	public String memberDelete(MemberVO memberVO) {
+	public int memberDelete(MemberVO memberVO) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectOne("member.memberDelete",memberVO);
+		return sqlSessionTemplate.update("member.memberDelete",memberVO);
 	}
 
 	@Override
@@ -207,4 +207,5 @@ public class MemberDAOImpl implements MemberDAO{
 			FindPasswordVO findPasswordVO) {
 		return sqlSessionTemplate.selectOne("member.requestTemporaryPasswordCheckRandomSentence", findPasswordVO);
 	}
+
 }

@@ -1894,11 +1894,11 @@ $(document).ready(function(){ //DOM이 준비되고
 	});
 
 	$("#memberDeleteSubmit").click(function(){		
-		alert(userCheckFlag);
 			if(userCheckFlag==true){
 				alert("회원탈퇴 되었습니다");
 				$("#memberDelete").submit();
-
+			}else{
+				alert("비밀번호를 확인해 주세요!");
 			}
 	});
 	

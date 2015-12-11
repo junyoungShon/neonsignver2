@@ -303,7 +303,7 @@
 		</div>
 	</div> 
 	
-<!-- 업데이트 모달 만들기 -->
+<!-- 뇌 On Sign 회원 탈퇴 모달 -->
 <div class="modal fade" id="memberDeleteModal" tabindex="-1" role="dialog"
 		aria-labelledby="memberDeleteLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -313,7 +313,7 @@
 						aria-label="Close">
 						 <span aria-hidden="true">&times;</span> 
 					</button>
-					<h4 class="modal-title" id="memberDeleteLabel">뇌 On Sign 회원 정보 탈퇴</h4>
+					<h4 class="modal-title" id="memberDeleteLabel">뇌 On Sign 회원 탈퇴</h4>
 				</div>
 				<div class="modal-body">
 				<form action="memberDelete.neon" method="post" name="memberDelete" id="memberDelete">
@@ -342,5 +342,5 @@
 				
 			</div>
 		</div>
-	</div> 
+	</div>  
 	

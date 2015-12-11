@@ -16,7 +16,7 @@ public interface MemberService {
 	public int memberRegister(MemberVO mvo);
 	public int memberUpdate(MemberVO memberVO);
 	public MemberVO memberLogin(MemberVO mvo);
-	public String memberDelete(MemberVO mvo);
+	public int memberDelete(MemberVO mvo);
 	public ArrayList<MemberVO> getNotifyMemberList(MemberVO mvo);
 	public MemberListVO getMemberList(int i);
 	public void memberBlock(String memberEmail);

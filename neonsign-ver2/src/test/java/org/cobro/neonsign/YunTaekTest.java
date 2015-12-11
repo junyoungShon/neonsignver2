@@ -6,9 +6,12 @@ import javax.annotation.Resource;
 
 import org.cobro.neonsign.model.BoardDAO;
 import org.cobro.neonsign.model.BoardService;
+import org.cobro.neonsign.model.MemberDAO;
 import org.cobro.neonsign.model.MemberService;
 import org.cobro.neonsign.model.ReportDAO;
 import org.cobro.neonsign.model.UtilService;
+import org.cobro.neonsign.vo.MainArticleVO;
+import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.SubArticleVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +36,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 public class YunTaekTest {
 	@Resource
+	private MemberDAO memberDAO;
+	@Resource
 	private MemberService memberService;
 	@Resource
 	private BoardService boardService;
@@ -45,9 +50,10 @@ public class YunTaekTest {
 
 	@Test
 	public void test(){
-		SubArticleVO subArticleVO=new SubArticleVO();
-		subArticleVO.setMainArticleNo(21); subArticleVO.setSubAtricleGrade(0);
-		List<SubArticleVO> list=boardDAO.selectListSubArticle(subArticleVO);
+		MemberVO memberVO= new MemberVO();
+		memberVO.setMemberEmail("b@gmail.com");
+		int result=memberService.memberDelete(memberVO);
+		System.out.println(result);
 	/*	MainArticleVO mvo=new MainArticleVO();
 		mvo.setMainArticleNo(3);
 		int number=reportDAO.mainArticleReport(mvo);

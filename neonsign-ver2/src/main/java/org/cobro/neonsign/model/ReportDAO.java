@@ -48,4 +48,5 @@ public interface ReportDAO {
 	public int allSubReports();
 
 	public int allMianReports();
+
 }

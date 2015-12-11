@@ -13,7 +13,7 @@ public interface MemberDAO {
 	public int memberRegister(MemberVO mvo);
 	public int memberUpdate(MemberVO memberVO);
 	public MemberVO memberLogin(MemberVO mvo);
-	public String memberDelete(MemberVO memberVO);
+	public int memberDelete(MemberVO memberVO);
 	public ArrayList<MemberVO> getNotifyMemberList(MemberVO mvo);
 	public List<MemberVO> getMemberList(int pageNo);
 	public void memberBlock(String memberEmail);
