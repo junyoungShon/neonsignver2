@@ -185,7 +185,7 @@ $(document).ready(function(){ //DOM이 준비되고
 						//추가될 카드 html문
 						infinityScrollTestSource +=
 							'<div class="card-box col-md-4" name="completeCardBox">' 
-							+ '<div class="card card-with-border" data-background="image" data-src="resources/img/snow.jpg" style="background-image: url(resources/img/snow.jpg); background-size: cover; background-position: 50% 50%;">' 
+							+ '<div class="card card-with-border" data-background="image" style="background-image: url(resources/uploadImg/articleBg/'+data.completeMainArticleArrayList[i].mainArticleImgVO.mainArticleImgName+'); background-size: cover; background-position: 50% 50%;">' 
 							+ '<div class="content">' 
 							+ '<h6 class="category">' + data.completeMainArticleArrayList[i].tagName + '</h6><br>' 
 							+ '<h5 class="title">[완결]' + mainArticleTitle + '</h5>' 
@@ -309,7 +309,7 @@ $(document).ready(function(){ //DOM이 준비되고
 							//추가될 카드 html문
 							infinityScrollTestSource +=
 								'<div class="card-box col-md-4" name="newCardBox">' 
-								+ '<div class="card card-with-border" data-background="image" data-src="resources/img/snow.jpg" style="background-image: url(resources/img/snow.jpg); background-size: cover; background-position: 50% 50%;">' 
+								+ '<div class="card card-with-border" data-background="image" style="background-image: url(resources/uploadImg/articleBg/'+data.newMainArticleArrayList[i].mainArticleImgVO.mainArticleImgName+'); background-size: cover; background-position: 50% 50%;">' 
 								+ '<div class="content">' 
 								+ '<h6 class="category">' + data.newMainArticleArrayList[i].tagName + '</h6><br>' 
 								+ '<h5 class="title">' + mainArticleTitle + '</h5>' 
@@ -446,8 +446,8 @@ $(document).ready(function(){ //DOM이 준비되고
 	             			}
 							//추가될 카드 html문
 							infinityScrollTestSource +=
-								'<div class="card-box col-md-4" name="newCardBox">' 
-								+ '<div class="card card-with-border" data-background="image" data-src="resources/img/snow.jpg" style="background-image: url(resources/img/snow.jpg); background-size: cover; background-position: 50% 50%;">' 
+								'<div class="card-box col-md-4" name="completeCardBox">' 
+								+ '<div class="card card-with-border" data-background="image" style="background-image: url(resources/uploadImg/articleBg/'+data.completeMainArticleArrayList[i].mainArticleImgVO.mainArticleImgName+'); background-size: cover; background-position: 50% 50%;">' 
 								+ '<div class="content">' 
 								+ '<h6 class="category">' + data.completeMainArticleArrayList[i].tagName + '</h6><br>' 
 								+ '<h5 class="title">' + mainArticleTitle + '</h5>' 
@@ -563,7 +563,7 @@ $(document).ready(function(){ //DOM이 준비되고
 							//추가될 카드 html문
 							infinityScrollTestSource +=
 								'<div class="card-box col-md-4" name="newCardBox">' 
-								+ '<div class="card card-with-border" data-background="image" data-src="resources/img/snow.jpg" style="background-image: url(resources/img/snow.jpg); background-size: cover; background-position: 50% 50%;">' 
+								+ '<div class="card card-with-border" data-background="image" style="background-image: url(resources/uploadImg/articleBg/'+data.newMainArticleArrayList[i].mainArticleImgVO.mainArticleImgName+'); background-size: cover; background-position: 50% 50%;">' 
 								+ '<div class="content">' 
 								+ '<h6 class="category">' + data.newMainArticleArrayList[i].tagName + '</h6><br>' 
 								+ '<h5 class="title">' + mainArticleTitle + '</h5>' 

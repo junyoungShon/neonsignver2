@@ -15,11 +15,10 @@
 	<!-- model 계층 빈 설정 , dbcp , MyBatis 관련 설정 , AOP 설정 , Transaction 설정 -->
 	<bean id="point" class="org.cobro.neonsign.common.PointAspect"/>
 		<aop:config>
-			<aop:pointcut expression="execution(public * org.cobro.neonsign..*Service.point*(..))" id="pt" />
-			<aop:pointcut expression="within(org.cobro.neonsign.*.*)" id="lg" />
+			<aop:pointcut
+				expression="execution(public * org.cobro.neonsign..*Service.point*(..))" id="pt" />
 			<aop:aspect ref="point">
 				<aop:around method="keepScore" pointcut-ref="pt" />
-				<aop:around method="cobroLogger" pointcut-ref="lg"/>
 			</aop:aspect>
 		</aop:config>
 	

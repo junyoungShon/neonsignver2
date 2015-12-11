@@ -32,26 +32,6 @@ public class PointAspect {
 	@Resource
 	private BoardDAO boardDAO;
 	
-	@Around("within(org.cobro.neonsign.*.*)")
-	public Object cobroLogger(ProceedingJoinPoint point) throws Throwable{
-		Object retValue = null;
-		String className = point.getTarget().getClass().getName();
-		String methodName = point.getSignature().getName();	
-		Object[] parameterArr = point.getArgs();
-		log.info("-----"+className+"에서 "+methodName+" 가 실행-----");
-		for(int i =0;i<parameterArr.length;i++){
-			log.info((i+1)+"번 파라미터 : "+ parameterArr[i]);
-		}
-		retValue = point.proceed();
-		if(retValue==null){
-			log.info("리턴 값 없음");
-		}else{
-			log.info("리턴 값 :"+retValue.toString());
-		}
-		log.info("-------실행 종료 ---------");
-		return retValue;
-	}
-	
 	@Around("execution(public * org.cobro.neonsign..*Service.point*(..))")
 	public Object keepScore(ProceedingJoinPoint point) throws Throwable{
 		log.info("AOP 적용 완료");
@@ -59,13 +39,11 @@ public class PointAspect {
 		Object[] parameterArr = null;
 		String methodName = point.getSignature().getName();	
 		//메서드 명을 기준으로 점수를 달리하거나 , 대상을 달리해준다.
-		
 		//메서드 실행
 		retValue = point.proceed();
 		parameterArr=point.getArgs();
 		//잇는 글과 주제글 작성 시 10포인 트 추가
 		if(methodName.startsWith("pointInsert")){
-			
 			if(parameterArr[0] instanceof SubArticleVO){
 				memberDAO.memberPointPlusUpdater(((SubArticleVO)parameterArr[0]).getMemberEmail(),10);
 			}else if(parameterArr[0] instanceof MainArticleVO){
@@ -91,17 +69,6 @@ public class PointAspect {
 			//회원 가입시 50점 부여
 			memberDAO.memberPointPlusUpdater(((MemberVO)parameterArr[0]).getMemberEmail(), 50);
 		}
-			
-		/*String className = point.getTarget().getClass().getName();
-		String methodName = point.getSignature().getName();			
-		List list = (List)retValue;
-		if(!list.isEmpty()){
-			Object param[]=point.getArgs();// 메서드 인자값 - 매개변수
-			log.debug("검색 메서드 인자값 db에 적재: {}",param[0]);
-			reportService.saveReport(param[0].toString());	
-		}				
-		//System.out.println(className + " " + methodName + " " + param[0]);
-*/		return retValue;
+		return retValue;
 	}
-	
 }
