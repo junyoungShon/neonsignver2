@@ -4,7 +4,7 @@
 		 
 		SELECT MAX(report_no) as report_no FROM report
 		
-		select * from REPORT
+		select * from REPORTER
 		
 		    select max(SUB_ARTICLE_GRADE)+1 as SUB_ARTICLE_GRADE from sub_article where MAIN_ARTICLE_NO=1 and IS_CONNECT=1
 		--이어진글 쿼리

@@ -601,7 +601,7 @@ $(document).ready(function(){ //DOM이 준비되고
 	//무한 스크롤에 의해 새로 로딩된 카드 디테일 뷰
 	$('.completeItjaList').on('click','.actions :button',function(){
 			var mainArticleNO =$(this).parent().siblings('input[class="mainArticleTitleNO"]').val()
-			detailItjaView(mainArticleNO);
+			detailItjaView(mainArticleNO,"complete");
 	});
 	//무한 스크롤에 의해 새로 로딩된 카드 디테일 뷰
 	$('.newItjaList').on('click','.actions :button',function(){
@@ -615,7 +615,10 @@ $(document).ready(function(){ //DOM이 준비되고
 	});
 	
 	//디테일 뷰 함수 정의
-	function detailItjaView(mainArticleNO){
+	function detailItjaView(mainArticleNO,isComplete){
+		if(isComplete=="complete"){
+			$('#isComplete').val(isComplete);
+		}
 		var mainArticleTitleNO=$(":input[name=mainArticleNo1234]").val();
 		var subAtricleOrder='';
 		$.ajax({
@@ -692,12 +695,9 @@ $(document).ready(function(){ //DOM이 준비되고
 							+'<form name="itJaInfo"><input type="hidden" name="memberEmail" value="'+data.itjaMemberList[0].memberEmail
 							+'"><input type="hidden" name="mainArticleNo" value="'+data.mainArticle.mainArticleNo
 							+'"><input type="hidden" name="subArticleNo" value=0></form></div>'
-							flag=false;
-							break;
-							$('.itjaWriteForm').css('display','block');	
 							
+							$('.itjaWriteForm').css('display','block');	
 							flag=false;
-							break;
 						}	
 					}
 					if(flag){
@@ -851,6 +851,9 @@ $(document).ready(function(){ //DOM이 준비되고
 					}
 					$('#detailSubTable').html(subAtricleOrder);
 				}
+					if(isComplete=="complete"){
+						$('.itjaWriteForm').css('display','none');	
+					}
 			}
 		});
 	}
@@ -1068,23 +1071,32 @@ $(document).ready(function(){ //DOM이 준비되고
 			success : function(data){
 				if(AllOrOne=="total"){
 					if(data.itjaSuccess==1){
+						
 						itjaCountSpan.html('<i class="fa fa-chain-broken"></i><br>'+data.itjaTotalCount+'it');
 						//잇는글 폼 비 활성화
-						$('.itjaWriteForm').css('display','none');
+						if($('#isComplete').val()!='complete'){
+							$('.itjaWriteForm').css('display','none');
+						}
 					}else{
 						itjaCountSpan.html('<i class="fa fa-link"></i><br>'+data.itjaTotalCount+'it');
 						//잇는글 폼 활성화
-						$('.itjaWriteForm').css('display','block');	
+						if($('#isComplete').val()!='complete'){
+							$('.itjaWriteForm').css('display','block');	
+						}
 					}
 				}else if(AllOrOne="one"){
 					if(data.itjaSuccess==1){
 						itjaCountSpan.html('<i class="fa fa-chain-broken"></i><br>'+data.itjaCount+'it');
 						//잇는글 폼 비활성화
-						$('.itjaWriteForm').css('display','none');	
+						if($('#isComplete').val()!='complete'){
+							$('.itjaWriteForm').css('display','none');	
+						}
 					}else{
 						itjaCountSpan.html('<i class="fa fa-link"></i><br>'+data.itjaCount+'it');
 						//잇는글 폼 활성화
-						$('.itjaWriteForm').css('display','block');	
+						if($('#isComplete').val()!='complete'){
+							$('.itjaWriteForm').css('display','block');	
+						}
 					}
 				}
 				if(data.itjaTotalCount==10){

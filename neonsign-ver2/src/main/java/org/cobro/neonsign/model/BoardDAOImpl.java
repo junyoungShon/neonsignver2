@@ -614,7 +614,7 @@ public class BoardDAOImpl implements BoardDAO{
 		if(itjaMemberVO.getSubArticleNo()==0){
 			result = sqlSessionTemplate.selectOne("board.selectWriterEmailByMainArticleNO",itjaMemberVO);
 		}else{
-			result = sqlSessionTemplate.selectOne("board.selectWriterEmailBysubArticleNO",itjaMemberVO);
+			result = sqlSessionTemplate.selectOne("board.selectWriterEmailBySubArticleNO",itjaMemberVO);
 		}
 		return result;
 	}
