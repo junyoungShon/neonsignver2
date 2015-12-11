@@ -208,6 +208,23 @@ public class ReportDAOImpl implements ReportDAO{
 		return sqlSessionTemplate.selectOne("report.allSubReports");
 	}
 
+	/**
+	 * 회원이 신고한 리포트 넘버들을 받아오는 메서드
+	 */
+	@Override
+	public List<Integer> selectReporterReportNo(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("report.selectReporterReportNo",memberVO);
+	}
+	
+	@Override
+	public ReportVO findReportByReportNoAndMainArticleNo(Integer reportNo,
+			MainArticleVO mainArticleVO) {
+		// TODO Auto-generated method stub
+		HashMap<String,Integer>map=new HashMap<String, Integer>();
+		map.put("reportNo", reportNo); map.put("mainArticleNo",mainArticleVO.getMainArticleNo());
+		return sqlSessionTemplate.selectOne("report.findReportByReportNoAndMainArticleNo",map);
+	}
 
 
 }

@@ -48,4 +48,9 @@ public interface ReportDAO {
 	public int allSubReports();
 
 	public int allMianReports();
+
+	public List<Integer> selectReporterReportNo(MemberVO memberVO);
+
+	public ReportVO findReportByReportNoAndMainArticleNo(Integer integer,
+			MainArticleVO mainArticleVO);
 }

@@ -868,8 +868,12 @@ $(document).ready(function(){ //DOM이 준비되고
 			type : "POST",
 			url : "auth_ArticleReport.neon",
 			data : dataForm,
-			success : function(){
+			success : function(data){
+				if(data=="ok"){
 				alert("신고를 완료하였습니다.");
+				}else{
+					alert("이미 신고를 하셨습니다")
+				}
 
 			},
 			error:function(xhr, textStatus, error){
@@ -895,8 +899,12 @@ $(document).ready(function(){ //DOM이 준비되고
 			type : "POST",
 			url : "auth_ArticleReport.neon",
 			data : dataForm,
-			success : function(){
-				alert("신고를 완료하였습니다.");
+			success : function(data){
+				if(data=="ok"){
+					alert("신고를 완료하였습니다.");
+					}else{
+						alert("이미 신고를 하셨습니다")
+					}
 
 			},
 			error:function(xhr, textStatus, error){
@@ -913,7 +921,6 @@ $(document).ready(function(){ //DOM이 준비되고
 	// 주제글 신고 버튼 클릭시 실행되는 스크립트
 	$('#detailMainArticle').on('click','.articleReport',function(){
 		var dataForm=$($(this).next()).serialize();
-		alert(dataForm);
 		if(confirm("해당글을 신고 하시겠습니까?")){	
 		$.ajax({
 			beforeSend : function(xmlHttpRequest){
@@ -923,8 +930,12 @@ $(document).ready(function(){ //DOM이 준비되고
 			type : "POST",
 			url : "auth_ArticleReport.neon",
 			data : dataForm,
-			success : function(){
-				alert("신고를 완료하였습니다.");
+			success : function(data){
+				if(data=="ok"){
+					alert("신고를 완료하였습니다.");
+					}else{
+						alert("이미 신고를 하셨습니다")
+					}
 	
 			},
 			error:function(xhr, textStatus, error){

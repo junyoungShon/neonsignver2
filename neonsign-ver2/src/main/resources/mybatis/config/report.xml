@@ -172,6 +172,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="allMianReports" resultType="int">
  	select count(REPORT_NO) from report where SUB_ARTICLE_NO is null
  	</select>
+ 	
+ 	<select id="selectReporterReportNo" parameterType="memberVO" resultType="int">
+ 	select REPORT_NO from reporter where MEMBER_EMAIL=#{memberEmail}
+ 	</select>
+ 	
+ 	<select id="findReportByReportNoAndMainArticleNo" parameterType="map" resultType="reportVO" resultMap="reportResultMap">
+ 	select * from REPORT where REPORT_NO=#{reportNo} and MAIN_ARTICLE_NO=#{mainArticleNo}
+ 	</select>
  </mapper> 		
  
  

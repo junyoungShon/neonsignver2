@@ -31,7 +31,7 @@ public interface UtilService {
 	public void stagesOfProcess(int reportNumber);
 
 
-	public void articleReport(MainArticleVO mainArticleVO,
+	public String articleReport(MainArticleVO mainArticleVO,
 			SubArticleVO subArticleVO, MemberVO memberVO);
 
 

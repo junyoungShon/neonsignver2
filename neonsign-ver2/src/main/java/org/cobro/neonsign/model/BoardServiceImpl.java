@@ -623,8 +623,8 @@ public class BoardServiceImpl implements BoardService{
 	 * @param miArticleVO
 	 * @param subArticleVO
 	 */
-	public void articleReport(MainArticleVO mainArticleVO , SubArticleVO subArticleVO , MemberVO memberVO){
-		utilService.articleReport(mainArticleVO, subArticleVO, memberVO);
+	public String articleReport(MainArticleVO mainArticleVO , SubArticleVO subArticleVO , MemberVO memberVO){
+		return utilService.articleReport(mainArticleVO, subArticleVO, memberVO);
 	
 	}
 	

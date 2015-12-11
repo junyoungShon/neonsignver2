@@ -144,8 +144,24 @@ public class UtilServiceImpl implements UtilService{
 		 * --만약에 현재 신고 횟수가 10이 된다면 Block 하고 
 		 * 	신고자들에게 포인트를 준다
 	 */
-	public void articleReport(MainArticleVO mainArticleVO,
+	public String articleReport(MainArticleVO mainArticleVO,
 			SubArticleVO subArticleVO, MemberVO memberVO) {
+		String reporterCheck="ok";
+		//신고한 회원의 신고한 리포트 넘버를 받아온다
+		List<Integer> reporterReportNoList=reportDAO.selectReporterReportNo(memberVO);
+		//신고자의 report넘버에 대응하는 MainArticleNo가 있으면 신고를 하지않고
+		//reporterCheck에 fail을 할당한다
+		for(int i=0; i<reporterReportNoList.size();i++){
+			System.out.println("index : "+reporterReportNoList.get(i));
+			ReportVO reportVO=reportDAO.findReportByReportNoAndMainArticleNo(reporterReportNoList.get(i),mainArticleVO);
+			System.out.println("reportVO : "+reportVO);
+			if(reportVO!=null){
+				reporterCheck="fail";
+				break;
+			}
+		}
+		System.out.println("result : "+reporterCheck);
+		if(reporterCheck.equals("ok")){
 		int result=0;
 		//subArticleNo가 있다면 else문 수행
 		if(subArticleVO.getSubArticleNo()==0){
@@ -170,6 +186,7 @@ public class UtilServiceImpl implements UtilService{
 		}
 		//현재 ReportNumber를 받아오는 메서드
 		int reportNo=reportDAO.nowReportNumber();
+		System.out.println("현재 리포트 넘버 : "+reportNo );
 		//신고자를 추가해주는 메서드
 		reportDAO.insertReporter(memberVO, reportNo);
 		//신고한 report의 신고수를 받아와 10이상이되면 Block해준다
@@ -186,6 +203,8 @@ public class UtilServiceImpl implements UtilService{
 				reportDAO.deleteByReporter(rvo);
 			}
 		}
+		}
+		return reporterCheck;
 	}
 	@Override
 	public List<MainArticleVO> SearchOnTopMenu(String selector,String keyword) {

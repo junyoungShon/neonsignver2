@@ -923,10 +923,9 @@ public class BoardController {
 	 */
 	@RequestMapping("auth_ArticleReport.neon")
 	@ResponseBody
-	public Map<String,Object> ArticleReport(MainArticleVO mainArticleVO, SubArticleVO subArticleVO , MemberVO memberVO){
-		Map<String, Object> map=new HashMap<String, Object>();
-		boardService.articleReport(mainArticleVO, subArticleVO, memberVO);
-		return map;
+	public String ArticleReport(MainArticleVO mainArticleVO, SubArticleVO subArticleVO , MemberVO memberVO){
+		String check=boardService.articleReport(mainArticleVO, subArticleVO, memberVO);
+		return check;
 		
 	}
 	
