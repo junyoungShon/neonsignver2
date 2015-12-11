@@ -13,14 +13,37 @@
          <c:forEach var="bestMainArticle"  items="${requestScope.bestMainArticleVOListOrderByDate}">
             <div class="card-box col-lg-2">
                <div class="card card-with-border" data-background="image"
-                  data-src="${initParam.root}resources/img/snow.jpg">
+                  data-src="${initParam.root}resources/uploadImg/articleBg/${bestMainArticle.mainArticleImgVO.mainArticleImgName}">
                   <div class="content">
                      <h6 class="category">
                          ${bestMainArticle.tagName}
                      </h6>
                      <br>
-                     <h4 class="title">${bestMainArticle.mainArticleTitle}</h4>
-                     <p class="description">${bestMainArticle.mainArticleContent}
+                     <c:set var="bestArticleContentTitle"
+                     value="${bestMainArticle.mainArticleTitle}" />
+                     <h5 class="title">
+                     <!-- 카드 간격을 맞추기위해 제목을 보여주는 글자수 제한 -대협- -->
+                     <c:choose>
+                        <c:when test="${fn:length(bestArticleContentTitle)>12}">
+                           ${fn:substring(bestArticleContentTitle, 0, 11)} ...
+                        </c:when>
+                        <c:otherwise>
+                           ${bestArticleContentTitle}
+                        </c:otherwise>
+                     </c:choose>
+                     </h5>
+                     <c:set var="bestArticleContentContent"
+                     value="${bestMainArticle.mainArticleContent}" />
+                     <p class="description">
+                     <!-- 카드 간격을 맞추기위해 내용을 보여주는 글자수 제한 -대협- -->
+                     <c:choose>
+                        <c:when test="${fn:length(bestArticleContentContent)>18}">
+                        ${fn:substring(bestArticleContentContent, 0, 15)} ...
+                     </c:when>
+                        <c:otherwise>
+                        ${bestArticleContentContent}
+                     </c:otherwise>
+                     </c:choose>
                      </p>
                      <a href="mypage.neon?memberEmail=${bestMainArticle.memberVO.memberEmail}" style="" tabindex="1" class="btn btn-lg btn-warning myNickDetail" role="button" 
                      data-toggle="popover" 

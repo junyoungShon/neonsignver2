@@ -32,6 +32,26 @@ public class PointAspect {
 	@Resource
 	private BoardDAO boardDAO;
 	
+	@Around("within(org.cobro.neonsign.*.*)")
+	public Object cobroLogger(ProceedingJoinPoint point) throws Throwable{
+		Object retValue = null;
+		String className = point.getTarget().getClass().getName();
+		String methodName = point.getSignature().getName();	
+		Object[] parameterArr = point.getArgs();
+		log.info("-----"+className+"에서 "+methodName+" 가 실행-----");
+		for(int i =0;i<parameterArr.length;i++){
+			log.info((i+1)+"번 파라미터 : "+ parameterArr[i]);
+		}
+		retValue = point.proceed();
+		if(retValue==null){
+			log.info("리턴 값 없음");
+		}else{
+			log.info("리턴 값 :"+retValue.toString());
+		}
+		log.info("-------실행 종료 ---------");
+		return retValue;
+	}
+	
 	@Around("execution(public * org.cobro.neonsign..*Service.point*(..))")
 	public Object keepScore(ProceedingJoinPoint point) throws Throwable{
 		log.info("AOP 적용 완료");
@@ -83,4 +103,5 @@ public class PointAspect {
 		//System.out.println(className + " " + methodName + " " + param[0]);
 */		return retValue;
 	}
+	
 }

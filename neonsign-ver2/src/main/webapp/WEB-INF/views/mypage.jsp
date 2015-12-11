@@ -68,15 +68,37 @@
         <!-- 카드 1개 -->
           <c:forEach var="pickMainArticle" items="${requestScope.pickedMainArticleList}">
             <div class="card-box col-lg-2">  
-                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/img/snow.jpg">    
+                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/uploadImg/articleBg/${pickMainArticle.mainArticleImgVO.mainArticleImgName}">    
                     <div class="content">
                         <h6 class="category">
                             ${pickMainArticle.tagName}
                         </h6>
                         <br>
-                        <h4 class="title">${pickMainArticle.mainArticleTitle}</h4>
+                        <c:set var="pickMainArticleContentTitle"
+                     value="${pickMainArticle.mainArticleTitle}" />
+                        <h5 class="title">
+                        <!-- 카드 간격을 맞추기위해 제목을 보여주는 글자수 제한 -대협- -->
+	                     <c:choose>
+	                        <c:when test="${fn:length(pickMainArticleContentTitle)>12}">
+	                           ${fn:substring(pickMainArticleContentTitle, 0, 11)} ...
+	                        </c:when>
+	                        <c:otherwise>
+	                           ${pickMainArticleContentTitle}
+	                        </c:otherwise>
+	                     </c:choose>
+                        </h5>
+                        <c:set var="pickMainArticleContentContent"
+                     value="${pickMainArticle.mainArticleContent}" />
                         <p class="description">
-                          	${pickMainArticle.mainArticleContent}
+                         <!-- 카드 간격을 맞추기위해 내용을 보여주는 글자수 제한 -대협- -->
+	                     <c:choose>
+	                        <c:when test="${fn:length(pickMainArticleContentContent)>18}">
+	                        ${fn:substring(pickMainArticleContentContent, 0, 15)} ...
+	                     </c:when>
+	                        <c:otherwise>
+	                        ${pickMainArticleContentContent}
+	                     </c:otherwise>
+	                     </c:choose>
                         </p>
                    <a href="mypage.neon?memberEmail=${pickMainArticle.memberVO.memberEmail}" style="" tabindex="1" class="btn btn-lg btn-warning myNickDetail" role="button" 
                data-toggle="popover" 
@@ -185,15 +207,37 @@
             <!-- 카드 1개 -->
           <c:forEach var="writeMainArticle" items="${requestScope.writeMainArticleList}">
             <div class="card-box col-lg-2">  
-                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/img/snow.jpg">    
+                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/uploadImg/articleBg/${writeMainArticle.mainArticleImgVO.mainArticleImgName}">    
                     <div class="content">
                         <h6 class="category">
                             ${writeMainArticle.tagName}
                         </h6>
                         <br>
-                        <h4 class="title">${writeMainArticle.mainArticleTitle}</h4>
+                        <c:set var="writeMainArticleContentTitle"
+                     value="${writeMainArticle.mainArticleTitle}" />
+                        <h5 class="title">
+	 					 <!-- 카드 간격을 맞추기위해 제목을 보여주는 글자수 제한 -대협- -->
+	                     <c:choose>
+	                        <c:when test="${fn:length(writeMainArticleContentTitle)>12}">
+	                           ${fn:substring(writeMainArticleContentTitle, 0, 11)} ...
+	                        </c:when>
+	                        <c:otherwise>
+	                           ${writeMainArticleContentTitle}
+	                        </c:otherwise>
+	                     </c:choose>
+                        </h5>
+                        <c:set var="writeMainArticleContentContent"
+                     value="${writeMainArticle.mainArticleContent}" />
                         <p class="description">
-                          ${writeMainArticle.mainArticleContent}
+                          <!-- 카드 간격을 맞추기위해 내용을 보여주는 글자수 제한 -대협- -->
+	                     <c:choose>
+	                        <c:when test="${fn:length(writeMainArticleContentContent)>18}">
+	                        ${fn:substring(writeMainArticleContentContent, 0, 15)} ...
+	                     </c:when>
+	                        <c:otherwise>
+	                        ${writeMainArticleContentContent}
+	                     </c:otherwise>
+	                     </c:choose>
                         </p>
                      <a href="mypage.neon?memberEmail=${writeMainArticle.memberVO.memberEmail}" style="" tabindex="1" class="btn btn-lg btn-warning myNickDetail" role="button" 
                data-toggle="popover" 
@@ -303,15 +347,37 @@
             <!-- 카드 1개 -->
             <c:forEach var="joinMainArticle" items="${requestScope.joinMainArticleList}">
             <div class="card-box col-lg-2">  
-                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/img/snow.jpg">    
+                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/uploadImg/articleBg/${joinMainArticle.mainArticleImgVO.mainArticleImgName}">    
                     <div class="content">
                         <h6 class="category">
                             ${joinMainArticle.tagName}
                         </h6>
                         <br>
-                        <h4 class="title">${joinMainArticle.mainArticleTitle}</h4>
+                        <c:set var="joinMainArticleContentTitle"
+                     value="${joinMainArticle.mainArticleTitle}" />
+                        <h5 class="title">
+						<!-- 카드 간격을 맞추기위해 제목을 보여주는 글자수 제한 -대협- -->
+	                     <c:choose>
+	                        <c:when test="${fn:length(joinMainArticleContentTitle)>12}">
+	                           ${fn:substring(joinMainArticleContentTitle, 0, 11)} ...
+	                        </c:when>
+	                        <c:otherwise>
+	                           ${joinMainArticleContentTitle}
+	                        </c:otherwise>
+	                     </c:choose>
+                        </h5>
+                        <c:set var="joinMainArticleContentContent"
+                     value="${joinMainArticle.mainArticleContent}" />
                         <p class="description">
-                          ${joinMainArticle.mainArticleContent}
+                          <!-- 카드 간격을 맞추기위해 내용을 보여주는 글자수 제한 -대협- -->
+	                     <c:choose>
+	                        <c:when test="${fn:length(joinMainArticleContentContent)>18}">
+	                        ${fn:substring(joinMainArticleContentContent, 0, 15)} ...
+	                     </c:when>
+	                        <c:otherwise>
+	                        ${joinMainArticleContentContent}
+	                     </c:otherwise>
+	                     </c:choose>
                         </p>
                      <a href="mypage.neon?memberEmail=${joinMainArticle.memberVO.memberEmail}" style="" tabindex="1" class="btn btn-lg btn-warning myNickDetail" role="button" 
                data-toggle="popover" 

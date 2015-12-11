@@ -22,7 +22,7 @@
          <!-- name은 script.js에서 카드 현재 카드의 수를 구하기 위해 사용 -대협- -->
          <div class="card-box col-md-4" name="completeCardBox">
             <div class="card card-with-border" data-background="image"
-               data-src="${initParam.root}resources/img/fashion-1.jpg">
+               data-src="${initParam.root}resources/uploadImg/articleBg/${completeMainArticle.mainArticleImgVO.mainArticleImgName}">
                <div class="content">
                   <h6 class="category">
                       ${completeMainArticle.tagName}
