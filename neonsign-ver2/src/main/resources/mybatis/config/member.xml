@@ -4,8 +4,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 	
-	
-	
 	<!-- 3.memberVO resultMap -->
 	<resultMap type="memberVO" id="memberResultMap">
 		<result property="memberEmail" column="MEMBER_EMAIL" />
@@ -17,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="memberCategory" column="MEMBER_CATEGORY"/>
 		<collection property="pickedVOList" column="MEMBER_EMAIL"
 			ofType="pickedVO" javaType="ArrayList" resultMap ="pickedResultMap"/>
-		</resultMap>
-
+	</resultMap>
+	
 	<!-- pickedVO resultMap -->
 	<resultMap type="pickedVO" id="pickedResultMap">
 		<result property="memberEmail" column="MEMBER_EMAIL"/>
@@ -30,10 +28,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="memberEmail" column="MEMBER_EMAIL"/>
 		<result property="randomSentence" column="RANDOM_SENTECE"/>
 	</resultMap>
-	
-		<select id="findMainArticleNumberByMember" parameterType="memberVO" resultType="int">
-	select main_article_no from MAIN_ARTICLE where MEMBER_EMAIL=#{memberEmail}
-	</select>	
 	
    	<!-- 비밀 번호 찾기 요청 인서트 구문 -->
    	<insert id="insertPasswordFindRequest">
@@ -146,19 +140,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="findByPassword" resultMap="memberResultMap" parameterType="string" resultType="memberVO">
 	 select MEMBER_PASSWORD,member_nickname from brain_member where  MEMBER_EMAIL=#{memberEmail}
 	 </select>
-	 
        <!-- 회원정보수정 -->
     <update id="memberUpdate" parameterType="memberVO">
     update brain_member
     set MEMBER_PASSWORD=#{memberPassword} , MEMBER_NICKNAME=#{memberNickName}
     where MEMBER_EMAIL=#{memberEmail} 
     </update>
+     <!-- 회원 포인트 플러스 -->
+    <update id="memberPointPlusUpdater" parameterType="map">
+    	update brain_member set MEMBER_POINT = MEMBER_POINT + #{memberPoint} where MEMBER_EMAIL = #{memberEmail}
+    </update>
+  
+    <!-- 회원 포인트 마이너스 -->
+    <update id="memberPointMinusUpdater" parameterType="map">
+    	update brain_member set MEMBER_POINT = MEMBER_POINT - #{memberPoint} where MEMBER_EMAIL = #{memberEmail}
+    </update>
     
+      <!-- 회원을 탈퇴처리 -->
     <update id="memberDelete" parameterType="memberVO" >
     update brain_member
     set MEMBER_CATEGORY='탈퇴회원'
     where MEMBER_EMAIL=#{memberEmail}
     </update>
+    
 </mapper> 		
  
  

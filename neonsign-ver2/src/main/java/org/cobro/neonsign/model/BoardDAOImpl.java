@@ -604,4 +604,18 @@ public class BoardDAOImpl implements BoardDAO{
 		MainArticleImgVO mainArticleImgVO = sqlSessionTemplate.selectOne("board.selectMainArticleImg", articleNo);
 		return mainArticleImgVO;
 	}
+	/**
+	 * 글번호로 작성자의 이메일을 얻어온다.
+	 * @author junyoung
+	 */
+	@Override
+	public String selectWriterEmailByArticleNO(ItjaMemberVO itjaMemberVO) {
+		String result = "";
+		if(itjaMemberVO.getSubArticleNo()==0){
+			result = sqlSessionTemplate.selectOne("board.selectWriterEmailByMainArticleNO",itjaMemberVO);
+		}else{
+			result = sqlSessionTemplate.selectOne("board.selectWriterEmailBysubArticleNO",itjaMemberVO);
+		}
+		return result;
+	}
 }

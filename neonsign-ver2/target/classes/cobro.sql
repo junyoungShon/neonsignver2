@@ -178,7 +178,6 @@ MEMBER_EMAIL varchar2(50) NOT NULL,
 RANDOM_SENTENCE varchar2(50) not null,
 constraint fk_FIND_PASSWORD foreign key(MEMBER_EMAIL) references brain_member(MEMBER_EMAIL)
 )
-insert into FIND_PASSWORD values('a@gmail.com','asd23')
 drop table FIND_PASSWORD
 select * from FIND_PASSWORD;
 -----------------------------------------------------------------------------------
@@ -742,7 +741,6 @@ create table MAIN_ARTICLE_IMG(
 	MAIN_ARTICLE_IMG_NAME clob not null,
 	constraint fk_img_main_article_no foreign key(MAIN_ARTICLE_NO) references MAIN_ARTICLE(MAIN_ARTICLE_NO)	
 )
-
 -- 2015-12-08 대협추가
 ----------------------------------------------------------------------------------------
 -- ** 프로필이미지 테이블 ** -------------------------------------------------------------
@@ -751,7 +749,6 @@ create table PROFILE_IMG(
 	PROFILE_IMG_NAME clob not null,
 	constraint fk_img_member_email foreign key(MEMBER_EMAIL) references BRAIN_MEMBER(MEMBER_EMAIL)	
 )
-insert into PROFILE_IMG values ('a@gmail.com','희희흐히');
 
 
 

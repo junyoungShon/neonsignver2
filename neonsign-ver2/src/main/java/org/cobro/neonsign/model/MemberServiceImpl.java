@@ -3,6 +3,7 @@ package org.cobro.neonsign.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -34,7 +35,7 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.findMemberByNickName(nameComp);
 	}
 	@Override
-	public int memberRegister(MemberVO memberVO) {
+	public int pointMemberRegister(MemberVO memberVO) {
 		return memberDAO.memberRegister(memberVO);
 	}
 	
@@ -149,13 +150,11 @@ public class MemberServiceImpl implements MemberService{
 		
 		return memberDAO.memberUpdate(memberVO);
 	} 
-	/**
-	 * 회원을 탈퇴처리 하는 메서드
-	 */
+	
 	@Override
-	public int memberDelete(MemberVO memberVO) {
+	public void memberDelete(MemberVO memberVO) {
 		// TODO Auto-generated method stub
-		return memberDAO.memberDelete(memberVO);
+		memberDAO.memberDelete(memberVO);
 	}
 	/**
 	 * 비밀번호를 찾기위한 메일 요청메서드

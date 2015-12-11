@@ -13,7 +13,7 @@ public interface MemberDAO {
 	public int memberRegister(MemberVO mvo);
 	public int memberUpdate(MemberVO memberVO);
 	public MemberVO memberLogin(MemberVO mvo);
-	public int memberDelete(MemberVO memberVO);
+	public void memberDelete(MemberVO memberVO);
 	public ArrayList<MemberVO> getNotifyMemberList(MemberVO mvo);
 	public List<MemberVO> getMemberList(int pageNo);
 	public void memberBlock(String memberEmail);
@@ -33,4 +33,6 @@ public interface MemberDAO {
 	public void memberUpdatePassword(MemberVO memberVO);
 	public MemberVO confirmPasswordFindRequest(FindPasswordVO findPasswordVO);
 	public void deletePasswordFindRequest(FindPasswordVO findPasswordVO);
+	public void memberPointPlusUpdater(String memberEmail, int i);
+	public void memberPointMinusUpdater(String memberEmail, int i);
 }

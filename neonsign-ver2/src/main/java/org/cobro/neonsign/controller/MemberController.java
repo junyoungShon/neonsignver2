@@ -109,7 +109,7 @@ public class MemberController {
 	 */
 	@RequestMapping("memberJoinByEmail.neon")
 	public ModelAndView memberRegister(HttpServletRequest request,MemberVO memberVO){
-		memberService.memberRegister(memberVO);
+		memberService.pointMemberRegister(memberVO);
 		request.setAttribute("memberVO", memberVO);
 		return new ModelAndView("forward:memberLogin.neon");
 	}
@@ -228,7 +228,7 @@ public class MemberController {
 	 */
 	@RequestMapping("memberDelete.neon")
 	public String memberDelete(MemberVO memberVO){
-		//System.out.println("탈퇴회원정보:"+memberVO)
+		//System.out.println("탈퇴회원정보:"+memberVO);
 		memberService.memberDelete(memberVO);
 		String path="redirect:memberLogout.neon";
     	return path;

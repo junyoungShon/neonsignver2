@@ -1894,11 +1894,11 @@ $(document).ready(function(){ //DOM이 준비되고
 	});
 
 	$("#memberDeleteSubmit").click(function(){		
+		alert(userCheckFlag);
 			if(userCheckFlag==true){
 				alert("회원탈퇴 되었습니다");
 				$("#memberDelete").submit();
-			}else{
-				alert("비밀번호를 확인해 주세요!");
+
 			}
 	});
 	
@@ -1967,4 +1967,19 @@ $(document).ready(function(){ //DOM이 준비되고
 		 }
 	 });
     // 비밀번호 찾기를 위한 요청 폼 검증 끝
+    $("#navbar").ready( function () {
+    	$("#serch_result").click( function () {
+    		//keyword
+    	var text=$("#serch").val();
+    	//alert(text);
+    	//select
+    	var check=$('#search_concept').text();
+    	//alert(check);
+    	
+    	location.href = "findBy.neon?selector="+check+"&keyword="+text;
+    	
+    	
+    	
+    	});//click
+    	});//serch click
 });//document.ready

@@ -1,20 +1,3 @@
-		delete from FIND_PASSWORD where MEMBER_EMAIL='a@gmail.com'
-		delete from REPORTER where MEMBER_EMAIL='a@gmail.com'
-		select main_article_no from MAIN_ARTICLE where MEMBER_EMAIL='b@gmail.com';
-		delete from PROFILE_IMG where MEMBER_EMAIL='a@gmail.com'
-		delete from SUB_ARTICLE where MEMBER_EMAIL='a@gmail.com'
-		delete from ITJA_MEMBER where MEMBER_EMAIL='a@gmail.com'
-		delete from PICKED_ARTICLE where MEMBER_EMAIL='a@gmail.com'
-		delete from MAIN_ARTICLE where MEMBER_EMAIL='a@gmail.com'
-		
-
-
-
-
-
-
-
-
 		select * from main_article m,  brain_member b   where
 		 m.MAIN_ARTICLE_NO=1
 		and b.MEMBER_EMAIL=m.MAIN_ARTICLE_EMAIL 

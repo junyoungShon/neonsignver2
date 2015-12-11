@@ -36,7 +36,7 @@ public class BoardServiceImpl implements BoardService{
 	 * @junyoung
 	 */
 	@Override
-	public int insertMainArticle(MainArticleVO mainArticleVO,ArrayList<String> list,TagBoardVO tagBoardVO) {
+	public int pointInsertMainArticle(MainArticleVO mainArticleVO,ArrayList<String> list,TagBoardVO tagBoardVO) {
 		boardDAO.insertMainArticle(mainArticleVO);
 		System.out.println("boardDAO : "+mainArticleVO.getMainArticleNo());
 		for(int i=0;i<list.size();i++){
@@ -306,7 +306,7 @@ public class BoardServiceImpl implements BoardService{
 	 * @author junyoung
 	 */
 	@Override
-	public boolean insertSubArticle(SubArticleVO subArticleVO) {
+	public boolean pointInsertSubArticle(SubArticleVO subArticleVO) {
 		boolean flag =false;
 		//현재 진행되는 이야기 단계를 반환
 		int subArticleCurruntGrade = boardDAO.selectSubArticleCurruntGrade(subArticleVO);
@@ -587,7 +587,7 @@ public class BoardServiceImpl implements BoardService{
 	 * @author junyoung
 	 */
 	@Override
-	public HashMap<String, Object> selectItjaState(ItjaMemberVO itjaMemberVO,SubArticleVO subArticleVO) {
+	public HashMap<String, Object> pointSelectItjaState(ItjaMemberVO itjaMemberVO,SubArticleVO subArticleVO) {
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("itjaSuccess",itjaMemberBean.checkItja(itjaMemberVO));
 		map.put("itjaCount",itjaMemberBean.itjaCount(itjaMemberVO));
@@ -679,5 +679,10 @@ public class BoardServiceImpl implements BoardService{
 	public MainArticleImgVO selectMainArticleImg(int articleNo){
 		MainArticleImgVO mainArticleImgVO = boardDAO.selectMainArticleImg(articleNo);
 		return mainArticleImgVO;
+	}
+	@Override
+	public List<MainArticleVO> SearchOnTopMenu(String selector, String keyword) {
+		// TODO Auto-generated method stub
+		return utilService.SearchOnTopMenu(selector,keyword);
 	}
 }

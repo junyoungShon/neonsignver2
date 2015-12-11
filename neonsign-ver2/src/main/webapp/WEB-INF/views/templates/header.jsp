@@ -12,7 +12,7 @@
           
          
           
-         <a class="navbar-brand top-menu" href="#">
+        <a class="navbar-brand top-menu" href="#">
         <img class="logoImg" src="${initParam.root}resources/img/width_logo_BrainOnSign.png">
 		</a>
         </div>
@@ -21,17 +21,18 @@
 		    <div class="input-group top-menu"  style="margin-top: 10px;">
                 <div class="input-group-btn search-panel">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    	<span id="search_concept">제목</span> <span class="caret"></span>
+                    	<span id="search_concept">제목</span> <span  class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#its_equal">내용</a></li>
-                      <li><a href="#greather_than">작성자</a></li>
-                    </ul>
+                  <ul class="dropdown-menu" role="menu" id="choose">
+                      <li><a href="#" class="title" >제목</a></li>
+                      <li><a href="#" >내용</a></li>
+                      <li><a href="#" >작성자</a></li>
+                   </ul> 
          </div>
                 <input type="hidden" name="search_param" value="all" id="search_param">         
-                <input type="text" class="form-control" name="x" placeholder="Search term...">
+                <input type="text" class="form-control"  id="serch" name="search" placeholder="Search term...">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="fa fa-search"></span></button>
+                    <button type="button" class="btn btn-default" id="serch_result"><span class="fa fa-search"></span></button>
                 </span>
             </div>
         </div>

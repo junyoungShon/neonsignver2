@@ -88,4 +88,5 @@ public interface BoardDAO {
 	public void insertProfileImg(String memberEmail, String imgName);
 	//이미지 로드 관련 메소드
 	public MainArticleImgVO selectMainArticleImg(int articleNo);
+	public String selectWriterEmailByArticleNO(ItjaMemberVO itjaMemberVO);
 }

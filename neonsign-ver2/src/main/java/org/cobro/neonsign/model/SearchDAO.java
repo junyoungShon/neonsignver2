@@ -13,4 +13,10 @@ public interface SearchDAO {
 	public void hitArticle(String keyword);
 
 	public List<MainArticleVO> articleSort(String sort);
+
+	public List<MainArticleVO> searchBytitle(String keyword);
+
+	public List<MainArticleVO> searchByContext(String keyword);
+
+	public List<MainArticleVO> searchByNickName(String keyword);
 }
