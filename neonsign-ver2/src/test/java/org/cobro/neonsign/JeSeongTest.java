@@ -1,14 +1,16 @@
 package org.cobro.neonsign;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.cobro.neonsign.model.BoardDAO;
 import org.cobro.neonsign.model.BoardService;
+import org.cobro.neonsign.model.MemberDAO;
 import org.cobro.neonsign.model.MemberService;
 import org.cobro.neonsign.vo.MemberVO;
-import org.cobro.neonsign.vo.TagBoardVO;
+import org.cobro.neonsign.vo.SubscriptionInfoVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -37,18 +39,47 @@ public class JeSeongTest {
 	private BoardService boardService;
 	@Resource
 	private BoardDAO boardDAO;
+	@Resource
+	private MemberDAO memberDAO;
 	
 
 	@Test
 	public void test(){
-		String memberEmail = "a@gmail.com";
+		
+		
+		
+		
+		SubscriptionInfoVO subscriptionInfoVO = new SubscriptionInfoVO();
+		String publisher = "a@gmail.com";
+		String subscriber = "b@gmail.com";
+		subscriptionInfoVO.setPublisher(publisher);
+		subscriptionInfoVO.setSubscriber(subscriber);
+		// memberDAO.selectSubscriptionInfoVO(subscriptionInfoVO);
+		/*if(memberDAO.selectSubscriptionInfoVO(subscriptionInfoVO) == null){
+			memberDAO.insertSubscriptionInfoVO(subscriptionInfoVO);
+			System.out.println("insert");
+		} else{
+			memberDAO.deleteSubscriptionInfoVO(subscriptionInfoVO);
+			System.out.println("delete");
+		}*/
+		System.out.println(memberDAO.getSubscriberListByPublisherEmail(subscriptionInfoVO));
+/*		List<SubscriptionInfoVO> subscriptionInfoList
+		= memberDAO.getSubscriberListByPublisherEmail(subscriptionInfoVO);
+		System.out.println(subscriptionInfoList);
+		ArrayList<MemberVO> subscriberList = new ArrayList<MemberVO>();
+		for(int i = 0 ; i<subscriptionInfoList.size() ; i++){
+			subscriberList.add(memberDAO.findMemberByEmail(subscriptionInfoList.get(i).getSubscriber()));
+		}
+		System.out.println(subscriberList);*/
+		/*String memberEmail = "y5@gmail.com";
 		MemberVO memberVO = new MemberVO();
 		memberVO.setMemberEmail(memberEmail);
-		ArrayList<TagBoardVO> mostWriteTagByEmailList
+		System.out.println(boardDAO.getJoinAgeByEmail(memberVO));*/
+		/*ArrayList<TagBoardVO> mostWriteTagByEmailList
 		= (ArrayList<TagBoardVO>) boardDAO.getMostWriteTagByEmail(memberVO);
 		TagBoardVO tagBoardVO = mostWriteTagByEmailList.get(0);
 		
-		System.out.println("최종 : " + tagBoardVO);
+		System.out.println("최종 : " + tagBoardVO);*/
 		/*ArrayList<Integer> joinMainArticleNoList = (ArrayList<Integer>) boardDAO.getJoinMainArticleNoByEmail(memberVO);
 		HashSet hs = new HashSet(joinMainArticleNoList);
 		ArrayList<Integer> nonDupJoinMainArticleNoList = new ArrayList<Integer>(hs);

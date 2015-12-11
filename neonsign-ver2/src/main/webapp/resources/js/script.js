@@ -1667,6 +1667,60 @@ $(document).ready(function(){ //DOM이 준비되고
 		}); // ajax
 	}; // pickBtn click
 	
+	
+	/**
+	 * 구독하기 
+	 * @author JeSeong Lee
+	 */
+	// 정적인 구독하기 클릭 시 발동하기
+	$('.staticSubscriptionBtn').on('click',function(){
+		var formData = $($(this).next()).serialize();
+		var subscriptionInfoSpan = $(this).children('.subscriptionInfoSpan');
+		subscriptionBtnClick(formData, subscriptionInfoSpan);
+	});
+	
+	// $('.staticSubscriptionBtn').click(function(){
+	function subscriptionBtnClick(formData, subscriptionInfoSpan){
+		// alert(subscriberCount.html());
+		// alert(formData);
+		// alert(subscriptionInfoSpan.html);
+		var subscriptedInfoHTML = "";
+		$.ajax({
+			type:"post",
+			url:"auth_updateSubscriptionInfo.neon",
+			data:formData,
+			success:function(data){
+				if(data.subscriptionResult == "selfSubscription"){
+					alert("자신을 구독할 수 없습니다");
+				}else if(data.subscriptionResult == "insert"){
+					subscriptionInfoSpan.html("<i class='fa fa-minus-square'></i>&nbsp;구독 취소");
+				}else if(data.subscriptionResult == "delete"){
+					subscriptionInfoSpan.html("<i class='fa fa-plus-square'></i>&nbsp;구독 하기");
+				}
+				$('.subscriptedCount').html(data.subscriberCount);
+				for(var i=0 ; i<data.subscriberMemberList.length ; i++){
+					subscriptedInfoHTML += data.subscriberMemberList[i].memberNickName+'<br>';
+				}
+				$('.subscriptedInfo').html(subscriptedInfoHTML);
+				
+				
+				
+			},
+			beforeSend : function(xmlHttpRequest){
+		           xmlHttpRequest.setRequestHeader("AJAX", "true");
+		           
+			},
+			error:function(xhr, textStatus, error){
+				if(xhr.status=="901"){
+					if(confirm('로그인이 필요합니다. 가입하시겠어요?')){
+						location.href="loginPage.neon"
+					}
+				}
+			}
+		}); // ajax
+	}; // subscriptionBtn click
+	
+	
 	/**
 	 * @author JeSeong Lee
 	 * 랭킹 팝오버
@@ -1696,17 +1750,6 @@ $(document).ready(function(){ //DOM이 준비되고
 		    }
 		}
 		$('body').popover(popOverSettings);
-		/*$(".writersNickName").on('click', function(){
-			$('body').popover(popOverSettings);
-		});*/
-		/*$('[data-toggle="popover"]').popover();
-		$('body').on('click', function (e) {
-		    //did not click a popover toggle or popover
-		    if ($(e.target).data('toggle') !== 'popover'
-		        && $(e.target).parents('.popover.in').length === 0) { 
-		        $('[data-toggle="popover"]').popover('hide');
-		    }
-		});*/
 	
 	/*<!--업데이트 모달창 --!>*/
 	$('.memberUpate').click(function(){

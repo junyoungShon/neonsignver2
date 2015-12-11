@@ -9,6 +9,7 @@ import org.cobro.neonsign.vo.FindPasswordVO;
 import org.cobro.neonsign.vo.MemberListVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.PickedVO;
+import org.cobro.neonsign.vo.SubscriptionInfoVO;
 
 public interface MemberService {
 	public MemberVO findMemberByEmail(String emailComp);
@@ -28,4 +29,12 @@ public interface MemberService {
 	public MemberListVO getBlockMemberList(int i);
 	public void findPasswordMailRequest(FindPasswordVO findPasswordVO);
 	public MemberVO requestTemporaryPassword(FindPasswordVO findPasswordVO);
+	/**
+	 * 구독정보 수정
+	 * @author JeSeong Lee
+	 */
+	public HashMap<String, Object> updateSubscriptionInfo(
+			SubscriptionInfoVO subscriptionInfoVO);
+	public List<SubscriptionInfoVO> getSubscriptionListBySubscriberMemberEmail(
+			SubscriptionInfoVO subscriptionInfoVO);
 }

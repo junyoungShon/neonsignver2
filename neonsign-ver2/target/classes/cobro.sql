@@ -8,12 +8,18 @@ drop table TAG_BOARD;
 drop table TAG;
 drop table PICKED_ARTICLE;
 drop table ITJA_MEMBER;
+drop table SUBSCRIPTION_INFO;
+drop table MAIN_ARTICLE_IMG;
+drop table PROFILE_IMG;
+drop table FIND_PASSWORD
 drop table SUB_ARTICLE;
 drop table MAIN_ARTICLE;
 drop table BRAIN_MEMBER;
+drop table SERVICE_CENTER
 drop sequence main_article_seq;
 drop sequence sub_article_seq;
 drop sequence report_seq;
+drop sequence service_center_seq
 -----------------------------------------------------------------------------------
 -- ** 테이블 조회 ** -----------------------------------------------------------
 select * from RANKING;
@@ -23,11 +29,15 @@ select * from SEARCH_BOARD;
 select * from TAG_BOARD;
 select * from TAG;
 select * from PICKED_ARTICLE;
+select * from ITJA_MEMBER;
+select * from SUBSCRIPTION_INFO;
+select * from MAIN_ARTICLE_IMG;
+select * from PROFILE_IMG;
+select * from FIND_PASSWORD
 select * from SUB_ARTICLE;
 select * from MAIN_ARTICLE;
 select * from BRAIN_MEMBER;
-select * from ITJA_MEMBER;
-
+select * from SERVICE_CENTER
 -----------------------------------------------------------------------------------
 -- ** 뇌온사인 회원 테이블 생성 / 삭제 ** -----------------------------------------------------------
 create table BRAIN_MEMBER(
@@ -93,7 +103,7 @@ SUB_ARTICLE_NO number default 0,
 MEMBER_EMAIL varchar(50) not null,
 constraint fk_itJa_Main_Article_NO foreign key(MAIN_ARTICLE_NO) references main_article(MAIN_ARTICLE_NO),
 constraint fk_itJa_MEMBER_EMAIL foreign key(MEMBER_EMAIL) references brain_member(MEMBER_EMAIL),
-constraint pk_tag_ITJA_MEMBER primary key(MAIN_ARTICLE_NO,SUB_ARTICLE_NO,MEMBER_EMAIL)
+constraint pk_itJa_MEMBER primary key(MAIN_ARTICLE_NO,SUB_ARTICLE_NO,MEMBER_EMAIL)
 )
 drop table ITJA_MEMBER
 select * table ITJA_MEMBER;
@@ -119,7 +129,7 @@ select * from TAG;
 -----------------------------------------------------------------------------------
 -- ** 태그 게시물 테이블 생성 / 삭제 ** ----------------------------------------------------------
 create table TAG_BOARD(
-TAG_NAME varchar2(30) , 
+TAG_NAME varchar2(30), 
 MAIN_ARTICLE_NO number ,
 constraint fk_tag foreign key(MAIN_ARTICLE_NO) references main_article(MAIN_ARTICLE_NO),
 constraint fk_tag_name foreign key(TAG_NAME) references tag(TAG_NAME),
@@ -138,12 +148,12 @@ select * from SEARCH_BOARD;
 -----------------------------------------------------------------------------------
 -- ** 신고내용 테이블, 시퀀스 생성 / 삭제 ** ------------------------------------------------------
 create table REPORT(
-REPORT_NO varchar2(30) primary key,
+REPORT_NO number primary key,
 REPORT_DATE date not null,
 MAIN_ARTICLE_NO number not null,
 SUB_ARTICLE_NO number,
 REPORT_AMOUNT number default 0,
-STAGES_OF_PROCESS varchar2(20), --여부 판단
+STAGES_OF_PROCESS varchar2(20) not null, --여부 판단
 constraint fk_report_main_article foreign key(MAIN_ARTICLE_NO) references main_article(MAIN_ARTICLE_NO),
 constraint fk_report_sub_article foreign key(SUB_ARTICLE_NO) references sub_article(SUB_ARTICLE_NO)
 );
@@ -155,7 +165,7 @@ select * from REPORT;
 -----------------------------------------------------------------------------------
 -- ** 신고자 테이블(복합키 적용) 생성 / 삭제 ** -----------------------------------------------------
 create table REPORTER(
-REPORT_NO varchar2(30) ,
+REPORT_NO number,
 MEMBER_EMAIL varchar2(50) not null,
 constraint fk_report foreign key(REPORT_NO) references report(REPORT_NO),
 constraint fk_reporter_main_article foreign key(MEMBER_EMAIL) references brain_member(MEMBER_EMAIL),
@@ -176,10 +186,53 @@ select * from RANKING;
 create table FIND_PASSWORD(
 MEMBER_EMAIL varchar2(50) NOT NULL,
 RANDOM_SENTENCE varchar2(50) not null,
-constraint fk_FIND_PASSWORD foreign key(MEMBER_EMAIL) references brain_member(MEMBER_EMAIL)
+constraint fk_FIND_PASSWORD foreign key(MEMBER_EMAIL) references brain_member(MEMBER_EMAIL),
+constraint pk_FIND_PASSWORD primary key(MEMBER_EMAIL, RANDOM_SENTENCE)
 )
 drop table FIND_PASSWORD
 select * from FIND_PASSWORD;
+-- 2015-12-08 대협추가 ----------------------------------------------------------------------
+-- ** 주제글 배경이미지 테이블 ** -------------------------------------------------------------
+create table MAIN_ARTICLE_IMG(
+	MAIN_ARTICLE_NO number primary key,
+	MAIN_ARTICLE_IMG_NAME clob not null,
+	constraint fk_img_main_article_no foreign key(MAIN_ARTICLE_NO) references MAIN_ARTICLE(MAIN_ARTICLE_NO)	
+)
+drop table MAIN_ARTICLE_IMG
+select * from MAIN_ARTICLE_IMG;
+-- 2015-12-08 대협추가 ---------------------------------------------------------------------
+-- ** 프로필이미지 테이블 ** -------------------------------------------------------------
+create table PROFILE_IMG(
+	MEMBER_EMAIL varchar2(50) primary key,
+	PROFILE_IMG_NAME clob not null,
+	constraint fk_img_member_email foreign key(MEMBER_EMAIL) references BRAIN_MEMBER(MEMBER_EMAIL)	
+)
+drop table PROFILE_IMG
+select * from PROFILE_IMG;
+-----------------------------------------------------------------------------------
+-- ** 구독 테이블(복합키 적용) 생성 / 삭제 ** -----------------------------------------------------
+create table SUBSCRIPTION_INFO(
+PUBLISHER varchar2(50) not null,
+SUBSCRIBER varchar2(50) not null,
+SUBSCRIPTION_DATE date not null,
+constraint fk_PUBLISHER foreign key(PUBLISHER) references brain_member(MEMBER_EMAIL),
+constraint fk_SUBSCRIBER foreign key(SUBSCRIBER) references brain_member(MEMBER_EMAIL),
+constraint pk_SUBSCRIPTION_INFO primary key(PUBLISHER, SUBSCRIBER)
+)
+drop table SUBSCRIPTION_INFO
+select * from SUBSCRIPTION_INFO;
+-----------------------------------------------------------------------------------
+-- ** 서비스센터 테이블, 시퀀스 생성 / 삭제 ** -----------------------------------------------------
+create table SERVICE_CENTER (
+   SERVICE_CENTER_NO number primary key,
+   SERVICE_CENTER_TITLE varchar2(30) not null,
+   SERVICE_CENTER_CONTENT varchar2(200) not null,
+   SERVICE_CENTER_DATE date not null,
+   SERVICE_CENTER_EMAIL varchar2(16) not null
+);
+create sequence service_center_seq
+drop table SERVICE_CENTER
+select * from SERVICE_CENTER;
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 ----------------------------- *** 구현 확인용 DATA 삽입 *** ----------------------------------
@@ -733,22 +786,7 @@ insert into ranking(MEMBER_GRADE, MIN_POINT, MAX_POINT) values('GOLD', 350, 749)
 insert into ranking(MEMBER_GRADE, MIN_POINT, MAX_POINT) values('PLATINUM', 750, 1549);
 -- DIAMOND 나중에 추가
 
--- 2015-12-08 대협추가
-----------------------------------------------------------------------------------------
--- ** 주제글 배경이미지 테이블 ** -------------------------------------------------------------
-create table MAIN_ARTICLE_IMG(
-	MAIN_ARTICLE_NO number primary key,
-	MAIN_ARTICLE_IMG_NAME clob not null,
-	constraint fk_img_main_article_no foreign key(MAIN_ARTICLE_NO) references MAIN_ARTICLE(MAIN_ARTICLE_NO)	
-)
--- 2015-12-08 대협추가
-----------------------------------------------------------------------------------------
--- ** 프로필이미지 테이블 ** -------------------------------------------------------------
-create table PROFILE_IMG(
-	MEMBER_EMAIL varchar2(50) primary key,
-	PROFILE_IMG_NAME clob not null,
-	constraint fk_img_member_email foreign key(MEMBER_EMAIL) references BRAIN_MEMBER(MEMBER_EMAIL)	
-)
+
 
 
 

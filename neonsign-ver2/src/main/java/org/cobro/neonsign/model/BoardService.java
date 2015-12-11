@@ -74,4 +74,13 @@ public interface BoardService {
 	//이미지 로드 관련 메소드
 	public MainArticleImgVO selectMainArticleImg(int articleNo);
 	public List<MainArticleVO> SearchOnTopMenu(String selector, String keyword);
+	
+	// 가입 나이 조회
+	public int getJoinAgeByEmail(MemberVO memberVO);
+	// 구독 관련 메서드
+	// 게시자 email로 나를 구독하는 리스트 닉네임 받기
+	public List<MemberVO> getSubscriptedInfoListByPublisherEmail(
+			MemberVO memberVO);
+	// 구독자 email로 나를 구독하는 리스트 닉네임 받기
+	public List<MemberVO> getSubscriptingInfoListBySubscriberEmail(MemberVO memberVO);
 }

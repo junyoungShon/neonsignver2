@@ -6,6 +6,7 @@ import java.util.List;
 import org.cobro.neonsign.vo.FindPasswordVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.PickedVO;
+import org.cobro.neonsign.vo.SubscriptionInfoVO;
 
 public interface MemberDAO {
 	public MemberVO findMemberByEmail(String emailComp);
@@ -35,4 +36,15 @@ public interface MemberDAO {
 	public void deletePasswordFindRequest(FindPasswordVO findPasswordVO);
 	public void memberPointPlusUpdater(String memberEmail, int i);
 	public void memberPointMinusUpdater(String memberEmail, int i);
+	/**
+	 * 구독하기
+	 * @author JeSeong Lee
+	 */
+	public SubscriptionInfoVO selectSubscriptionInfoVO(SubscriptionInfoVO subscriptionInfoVO);
+	public int insertSubscriptionInfoVO(SubscriptionInfoVO subscriptionInfoVO);
+	public int deleteSubscriptionInfoVO(SubscriptionInfoVO subscriptionInfoVO);
+	public List<SubscriptionInfoVO> getSubscriberListByPublisherEmail(
+			SubscriptionInfoVO subscriptionInfoVO);
+	public List<SubscriptionInfoVO> getSubscriptionListBySubscriberMemberEmail(
+			SubscriptionInfoVO subscriptionInfoVO);
 }

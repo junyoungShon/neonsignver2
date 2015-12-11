@@ -11,6 +11,7 @@ import org.cobro.neonsign.vo.MainArticleVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.RankingVO;
 import org.cobro.neonsign.vo.SubArticleVO;
+import org.cobro.neonsign.vo.SubscriptionInfoVO;
 import org.cobro.neonsign.vo.TagBoardVO;
 import org.cobro.neonsign.vo.TagVO;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -618,4 +619,34 @@ public class BoardDAOImpl implements BoardDAO{
 		}
 		return result;
 	}
+	
+	/**
+	 * email주소로 가입나이 받아오기
+	 * @author Je Seong Lee
+	 */
+	@Override
+	public int getJoinAgeByEmail(MemberVO memberVO) {
+		return sqlSessionTemplate.selectOne("board.getJoinAgeByEmail", memberVO);
+	}
+	
+	/**
+	 * 게시자 email로 내가 구독하는 리스트 받기
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public List<SubscriptionInfoVO> getSubscriptedInfoListByPublisherEmail(
+			MemberVO memberVO) {
+		return sqlSessionTemplate.selectList("board.getSubscriptedInfoListByPublisherEmail", memberVO);
+	}
+
+	/**
+	 * 게시자 email로 나를 구독하는 리스트 받기
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public List<SubscriptionInfoVO> getSubscriptingInfoListBySubscriberEmail(
+			MemberVO memberVO) {
+		return sqlSessionTemplate.selectList("board.getSubscriptingInfoListBySubscriberEmail", memberVO);
+	}
+	
 }

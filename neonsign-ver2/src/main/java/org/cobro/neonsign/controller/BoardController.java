@@ -735,7 +735,7 @@ public class BoardController {
 	public ModelAndView myPage(MemberVO memberVO){
 		System.out.println("넘어온 email : " + memberVO);
 		ModelAndView mav = new ModelAndView();
-		// email주소로 랭킹 받아서 memberVO에 set
+		// 마이페이지 주인 email주소로 랭킹 받아서 memberVO에 set + 구독정보도 추가함
 		memberVO = boardService.getMemberRankingByMemberEmail(memberVO);
 		// System.out.println("con : " + memberVO);
 		mav.addObject("rankMemberVO", memberVO);
@@ -745,17 +745,15 @@ public class BoardController {
 		// email주소로 찜한글 받아오기
 		List<MainArticleVO> pickedMainArticleList
 			= boardService.getPickedMainArticleByMemberEmailOrderByDate(memberVO);
+		mav.addObject("pickedMainArticleList", pickedMainArticleList);
 		//2015-12-10 대협추가
 		for(int i=0; i<pickedMainArticleList.size(); i++){
 			//태그가 두개인지 확인 -1이면 한개
 			int tagInt = pickedMainArticleList.get(i).getTagName().lastIndexOf(" ");
-			//System.out.println("끼-이 : " + tagInt);
 			String firstTagName = "";
 			if(tagInt!=-1){
-				//System.out.println("끄-오-오! : " + newMainArticleVOList.get(i).getTagName().substring(1, tagInt));
 				firstTagName = pickedMainArticleList.get(i).getTagName().substring(1, tagInt);
 			}else{
-				//System.out.println("꺄-오-오! : " + newMainArticleVOList.get(i).getTagName().substring(1));
 				firstTagName = pickedMainArticleList.get(i).getTagName().substring(1);
 			}
 			MainArticleImgVO mainArticleImgVOComp =boardService.selectMainArticleImg(pickedMainArticleList.get(i).getMainArticleNo());
@@ -775,26 +773,22 @@ public class BoardController {
 			File dir = new File(articleImgPath+mainArticleImgVO.getMainArticleImgName());
 			//해당 경로에 파일이 존재하는지 확인
 			if (dir.isFile() == false) {
-				// System.out.println("퍽!");
 				//태그명이 게임일때만 .png를 할당한다.
 				if(firstTagName.equals("게임")){
 					pickedMainArticleList.get(i).setMainArticleImgVO(
 							new MainArticleImgVO(pickedMainArticleList.get(i)
 									.getMainArticleNo(), "basicBg/"+firstTagName+".png"));
 				}else{
-					//System.out.println("낫겜 : " + "basicBg/"+firstTagName+".jpg");
 					pickedMainArticleList.get(i).setMainArticleImgVO(
 							new MainArticleImgVO(pickedMainArticleList.get(i)
 									.getMainArticleNo(), "basicBg/"+firstTagName+".jpg"));
 				}
 			} else {
-				// System.out.println("낫 퍽! : " + dir.toString());
 				pickedMainArticleList.get(i).setMainArticleImgVO(
 						mainArticleImgVO);
 			}
 		}
 		mav.addObject("pickedMainArticleList", pickedMainArticleList);
-		
 		// email주소로 작성한 글 받아오기
 		List<MainArticleVO> writeMainArticleList
 			= boardService.getWriteMainArticleByEmailOrderByDate(memberVO);
@@ -802,13 +796,10 @@ public class BoardController {
 		for(int i=0; i<writeMainArticleList.size(); i++){
 			//태그가 두개인지 확인 -1이면 한개
 			int tagInt = writeMainArticleList.get(i).getTagName().lastIndexOf(" ");
-			//System.out.println("끼-이 : " + tagInt);
 			String firstTagName = "";
 			if(tagInt!=-1){
-				//System.out.println("끄-오-오! : " + newMainArticleVOList.get(i).getTagName().substring(1, tagInt));
 				firstTagName = writeMainArticleList.get(i).getTagName().substring(1, tagInt);
 			}else{
-				//System.out.println("꺄-오-오! : " + newMainArticleVOList.get(i).getTagName().substring(1));
 				firstTagName = writeMainArticleList.get(i).getTagName().substring(1);
 			}
 			MainArticleImgVO mainArticleImgVOComp =boardService.selectMainArticleImg(writeMainArticleList.get(i).getMainArticleNo());
@@ -828,27 +819,26 @@ public class BoardController {
 			File dir = new File(articleImgPath+mainArticleImgVO.getMainArticleImgName());
 			//해당 경로에 파일이 존재하는지 확인
 			if (dir.isFile() == false) {
-				// System.out.println("퍽!");
 				//태그명이 게임일때만 .png를 할당한다.
 				if(firstTagName.equals("게임")){
 					writeMainArticleList.get(i).setMainArticleImgVO(
 							new MainArticleImgVO(writeMainArticleList.get(i)
 									.getMainArticleNo(), "basicBg/"+firstTagName+".png"));
 				}else{
-					//System.out.println("낫겜 : " + "basicBg/"+firstTagName+".jpg");
 					writeMainArticleList.get(i).setMainArticleImgVO(
 							new MainArticleImgVO(writeMainArticleList.get(i)
 									.getMainArticleNo(), "basicBg/"+firstTagName+".jpg"));
 				}
 			} else {
-				// System.out.println("낫 퍽! : " + dir.toString());
 				writeMainArticleList.get(i).setMainArticleImgVO(
 						mainArticleImgVO);
 			}
 		}
 		mav.addObject("writeMainArticleList", writeMainArticleList);
-		
-		// email 주소로 작성한 글의 태그 리스트 받기 : 태그 수 확인
+		// email주소로 가입일자 받아서 나이 받아오기
+		int joinAge = boardService.getJoinAgeByEmail(memberVO);
+		mav.addObject("joinAge", joinAge);
+		// email 주소로 작성한 태그 리스트 받기 : 태그 수 확인
 		List<TagBoardVO> writeTagListbyEmailList
 			= boardService.writeTagListbyEmail(memberVO);
 		mav.addObject("writeTagListbyEmailList", writeTagListbyEmailList);
@@ -856,6 +846,10 @@ public class BoardController {
 		TagBoardVO tagBoardVO
 			= boardService.getMostWriteTagByEmail(memberVO);
 		mav.addObject("tagBoardVO", tagBoardVO);
+		// 게시자 email로 나를 구독하는 리스트 닉네임 받기
+		mav.addObject("subscriptedInfoList", boardService.getSubscriptedInfoListByPublisherEmail(memberVO));
+		// 구독자 email로 내가 구독하는 리스트 닉네임 받기
+		mav.addObject("subscriptingInfoList", boardService.getSubscriptingInfoListBySubscriberEmail(memberVO));
 		
 		// email 주소로 참여한 글 받아오기
 		List<MainArticleVO> joinMainArticleList
@@ -864,13 +858,10 @@ public class BoardController {
 		for(int i=0; i<joinMainArticleList.size(); i++){
 			//태그가 두개인지 확인 -1이면 한개
 			int tagInt = joinMainArticleList.get(i).getTagName().lastIndexOf(" ");
-			//System.out.println("끼-이 : " + tagInt);
 			String firstTagName = "";
 			if(tagInt!=-1){
-				//System.out.println("끄-오-오! : " + newMainArticleVOList.get(i).getTagName().substring(1, tagInt));
 				firstTagName = joinMainArticleList.get(i).getTagName().substring(1, tagInt);
 			}else{
-				//System.out.println("꺄-오-오! : " + newMainArticleVOList.get(i).getTagName().substring(1));
 				firstTagName = joinMainArticleList.get(i).getTagName().substring(1);
 			}
 			MainArticleImgVO mainArticleImgVOComp =boardService.selectMainArticleImg(joinMainArticleList.get(i).getMainArticleNo());
@@ -890,20 +881,17 @@ public class BoardController {
 			File dir = new File(articleImgPath+mainArticleImgVO.getMainArticleImgName());
 			//해당 경로에 파일이 존재하는지 확인
 			if (dir.isFile() == false) {
-				// System.out.println("퍽!");
 				//태그명이 게임일때만 .png를 할당한다.
 				if(firstTagName.equals("게임")){
 					joinMainArticleList.get(i).setMainArticleImgVO(
 							new MainArticleImgVO(joinMainArticleList.get(i)
 									.getMainArticleNo(), "basicBg/"+firstTagName+".png"));
 				}else{
-					//System.out.println("낫겜 : " + "basicBg/"+firstTagName+".jpg");
 					joinMainArticleList.get(i).setMainArticleImgVO(
 							new MainArticleImgVO(joinMainArticleList.get(i)
 									.getMainArticleNo(), "basicBg/"+firstTagName+".jpg"));
 				}
 			} else {
-				// System.out.println("낫 퍽! : " + dir.toString());
 				joinMainArticleList.get(i).setMainArticleImgVO(
 						mainArticleImgVO);
 			}

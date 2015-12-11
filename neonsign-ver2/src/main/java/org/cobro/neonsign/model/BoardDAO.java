@@ -9,6 +9,7 @@ import org.cobro.neonsign.vo.MainArticleVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.RankingVO;
 import org.cobro.neonsign.vo.SubArticleVO;
+import org.cobro.neonsign.vo.SubscriptionInfoVO;
 import org.cobro.neonsign.vo.TagBoardVO;
 import org.cobro.neonsign.vo.TagVO;
 
@@ -89,4 +90,14 @@ public interface BoardDAO {
 	//이미지 로드 관련 메소드
 	public MainArticleImgVO selectMainArticleImg(int articleNo);
 	public String selectWriterEmailByArticleNO(ItjaMemberVO itjaMemberVO);
+	
+	// 가입 나이 조회
+	public int getJoinAgeByEmail(MemberVO memberVO);
+	// 구독 관련 메서드
+	// 게시자 email로 나를 구독하는 리스트 받기
+	public List<SubscriptionInfoVO> getSubscriptedInfoListByPublisherEmail(
+			MemberVO memberVO);
+	// 게시자 email로 내가 구독하는 리스트 받기
+	public List<SubscriptionInfoVO> getSubscriptingInfoListBySubscriberEmail(
+			MemberVO memberVO);
 }

@@ -17,6 +17,7 @@ import org.cobro.neonsign.vo.RankingVO;
 import org.cobro.neonsign.vo.ReportListVO;
 import org.cobro.neonsign.vo.ReportVO;
 import org.cobro.neonsign.vo.SubArticleVO;
+import org.cobro.neonsign.vo.SubscriptionInfoVO;
 import org.cobro.neonsign.vo.TagBoardVO;
 import org.cobro.neonsign.vo.TagVO;
 import org.springframework.stereotype.Service;
@@ -414,6 +415,7 @@ public class BoardServiceImpl implements BoardService{
 	public List<MainArticleVO> articleSort(String sort) {
 		return utilService.articleSort(sort);
 	}
+	
 	@Override
 	/**
 	 * 게시물 신고 횟수를 증가 하고 신고횟수가 10이상이면
@@ -471,18 +473,24 @@ public class BoardServiceImpl implements BoardService{
 		}
 		return pickedMainArticleVOList;
 	}
+	
 	/**
 	 * @author JeSeong Lee
-	 * NickName의 마이페이지 상단부 Ranking정보
+	 * 해당 마이페이지 상단부 Ranking정보
+	 * + 구독정보 추가함
 	 * email로 받아와서 memberVO에 set
 	 */
 	@Override
 	public MemberVO getMemberRankingByMemberEmail(MemberVO memberVO) {
 		memberVO = boardDAO.getMemberNickNameByEmail(memberVO);
 		RankingVO rankingVO = boardDAO.getMemberRankingByMemberEmail(memberVO);
+		List<SubscriptionInfoVO> subscriptionInfoList
+			= boardDAO.getSubscriptedInfoListByPublisherEmail(memberVO);
 		memberVO.setRankingVO(rankingVO);
+		memberVO.setSubscriptionInfoList(subscriptionInfoList);
 		return memberVO;
 	}
+	
 	
 	/**
 	 * @author JeSeong Lee
@@ -685,4 +693,51 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return utilService.SearchOnTopMenu(selector,keyword);
 	}
+	
+	
+	/**
+	 * email주소로 가입나이 받아오기
+	 * @author Je Seong Lee
+	 */
+	@Override
+	public int getJoinAgeByEmail(MemberVO memberVO) {
+		return boardDAO.getJoinAgeByEmail(memberVO);
+	}
+	
+	/**
+	 * 게시자 email로 나를 구독하는 리스트 받기
+	 * 구독리스트에서 구독자 이메일로 닉네임 받기
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public List<MemberVO> getSubscriptedInfoListByPublisherEmail(
+			MemberVO memberVO) {
+		List<SubscriptionInfoVO> SubscriptedInfoList = boardDAO.getSubscriptedInfoListByPublisherEmail(memberVO);
+		ArrayList<MemberVO> subscriptedMemberList = new ArrayList<MemberVO>();
+		for(int i = 0 ; i<SubscriptedInfoList.size() ; i++){
+			memberVO = new MemberVO();
+			memberVO.setMemberEmail(SubscriptedInfoList.get(i).getSubscriber());
+			subscriptedMemberList.add(boardDAO.getMemberNickNameByEmail(memberVO));
+		}
+		return subscriptedMemberList;
+	}
+	
+	/**
+	 * 구독자 email로 내가 구독하는 리스트 받기
+	 * 구독리스트에서 구독자 이메일로 닉네임 받기
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public List<MemberVO> getSubscriptingInfoListBySubscriberEmail(
+			MemberVO memberVO) {
+		List<SubscriptionInfoVO> SubscriptingInfoList = boardDAO.getSubscriptingInfoListBySubscriberEmail(memberVO);
+		ArrayList<MemberVO> subscriptingMemberList = new ArrayList<MemberVO>();
+		for(int i = 0 ; i<SubscriptingInfoList.size() ; i++){
+			memberVO = new MemberVO();
+			memberVO.setMemberEmail(SubscriptingInfoList.get(i).getPublisher());
+			subscriptingMemberList.add(boardDAO.getMemberNickNameByEmail(memberVO));
+		}
+		return subscriptingMemberList;
+	}
+	
 }

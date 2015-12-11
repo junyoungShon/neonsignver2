@@ -13,6 +13,7 @@ import org.cobro.neonsign.vo.MemberListVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.PagingBean;
 import org.cobro.neonsign.vo.PickedVO;
+import org.cobro.neonsign.vo.SubscriptionInfoVO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -188,5 +189,53 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return memberVO;
 	}
+
+	
+	/**
+	 * 구독정보 확인 후 insert, delete 수행 후
+	 * ajax에 보여줄 정보들과
+	 * map에 담아서 보내기
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public HashMap<String, Object> updateSubscriptionInfo(
+			SubscriptionInfoVO subscriptionInfoVO) {
+		System.out.println(memberDAO.selectSubscriptionInfoVO(subscriptionInfoVO));
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		if(memberDAO.selectSubscriptionInfoVO(subscriptionInfoVO) == null){
+			memberDAO.insertSubscriptionInfoVO(subscriptionInfoVO);
+			map.put("subscriptionResult", "insert");
+		} else{
+			memberDAO.deleteSubscriptionInfoVO(subscriptionInfoVO);
+			map.put("subscriptionResult", "delete");
+		}
+		// 구독된 현황 리스트
+		List<SubscriptionInfoVO> subscriberInfoList
+			= memberDAO.getSubscriberListByPublisherEmail(subscriptionInfoVO);
+		map.put("subscriberCount", subscriberInfoList.size());
+		ArrayList<MemberVO> subscriberMemberList = new ArrayList<MemberVO>();
+		for(int i = 0 ; i<subscriberInfoList.size() ; i++){
+			subscriberMemberList.add(memberDAO.findMemberByEmail(subscriberInfoList.get(i).getSubscriber()));
+		}
+		map.put("subscriberMemberList", subscriberMemberList);
+		// 구독한 현황 리스트
+		List<SubscriptionInfoVO> subscriptingInfoList
+			= memberDAO.getSubscriptionListBySubscriberMemberEmail(subscriptionInfoVO);
+		
+		return map;
+	}
+	
+	/**
+	 * 구독자 email로 구독리스트 받기
+	 * 세션에 세팅해주기용
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public List<SubscriptionInfoVO> getSubscriptionListBySubscriberMemberEmail(
+			SubscriptionInfoVO subscriptionInfoVO) {
+		return memberDAO.getSubscriptionListBySubscriberMemberEmail(subscriptionInfoVO);
+	}
+	
+	
 	
 }

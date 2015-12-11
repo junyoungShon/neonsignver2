@@ -34,7 +34,6 @@
          </span>
          </div>
         <!-- 우측 팔로우 표시 -->
-		
         <!-- 우측 팔로우 표시 끝 -->
     </div>
     
@@ -51,7 +50,7 @@
         </div>
         <div class="btn-group" role="group">
             <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><i class="fa fa-users"></i>
-                <div class="hidden-xs">Following</div>
+                <div class="hidden-xs">Scription Info</div>
             </button>
         </div>
     </div>
@@ -68,37 +67,15 @@
         <!-- 카드 1개 -->
           <c:forEach var="pickMainArticle" items="${requestScope.pickedMainArticleList}">
             <div class="card-box col-lg-2">  
-                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/uploadImg/articleBg/${pickMainArticle.mainArticleImgVO.mainArticleImgName}">    
+                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/img/snow.jpg">    
                     <div class="content">
                         <h6 class="category">
                             ${pickMainArticle.tagName}
                         </h6>
                         <br>
-                        <c:set var="pickMainArticleContentTitle"
-                     value="${pickMainArticle.mainArticleTitle}" />
-                        <h5 class="title">
-                        <!-- 카드 간격을 맞추기위해 제목을 보여주는 글자수 제한 -대협- -->
-	                     <c:choose>
-	                        <c:when test="${fn:length(pickMainArticleContentTitle)>12}">
-	                           ${fn:substring(pickMainArticleContentTitle, 0, 11)} ...
-	                        </c:when>
-	                        <c:otherwise>
-	                           ${pickMainArticleContentTitle}
-	                        </c:otherwise>
-	                     </c:choose>
-                        </h5>
-                        <c:set var="pickMainArticleContentContent"
-                     value="${pickMainArticle.mainArticleContent}" />
+                        <h4 class="title">${pickMainArticle.mainArticleTitle}</h4>
                         <p class="description">
-                         <!-- 카드 간격을 맞추기위해 내용을 보여주는 글자수 제한 -대협- -->
-	                     <c:choose>
-	                        <c:when test="${fn:length(pickMainArticleContentContent)>18}">
-	                        ${fn:substring(pickMainArticleContentContent, 0, 15)} ...
-	                     </c:when>
-	                        <c:otherwise>
-	                        ${pickMainArticleContentContent}
-	                     </c:otherwise>
-	                     </c:choose>
+                          	${pickMainArticle.mainArticleContent}
                         </p>
                    <a href="mypage.neon?memberEmail=${pickMainArticle.memberVO.memberEmail}" style="" tabindex="1" class="btn btn-lg btn-warning myNickDetail" role="button" 
                data-toggle="popover" 
@@ -207,37 +184,15 @@
             <!-- 카드 1개 -->
           <c:forEach var="writeMainArticle" items="${requestScope.writeMainArticleList}">
             <div class="card-box col-lg-2">  
-                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/uploadImg/articleBg/${writeMainArticle.mainArticleImgVO.mainArticleImgName}">    
+                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/img/snow.jpg">    
                     <div class="content">
                         <h6 class="category">
                             ${writeMainArticle.tagName}
                         </h6>
                         <br>
-                        <c:set var="writeMainArticleContentTitle"
-                     value="${writeMainArticle.mainArticleTitle}" />
-                        <h5 class="title">
-	 					 <!-- 카드 간격을 맞추기위해 제목을 보여주는 글자수 제한 -대협- -->
-	                     <c:choose>
-	                        <c:when test="${fn:length(writeMainArticleContentTitle)>12}">
-	                           ${fn:substring(writeMainArticleContentTitle, 0, 11)} ...
-	                        </c:when>
-	                        <c:otherwise>
-	                           ${writeMainArticleContentTitle}
-	                        </c:otherwise>
-	                     </c:choose>
-                        </h5>
-                        <c:set var="writeMainArticleContentContent"
-                     value="${writeMainArticle.mainArticleContent}" />
+                        <h4 class="title">${writeMainArticle.mainArticleTitle}</h4>
                         <p class="description">
-                          <!-- 카드 간격을 맞추기위해 내용을 보여주는 글자수 제한 -대협- -->
-	                     <c:choose>
-	                        <c:when test="${fn:length(writeMainArticleContentContent)>18}">
-	                        ${fn:substring(writeMainArticleContentContent, 0, 15)} ...
-	                     </c:when>
-	                        <c:otherwise>
-	                        ${writeMainArticleContentContent}
-	                     </c:otherwise>
-	                     </c:choose>
+                          ${writeMainArticle.mainArticleContent}
                         </p>
                      <a href="mypage.neon?memberEmail=${writeMainArticle.memberVO.memberEmail}" style="" tabindex="1" class="btn btn-lg btn-warning myNickDetail" role="button" 
                data-toggle="popover" 
@@ -347,37 +302,15 @@
             <!-- 카드 1개 -->
             <c:forEach var="joinMainArticle" items="${requestScope.joinMainArticleList}">
             <div class="card-box col-lg-2">  
-                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/uploadImg/articleBg/${joinMainArticle.mainArticleImgVO.mainArticleImgName}">    
+                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/img/snow.jpg">    
                     <div class="content">
                         <h6 class="category">
                             ${joinMainArticle.tagName}
                         </h6>
                         <br>
-                        <c:set var="joinMainArticleContentTitle"
-                     value="${joinMainArticle.mainArticleTitle}" />
-                        <h5 class="title">
-						<!-- 카드 간격을 맞추기위해 제목을 보여주는 글자수 제한 -대협- -->
-	                     <c:choose>
-	                        <c:when test="${fn:length(joinMainArticleContentTitle)>12}">
-	                           ${fn:substring(joinMainArticleContentTitle, 0, 11)} ...
-	                        </c:when>
-	                        <c:otherwise>
-	                           ${joinMainArticleContentTitle}
-	                        </c:otherwise>
-	                     </c:choose>
-                        </h5>
-                        <c:set var="joinMainArticleContentContent"
-                     value="${joinMainArticle.mainArticleContent}" />
+                        <h4 class="title">${joinMainArticle.mainArticleTitle}</h4>
                         <p class="description">
-                          <!-- 카드 간격을 맞추기위해 내용을 보여주는 글자수 제한 -대협- -->
-	                     <c:choose>
-	                        <c:when test="${fn:length(joinMainArticleContentContent)>18}">
-	                        ${fn:substring(joinMainArticleContentContent, 0, 15)} ...
-	                     </c:when>
-	                        <c:otherwise>
-	                        ${joinMainArticleContentContent}
-	                     </c:otherwise>
-	                     </c:choose>
+                          ${joinMainArticle.mainArticleContent}
                         </p>
                      <a href="mypage.neon?memberEmail=${joinMainArticle.memberVO.memberEmail}" style="" tabindex="1" class="btn btn-lg btn-warning myNickDetail" role="button" 
                data-toggle="popover" 
@@ -491,11 +424,43 @@
                      <i class="fa fa-user user"></i>
                 </div>
                 <div class="text">
-                    <var>3</var>
-                    <label class="text-muted">Followers</label>
+                	<c:set var="subscriptedCount" value="${fn:length(requestScope.subscriptedInfoList)}"/>
+                    <var class="subscriptedCount">${subscriptedCount}</var>
+                    
+                    <label class="text-muted">SUBSCRIBERs</label>
                 </div>
                 <div class="options">
-                    <a href="javascript:;" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i>Follow Member!</a>
+                    <button class="btn btn-primary btn-lg staticSubscriptionBtn">
+                    <c:set var="breakCheck" value="false"/>
+                     <c:forEach var="subscriptedCheck" items="${requestScope.subscriptedInfoList}">
+	                     <c:choose>
+	                        <c:when test="${subscriptedCheck.memberEmail == sessionScope.memberVO.memberEmail}">
+                                <c:set var="breakCheck" value="true"/>
+                            </c:when>
+                            <c:otherwise>
+                            </c:otherwise>
+	                     </c:choose>
+                     </c:forEach>
+                     
+                     <c:choose>
+                        <c:when test="${breakCheck == true}">
+                            <span class="subscriptionInfoSpan">
+		                 	   <i class="fa fa-minus-square"></i>&nbsp;구독 취소
+		                    </span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="subscriptionInfoSpan">
+		                 	   <i class="fa fa-plus-square"></i>&nbsp;구독 하기
+		                    </span>
+                        </c:otherwise>
+                     </c:choose>
+                    </button>
+					<!-- 구독 정보를 전달하기 위한 폼 시작 -->
+					<form name="subscriptionInfo">
+						<input type="hidden" name="publisher" value="${requestScope.rankMemberVO.memberEmail}">
+						<input type="hidden" name="subscriber" value="${sessionScope.memberVO.memberEmail}">
+					</form>
+					<!-- 구독 정보를 전달하기 위한 폼 끝 -->
                 </div>
             </div>
 		</div>
@@ -510,8 +475,9 @@
                 </div>
 				<div class="options">
 				<a class="btn btn-lg btn-danger popover2" title="뇌OnSign Grade" href='#'>
-						<i class="fa fa-trophy"></i> Next Point
+						<i class="fa fa-trophy"></i>&nbsp; Next Point
 						${requestScope.rankMemberVO.rankingVO.maxPoint}</a>
+						
 						<div id="rankingPopover" style="display: none">
 						<table class="rankingTable">
 							<tr>
@@ -564,6 +530,55 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon age">
+	                <c:if test="${requestScope.joinAge==0}">
+	                	<i class="fa fa-paper-plane"></i>
+	                </c:if>
+	                <c:if test="${requestScope.joinAge==1}">
+	                	<i class="fa fa-rocket"></i>
+	                </c:if>
+	                <c:if test="${requestScope.joinAge==2}">
+	                	<i class="fa fa-diamond"></i>
+	                </c:if>
+	                <c:if test="${requestScope.joinAge==3||requestScope.joinAge==4}">
+	                	<i class="fa fa-gavel"></i>
+	                </c:if>
+	                <c:if test="${requestScope.joinAge==5||requestScope.joinAge==6}">
+	                	<i class="fa fa-mixcloud"></i>
+	                </c:if>
+	                <c:if test="${requestScope.joinAge>6}">
+	                	<i class="fa fa-linux"></i>
+	                </c:if>
+                </div>
+                <div class="text">
+                    <var>${requestScope.joinAge}</var>
+                    <label class="text-muted">가입나이</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg">
+                    <i class="fa fa-fire"></i>&nbsp;&nbsp;since ${requestScope.rankMemberVO.memberJoinDate}</a>
+                </div>
+            </div>
+		</div>
+		
+		<div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="fa fa-star pick"></i>
+                </div>
+                <div class="text">
+                    <var>${fn:length(requestScope.pickedMainArticleList)}</var>
+                    <label class="text-muted">찜한게시물</label>
+                </div>
+                <div class="options">
+                    <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg">
+                    <i class="fa fa-desktop"></i>&nbsp;&nbsp;View Info</a>
+                </div>
+            </div>
+    	</div>
     	
        	<div class="col-sm-3">
             <div class="hero-widget well well-sm">
@@ -575,10 +590,11 @@
                     <label class="text-muted">작성한 잇는글</label>
                 </div>
                 <div class="options">
-                   <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
+                   <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;&nbsp;View Info</a>
                 </div>
             </div>
 		</div>
+		
 		
         <div class="col-sm-3">
             <div class="hero-widget well well-sm">
@@ -590,26 +606,12 @@
                     <label class="text-muted">참여한 잇는글</label>
                 </div>
                 <div class="options">
-                    <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;View Info</a>
+                    <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg"><i class="fa fa-desktop"></i>&nbsp;&nbsp;View Info</a>
                 </div>
             </div>
 		</div>
 		
-		        <div class="col-sm-3">
-            <div class="hero-widget well well-sm">
-                <div class="icon">
-                     <i class="fa fa-star pick"></i>
-                </div>
-                <div class="text">
-                    <var>${fn:length(requestScope.pickedMainArticleList)}</var>
-                    <label class="text-muted">찜한게시물</label>
-                </div>
-                <div class="options">
-                    <a href="mypage.neon?memberEmail=${requestScope.rankMemberVO.memberEmail}" class="btn btn-default btn-lg">
-                    <i class="fa fa-desktop"></i>&nbsp;View Info</a>
-                </div>
-            </div>
-    	</div>
+		
 		
 		<div class="col-sm-3">
             <div class="hero-widget well well-sm">
@@ -635,20 +637,6 @@
             </div>
 		</div>
 		
-		<div class="col-sm-3">
-            <div class="hero-widget well well-sm">
-                <div class="icon">
-                     <i class="fa fa-exclamation-triangle ready"></i>
-                </div>
-                <div class="text">
-                    <var>-</var>
-                    <label class="text-muted">준비중입니다</label>
-                </div>
-                <div class="options">
-                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="fa fa-wrench"></i></a>
-                </div>
-            </div>
-		</div>
 		
 		<div class="col-sm-3">
             <div class="hero-widget well well-sm">
@@ -672,6 +660,35 @@
         
        <!-- Tab3 구독 정보 시작 -->
         <div class="tab-pane fade in" id="tab3">
+        
+        
+ 			<div class="row">
+				<!-- 내가 구독중인 현황 -->
+                <div class="col-xs-6">
+                	<p class="lead"><span class="text-danger">${requestScope.rankMemberVO.memberNickName}님이 구독하는 사람들</span></p>
+					<span class="text-danger">
+                      	<h2 class="subscriptingCount">${fn:length(requestScope.subscriptingInfoList)}명</h2>
+                      	<span class="subscriptingInfo">
+	                      	<c:forEach var="subscriptingInfoList" items="${requestScope.subscriptingInfoList}">
+	                      		${subscriptingInfoList.memberNickName}<br>
+	                      	</c:forEach>
+	                     </span>
+					</span>
+                </div>
+                  <!-- 나를 구독 하는 현황 -->
+                  <div class="col-xs-6">
+                      	<p class="lead"><span class="text-success">${requestScope.rankMemberVO.memberNickName}님을 구독하는 사람들</span></p>
+						<span class="text-success">
+	                      	<h2 class="subscriptedCount">${subscriptedCount}명</h2>
+	                      	<span class="subscriptedInfo">
+		                      	<c:forEach var="subscriptedInfoList" items="${requestScope.subscriptedInfoList}">
+		                      		${subscriptedInfoList.memberNickName}<br>
+		                      	</c:forEach>
+	                      	</span>
+	                    </span>
+                  </div>
+              </div>
+        
         	
 
         </div> <!-- Tab3 끝 -->

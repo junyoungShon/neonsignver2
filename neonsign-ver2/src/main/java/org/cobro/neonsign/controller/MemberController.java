@@ -17,6 +17,7 @@ import org.cobro.neonsign.vo.ItjaMemberVO;
 import org.cobro.neonsign.vo.MemberListVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.PickedVO;
+import org.cobro.neonsign.vo.SubscriptionInfoVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -187,6 +188,32 @@ public class MemberController {
 		}
 		return map;
 	}
+	
+	/**
+	 * 구독 정보의 모든 것
+	 * @author JeSeong Lee 
+	 */
+	@RequestMapping(value="auth_updateSubscriptionInfo.neon", method=RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> updateSubscriptionInfo(SubscriptionInfoVO subscriptionInfoVO, HttpServletRequest request){
+		System.out.println("넘어온 구독정보 : " + subscriptionInfoVO);
+		HttpSession session = request.getSession(false);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(session != null){
+			if(subscriptionInfoVO.getPublisher().equals(subscriptionInfoVO.getSubscriber())){
+				map.put("subscriptionResult", "selfSubscription");
+			}else{
+				map = memberService.updateSubscriptionInfo(subscriptionInfoVO);
+				List<SubscriptionInfoVO> subscriptionInfoList
+					= memberService.getSubscriptionListBySubscriberMemberEmail(subscriptionInfoVO);
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+				memberVO.setSubscriptionInfoList(subscriptionInfoList);
+				session.setAttribute("memberVO", memberVO);
+			}
+		}
+		return map;
+	}
+	
 	
 	/**
 	 * 현재 내 비밀번호가 맞는지 확인

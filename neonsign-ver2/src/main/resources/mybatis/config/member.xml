@@ -13,8 +13,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="memberPoint" column="MEMBER_POINT" />
       	<result property="memberReportAmount" column="MEMBER_REPORT_AMOUNT" />
 		<result property="memberCategory" column="MEMBER_CATEGORY"/>
-		<collection property="pickedVOList" column="MEMBER_EMAIL"
-			ofType="pickedVO" javaType="ArrayList" resultMap ="pickedResultMap"/>
+		<collection property="subscriptionInfoList" column="MEMBER_EMAIL"
+			ofType="subscriptionInfoVO" javaType="ArrayList" resultMap ="subscriptionInfoResultMap"/>
+	</resultMap>
+	
+	<!-- SubscriptionInfoVO resultMap -->
+	<resultMap type="subscriptionInfoVO" id="subscriptionInfoResultMap">
+		<result property="publisher" column="PUBLISHER"/>
+		<result property="subscriber" column="SUBSCRIBER"/>
+		<result property="subscriptionDate" column="SUBSCRIPTION_DATE"/>
 	</resultMap>
 	
 	<!-- pickedVO resultMap -->
@@ -28,6 +35,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="memberEmail" column="MEMBER_EMAIL"/>
 		<result property="randomSentence" column="RANDOM_SENTECE"/>
 	</resultMap>
+	
+	<!-- *************************** ResultMap 끝 *************************** -->
 	
    	<!-- 비밀 번호 찾기 요청 인서트 구문 -->
    	<insert id="insertPasswordFindRequest">
@@ -58,11 +67,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 재영 로그인 -->
-	<!-- 제성 : 찜목록 담는거로 수정 -->
+	<!-- 제성 : 찜목록 담는거로 수정 + 구독 목록 담기 -->
 	<select id="memberLogin" resultMap="memberResultMap" parameterType="memberVO">
-		select bm.MEMBER_EMAIL, bm.member_Category,bm.MEMBER_NICKNAME, pa.MAIN_ARTICLE_NO, bm.MEMBER_POINT
-		from BRAIN_MEMBER bm, picked_article pa	
-		where bm.MEMBER_EMAIL=pa.MEMBER_EMAIL and 
+		select bm.MEMBER_EMAIL, bm.member_Category,bm.MEMBER_NICKNAME, pa.MAIN_ARTICLE_NO,
+		bm.MEMBER_POINT, si.PUBLISHER
+		from BRAIN_MEMBER bm, picked_article pa, SUBSCRIPTION_INFO si
+		where bm.MEMBER_EMAIL=pa.MEMBER_EMAIL and bm.MEMBER_EMAIL=si.SUBSCRIBER and
 		bm.MEMBER_EMAIL=#{memberEmail} and bm.MEMBER_PASSWORD=#{memberPassword}
 	</select>
 	<select id="defaultMemberLogin" resultMap="memberResultMap" parameterType="memberVO">
@@ -162,7 +172,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     set MEMBER_CATEGORY='탈퇴회원'
     where MEMBER_EMAIL=#{memberEmail}
     </update>
+
+    <!-- 구독정보를 조회 -->
+  	<select id="selectSubscriptionInfoVO" resultMap="subscriptionInfoResultMap">
+  		select PUBLISHER, SUBSCRIBER 
+		from SUBSCRIPTION_INFO
+		where PUBLISHER = #{publisher} and SUBSCRIBER=#{subscriber}
+  	</select>
+    <!-- 구독정보 조회 후 비구독상태시 구독하기 수행 -->
+    <insert id="insertSubscriptionInfoVO">
+    	insert into SUBSCRIPTION_INFO(PUBLISHER, SUBSCRIBER, SUBSCRIPTION_DATE) 
+		values(#{publisher}, #{subscriber}, sysdate)
+    </insert>
+    <!-- 구독정보 조회 후 비구독상태시 구독취소 수행 -->
+    <delete id="deleteSubscriptionInfoVO">
+    	delete SUBSCRIPTION_INFO where PUBLISHER=#{publisher} and SUBSCRIBER=#{subscriber}
+    </delete>
     
+    <!-- 마이페이지 ajax 게시자 Email로 구독자리스트 보내기 -->
+    <select id="getSubscriberListByPublisherEmail" resultMap="subscriptionInfoResultMap">
+    	select SUBSCRIBER from SUBSCRIPTION_INFO
+		where PUBLISHER = #{publisher} order by SUBSCRIPTION_DATE desc
+    </select> 
+    
+    <!-- 구독자 email로 구독리스트 조회(세션 다시 세팅용) -->
+    <select id="getSubscriptionListBySubscriberMemberEmail" resultMap="subscriptionInfoResultMap">
+   		select PUBLISHER, SUBSCRIBER, SUBSCRIPTION_DATE
+		from SUBSCRIPTION_INFO
+		where SUBSCRIBER=#{subscriber}
+    </select>
+   
 </mapper> 		
  
  

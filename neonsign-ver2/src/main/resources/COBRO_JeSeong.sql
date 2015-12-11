@@ -1,3 +1,54 @@
+select count(SUBSCRIBER) from SUBSCRIPTION_INFO
+where PUBLISHER = 'a@gmail.com'
+
+
+select PUBLISHER, SUBSCRIBER, SUBSCRIPTION_DATE from SUBSCRIPTION_INFO
+where PUBLISHER = 'a@gmail.com'
+
+select bm.MEMBER_EMAIL, bm.member_Category,bm.MEMBER_NICKNAME, pa.MAIN_ARTICLE_NO,
+bm.MEMBER_POINT, si.PUBLISHER
+from BRAIN_MEMBER bm, picked_article pa, SUBSCRIPTION_INFO si
+where bm.MEMBER_EMAIL=pa.MEMBER_EMAIL and bm.MEMBER_EMAIL=si.SUBSCRIBER and
+bm.MEMBER_EMAIL='b@gmail.com' and bm.MEMBER_PASSWORD='aaaa'
+
+select * from SUBSCRIPTION_INFO;
+
+select PUBLISHER, SUBSCRIBER 
+from SUBSCRIPTION_INFO
+where PUBLISHER = 'a@gmail.com' and SUBSCRIBER='b@gmail.com'
+
+insert into SUBSCRIPTION_INFO(PUBLISHER, SUBSCRIBER, SUBSCRIPTION_DATE) 
+values('a@gmail.com', 'b@gmail.com', sysdate);
+
+insert into SUBSCRIPTION_INFO(PUBLISHER, SUBSCRIBER, SUBSCRIPTION_DATE) 
+values('g@gmail.com', 'b@gmail.com', sysdate);
+
+SELECT datediff(날짜1, 날짜2);
+
+select MEMBER_EMAIL, MEMBER_NICKNAME, MEMBER_POINT, to_char(MEMBER_JOIN_DATE, 'YYYY/MM/DD') as MEMBER_JOIN_DATE
+from brain_member
+where MEMBER_EMAIL = 'y5@gmail.com'
+
+select months_between(sysdate,to_date('2006-12-22','yyyy-mm-dd')) from dual;
+
+select FLOOR(months_between(SYSDATE, MEMBER_JOIN_DATE)/12)
+from BRAIN_MEMBER where MEMBER_EMAIL = 'y5@gmail.com'
+
+insert into brain_member(MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_PASSWORD,MEMBER_JOIN_DATE,MEMBER_POINT, MEMBER_CATEGORY) 
+values('y1@gmail.com','Y1맨','aaaa', to_date('2014/12/09 00:00:00',  'yyyy/mm/dd hh24:mi:ss'), 950, 'NORMAL');
+
+insert into brain_member(MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_PASSWORD,MEMBER_JOIN_DATE,MEMBER_POINT, MEMBER_CATEGORY) 
+values('y2@gmail.com','Y2맨','aaaa', to_date('2014/12/10 00:00:00',  'yyyy/mm/dd hh24:mi:ss'), 1050, 'NORMAL');
+
+insert into brain_member(MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_PASSWORD,MEMBER_JOIN_DATE,MEMBER_POINT, MEMBER_CATEGORY) 
+values('y3@gmail.com','Y3맨','aaaa', to_date('2014/12/11 00:00:00',  'yyyy/mm/dd hh24:mi:ss'), 1450, 'NORMAL');
+
+insert into brain_member(MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_PASSWORD,MEMBER_JOIN_DATE,MEMBER_POINT, MEMBER_CATEGORY) 
+values('y4@gmail.com','Y4맨','aaaa', to_date('2012/12/11 00:00:00',  'yyyy/mm/dd hh24:mi:ss'), 1250, 'NORMAL');
+
+insert into brain_member(MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_PASSWORD,MEMBER_JOIN_DATE,MEMBER_POINT, MEMBER_CATEGORY) 
+values('y5@gmail.com','Y5맨','aaaa', to_date('2007/12/11 00:00:00',  'yyyy/mm/dd hh24:mi:ss'), 1150, 'NORMAL');
+
 
 select TAG_NAME, sum(TAG_COUNT) as SUM_COUNT from(
 select tb.MAIN_ARTICLE_NO as MAIN_ARTICLE_NO, tb.TAG_NAME as TAG_NAME, count(tb.TAG_NAME) as TAG_COUNT

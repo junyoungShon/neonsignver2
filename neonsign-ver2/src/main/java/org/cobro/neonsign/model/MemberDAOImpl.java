@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.cobro.neonsign.vo.FindPasswordVO;
 import org.cobro.neonsign.vo.MemberVO;
 import org.cobro.neonsign.vo.PickedVO;
+import org.cobro.neonsign.vo.SubscriptionInfoVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 @Repository
@@ -232,4 +233,57 @@ public class MemberDAOImpl implements MemberDAO{
 		map.put( "memberPoint", point );
 		sqlSessionTemplate.update("member.memberPointMinusUpdater",map);
 	}
+	
+
+	/**
+	 * 게시자, 구독자 email로 구독정보 반환
+	 * null인지, 구독정보 확인
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public SubscriptionInfoVO selectSubscriptionInfoVO(SubscriptionInfoVO subscriptionInfoVO) {
+		return sqlSessionTemplate.selectOne("member.selectSubscriptionInfoVO", subscriptionInfoVO);
+	}
+	
+	/**
+	 * null인지, 구독정보 확인
+	 * 구독중 아니면 insert
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public int insertSubscriptionInfoVO(SubscriptionInfoVO subscriptionInfoVO) {
+		return sqlSessionTemplate.insert("member.insertSubscriptionInfoVO", subscriptionInfoVO);
+	}
+
+	/**
+	 * null인지, 구독정보 확인
+	 * 구독중이면 delete
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public int deleteSubscriptionInfoVO(SubscriptionInfoVO subscriptionInfoVO) {
+		return sqlSessionTemplate.delete("member.deleteSubscriptionInfoVO", subscriptionInfoVO);
+	}
+	/**
+	 * ajax용 게시자이메일로 구독자들리스트 받아옴
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public List<SubscriptionInfoVO> getSubscriberListByPublisherEmail(
+			SubscriptionInfoVO subscriptionInfoVO) {
+		return sqlSessionTemplate.selectList("member.getSubscriberListByPublisherEmail", subscriptionInfoVO);
+	}
+	
+	/**
+	 * 구독자(세션의 이메일) 이메일로 구독리스트 받아옴
+	 * @author JeSeong Lee
+	 */
+	@Override
+	public List<SubscriptionInfoVO> getSubscriptionListBySubscriberMemberEmail(
+			SubscriptionInfoVO subscriptionInfoVO) {
+		return sqlSessionTemplate.selectList("member.getSubscriptionListBySubscriberMemberEmail", subscriptionInfoVO);
+	}
+
+	
+	
 }

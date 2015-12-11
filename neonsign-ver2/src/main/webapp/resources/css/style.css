@@ -432,8 +432,9 @@ input[type=radio]:checked + label {
 .hero-widget .icon .itja{color:#02bbea;}
 .hero-widget .icon .pick{color:#ff7266;}
 .hero-widget .icon .write{color:#ff870f;}
-.hero-widget .icon .join{color:#f2f200;}
+.hero-widget .icon .join{color:#c6a81c;}
 .hero-widget .icon .tags{color:#009700;}
+.hero-widget .age{color: #b300ff;}
 .hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal; }
 .hero-widget label { font-size: 17px; }
 .hero-widget .options { margin-top: 10px; }

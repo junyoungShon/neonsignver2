@@ -49,6 +49,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       <result property="memberCategory" column="MEMBER_CATEGORY" />
       <collection property="pickedVOList" column="MEMBER_EMAIL"
 			ofType="pickedVO" javaType="ArrayList" resultMap ="pickedResultMap"/>
+	  <collection property="subscriptionInfoList" column="MEMBER_EMAIL"
+		ofType="subscriptionInfoVO" javaType="ArrayList" resultMap ="subscriptionInfoResultMap"/>
    </resultMap>
    
    <!-- pickedVO resultMap -->
@@ -88,6 +90,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="mainArticleNo" column="MAIN_ARTICLE_NO"/>
 		<result property="mainArticleImgName" column="MAIN_ARTICLE_IMG_NAME"/>
 	</resultMap>
+	
+	<!-- SubscriptionInfoVO resultMap -->
+	<resultMap type="subscriptionInfoVO" id="subscriptionInfoResultMap">
+		<result property="publisher" column="PUBLISHER"/>
+		<result property="subscriber" column="SUBSCRIBER"/>
+		<result property="subscriptionDate" column="SUBSCRIPTION_DATE"/>
+	</resultMap>
+	
+	<!-- ************************************** 리절트맵 끝 ************************************** -->
 	
 	<!-- 준영 -->
 	<!-- 주제글에 잇자 멤버 정보를 삽입 -->
@@ -505,4 +516,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMainArticleImg" resultMap="mainArticleImgResultMap">
 		select MAIN_ARTICLE_NO, MAIN_ARTICLE_IMG_NAME from MAIN_ARTICLE_IMG where MAIN_ARTICLE_NO=#{value}	
 	</select>
+	
+	<!-- eMail로 가입나이 받기 -->
+	<select id="getJoinAgeByEmail" resultType="int">
+		select FLOOR(months_between(SYSDATE, MEMBER_JOIN_DATE)/12)
+		from BRAIN_MEMBER
+		where MEMBER_EMAIL = #{memberEmail}
+	</select>
+	
+	<!-- 게시자 email로 나를 구독하는 리스트 받기 -->
+	<select id="getSubscriptedInfoListByPublisherEmail" resultMap="subscriptionInfoResultMap">
+		select PUBLISHER, SUBSCRIBER, SUBSCRIPTION_DATE from SUBSCRIPTION_INFO
+		where PUBLISHER = #{memberEmail}
+	</select>
+	
+	<!-- 게시자 email로 나를 구독하는 리스트 받기 -->
+	<select id="getSubscriptingInfoListBySubscriberEmail" resultMap="subscriptionInfoResultMap">
+		select PUBLISHER, SUBSCRIBER, SUBSCRIPTION_DATE from SUBSCRIPTION_INFO
+		where SUBSCRIBER = #{memberEmail}
+	</select>
+	
 </mapper> 		
