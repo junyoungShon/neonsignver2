@@ -67,7 +67,7 @@
         <!-- 카드 1개 -->
           <c:forEach var="pickMainArticle" items="${requestScope.pickedMainArticleList}">
             <div class="card-box col-lg-2">  
-                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/img/snow.jpg">    
+                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/uploadImg/articleBg/${pickMainArticle.mainArticleImgVO.mainArticleImgName}">    
                     <div class="content">
                         <h6 class="category">
                             ${pickMainArticle.tagName}
@@ -184,7 +184,7 @@
             <!-- 카드 1개 -->
           <c:forEach var="writeMainArticle" items="${requestScope.writeMainArticleList}">
             <div class="card-box col-lg-2">  
-                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/img/snow.jpg">    
+                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/uploadImg/articleBg/${writeMainArticle.mainArticleImgVO.mainArticleImgName}">    
                     <div class="content">
                         <h6 class="category">
                             ${writeMainArticle.tagName}
@@ -302,7 +302,7 @@
             <!-- 카드 1개 -->
             <c:forEach var="joinMainArticle" items="${requestScope.joinMainArticleList}">
             <div class="card-box col-lg-2">  
-                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/img/snow.jpg">    
+                <div class="card card-with-border" data-background="image" data-src="${initParam.root}resources/uploadImg/articleBg/${joinMainArticle.mainArticleImgVO.mainArticleImgName}">    
                     <div class="content">
                         <h6 class="category">
                             ${joinMainArticle.tagName}

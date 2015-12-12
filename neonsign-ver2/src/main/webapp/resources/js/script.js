@@ -1467,7 +1467,7 @@ $(document).ready(function(){ //DOM이 준비되고
 					$('.rePassInput').attr('class','form-group has-feedback rePassInput has-error');
 					$('.rePassInput > .control-label').html('암호를 확인해주세요');
 					$('.rePassInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
-				}else if(rePasswordComp.length<8 || rePasswordComp.length>19){
+				}else if(rePasswordComp.length<7 || rePasswordComp.length>18){
 					userRePassFlag = false;
 					$('.rePassInput').attr('class','form-group has-feedback rePassInput has-error');
 					$('.rePassInput > .control-label').html('암호는 7글자 이상 ~18글자 이하로 입력해주세요');
@@ -1838,7 +1838,7 @@ $(document).ready(function(){ //DOM이 준비되고
 				$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-error');
 				$('.checkpassInput > .control-label').html('현재비밀번호를 입력해 주세요');
 				$('.checkpassInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
-			}else if(checkPassComp.length<8 || checkPassComp.length>19){
+			}else if(checkPassComp.length<7 || checkPassComp.length>18){
 				userPassFlag = false;
 				$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-error');
 				$('.checkpassInput > .control-label').html('비밀번호 확인중 입니다');
@@ -1914,7 +1914,7 @@ $(document).ready(function(){ //DOM이 준비되고
 				$('.passInput').attr('class','form-group has-feedback passInput has-error');
 				$('.passInput > .control-label').html('암호를 입력해주세요');
 				$('.passInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
-			}else if(passwordComp.length<8 || passwordComp.length>19){
+			}else if(passwordComp.length<7 || passwordComp.length>18){
 				userPassFlag = false;
 				$('.passInput').attr('class','form-group has-feedback passInput has-error');
 				$('.passInput > .control-label').html('암호는 7글자 이상 ~18글자 이하로 입력해주세요');
@@ -1935,7 +1935,7 @@ $(document).ready(function(){ //DOM이 준비되고
 				$('.rePassInput').attr('class','form-group has-feedback rePassInput has-error');
 				$('.rePassInput > .control-label').html('암호를 확인해주세요');
 				$('.rePassInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
-			}else if(rePasswordComp.length<8 || rePasswordComp.length>19){
+			}else if(rePasswordComp.length<7 || rePasswordComp.length>18){
 				userRePassFlag = false;
 				$('.rePassInput').attr('class','form-group has-feedback rePassInput has-error');
 				$('.rePassInput > .control-label').html('암호는 7글자 이상 ~18글자 이하로 입력해주세요');
@@ -1986,7 +1986,7 @@ $(document).ready(function(){ //DOM이 준비되고
 			$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-error');
 			$('.checkpassInput > .control-label').html('현재비밀번호를 입력해 주세요');
 			$('.checkpassInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
-		}else if(PassComp.length<8 || PassComp.length>19){
+		}else if(PassComp.length<7 || PassComp.length>18){
 			userPassFlag = false;
 			$('.checkpassInput').attr('class','form-group has-feedback checkpassInput has-error');
 			$('.checkpassInput > .control-label').html('비밀번호 확인중 입니다');
@@ -2020,7 +2020,7 @@ $(document).ready(function(){ //DOM이 준비되고
 	});
 
 	$("#memberDeleteSubmit").click(function(){		
-		alert(userCheckFlag);
+		//alert(userCheckFlag);
 			if(userCheckFlag==true){
 				alert("회원탈퇴 되었습니다");
 				$("#memberDelete").submit();
