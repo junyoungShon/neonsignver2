@@ -1972,7 +1972,7 @@ $(document).ready(function(){ //DOM이 준비되고
 	});
 
 	$("#memberDeleteSubmit").click(function(){		
-		alert(userCheckFlag);
+		//alert(userCheckFlag);
 			if(userCheckFlag==true){
 				alert("회원탈퇴 되었습니다");
 				$("#memberDelete").submit();
