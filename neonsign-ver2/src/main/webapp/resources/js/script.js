@@ -1,4 +1,6 @@
 $(document).ready(function(){ //DOM이 준비되고
+	
+	
 	//타이머
 	window.setInterval(function(){
 		//날짜 형식
@@ -618,7 +620,53 @@ $(document).ready(function(){ //DOM이 준비되고
 	function detailItjaView(mainArticleNO,isComplete){
 		if(isComplete=="complete"){
 			$('#isComplete').val(isComplete);
+		}	
+		
+		var updateDates = $('.updateDate');
+		var bestMainArticleSNo = $('.bestMainArticleNo'); 
+		var i =0;
+		for(i;i<updateDates.length;i++){
+			if($('.bestMainArticleNo').eq(i).val() == mainArticleNO){
+				break;
+			}
 		}
+		//타이머
+		window.setInterval(function(){
+			//날짜 형식
+			// 2015-12-03 13:05:17
+			var updateDates = $('.updateDate');
+			var bestMainArticleSNo = bestMainArticleSNo;
+				//현재 시간	
+				var currunt_date = new Date();
+				var currunt_timestamp = Math.floor(currunt_date.getTime()/1000)
+				var updateYear = $(updateDates[i]).val().substring(0,4);
+				var updateMonth = $(updateDates[i]).val().substring(5,7);
+				var updateDay =$(updateDates[i]).val().substring(8,10);
+				var updateHour=$(updateDates[i]).val().substring(11,13);;
+				var updateMinute =$(updateDates[i]).val().substring(14,16);
+				var second= $(updateDates[i]).val().substring(17,19);
+				//완결 시간(서버에서 최종 수정시간을  받아와옴)
+				var update_date = new Date(updateYear, (updateMonth-1), updateDay, updateHour, updateMinute, second);
+				var update_date_timestamp = Math.floor(update_date.getTime()/1000);
+				//투표 마감 시간(10분)
+				var close_timestamp = update_date_timestamp+60;
+				//
+				var remind_timestamp = close_timestamp-currunt_timestamp
+				var remind_minutes = Math.floor(remind_timestamp/60);
+				var remind_seconds = remind_timestamp%60;
+				if(remind_minutes >= 1 && remind_seconds>=10) {
+					$('.time_area_modal').html(remind_minutes+':'+remind_seconds+'<br>빨리!');
+				} else if(remind_minutes == 0 && remind_seconds<=9){
+					$('.time_area_modal').html('00:0'+remind_seconds+'<br>빨리!');
+				} else if(remind_minutes == 0 && remind_seconds>=10){
+					$('.time_area_modal').html('00:'+remind_seconds+'<br>빨리!');
+				}
+				if(remind_seconds==0){
+					alert('잇자 타임이 종료되었습니다. 재가동 됩니다.');
+					detailItjaView(mainArticleNO);
+			}
+		}, 1000);
+		$('.time_area_modal').text($('.time_area').eq(i).text());
 		var mainArticleTitleNO=$(":input[name=mainArticleNo1234]").val();
 		var subAtricleOrder='';
 		$.ajax({

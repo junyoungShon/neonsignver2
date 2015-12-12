@@ -464,3 +464,8 @@ input[type=radio]:checked + label {
 .itjaWriteForm{
 	display:none;
 }
+
+.time_area_modal{
+	font: red;
+	font-weight: bold;
+}

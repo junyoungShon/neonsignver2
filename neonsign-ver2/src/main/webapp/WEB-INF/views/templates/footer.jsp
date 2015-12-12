@@ -78,6 +78,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="cardDetailViewLabel"></h4>
+					<span class="time_area_modal"></span>
 				</div>
 					<div class="modal-body">
 						<table class="table">
