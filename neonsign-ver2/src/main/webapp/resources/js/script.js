@@ -1825,7 +1825,7 @@ $(document).ready(function(){ //DOM이 준비되고
 		var userCheckFlag= false;
 		var userPassFlag = false;
 		var userRePassFlag = false;
-		var userNameFlag = false;
+		var userNameFlag = true;
 		
 		
 		
@@ -1871,7 +1871,7 @@ $(document).ready(function(){ //DOM이 준비되고
 
 		$("#memberupdateInputName").keyup(function(){
 			var nameComp = $(this).val();
-			
+			var nameCheck= $("#memberupdateInputReName").val();
 			if(nameComp==""){
 				userNameFlag = false;
 				$('.nameInput').attr('class','form-group has-feedback nameInput has-error');
@@ -1882,7 +1882,9 @@ $(document).ready(function(){ //DOM이 준비되고
 				$('.nameInput').attr('class','form-group has-feedback nameInput has-error');
 				$('.nameInput > .control-label').html('닉네임은 1글자 이상 ~7글자 이하로 입력해주세요');
 				$('.nameInput > .glyphicon').attr('class','glyphicon glyphicon-remove form-control-feedback');
-			}else{					
+			}else if(nameComp==nameCheck){
+				userNameFlag = true;
+			}else{										 
 				$.ajax({
 					type:"post",
 					url:"findMemberByNickName.neon",				
@@ -1953,10 +1955,11 @@ $(document).ready(function(){ //DOM이 준비되고
 			}
 		});
 		$("#memberUpdateSubmit").click(function(){
-			
 			if(userPassFlag&&userRePassFlag&&userNameFlag){
 			$("#memberUpdate").submit();
 			alert("변경처리되었습니다");
+			}else{
+				alert('유효성 체크하시오!!');
 			}
 	});
 		});

@@ -1,6 +1,7 @@
 package org.cobro.neonsign.common;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -13,6 +14,7 @@ import org.cobro.neonsign.model.BoardDAO;
 import org.cobro.neonsign.model.BoardService;
 import org.cobro.neonsign.model.MemberDAO;
 import org.cobro.neonsign.model.MemberService;
+import org.cobro.neonsign.model.UtilService;
 import org.cobro.neonsign.vo.ItjaMemberVO;
 import org.cobro.neonsign.vo.MainArticleVO;
 import org.cobro.neonsign.vo.MemberVO;
@@ -31,7 +33,26 @@ public class PointAspect {
 	private MemberDAO memberDAO;
 	@Resource
 	private BoardDAO boardDAO;
-	
+	@Resource
+	private UtilService utilService;
+
+	@Around("execution(public * org.cobro.neonsign.model.*Service.Search*(..))")
+	public Object aroundSearch(ProceedingJoinPoint point) throws Throwable{
+		log.info("검색AOP실행");
+		//메서드 실행
+		Object retValue = null;	
+		retValue = point.proceed();
+
+		List list = (List)retValue;
+		System.out.println(list);
+		if(!list.isEmpty()){
+			Object param[]=point.getArgs();// 메서드 인자값 - 매개변수
+			System.out.println(param[1].toString());
+			utilService.saveSearch(param[1].toString());	
+		}		
+		return retValue;
+	}
+
 	@Around("execution(public * org.cobro.neonsign..*Service.point*(..))")
 	public Object keepScore(ProceedingJoinPoint point) throws Throwable{
 		log.info("AOP 적용 완료");
@@ -49,7 +70,7 @@ public class PointAspect {
 			}else if(parameterArr[0] instanceof MainArticleVO){
 				memberDAO.memberPointPlusUpdater(((MainArticleVO)parameterArr[0]).getMemberEmail(),10);
 			}
-		//잇자 버튼 클릭 시 점수 부여 및 점수 차감
+			//잇자 버튼 클릭 시 점수 부여 및 점수 차감
 		}else if(methodName.equals("pointSelectItjaState")){
 			ItjaMemberVO itjaMemberVO = (ItjaMemberVO)parameterArr[0];
 			HashMap<String, Object> map = (HashMap<String, Object>)retValue;

@@ -1,5 +1,7 @@
 package org.cobro.neonsign.model;
 
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -53,4 +55,22 @@ public class SearchDAOImpl implements SearchDAO{
 		System.out.println("닉네임 DAO:"+keyword);
 		return sqlSessionTemplate.selectList("search.searchByNickName", keyword);
 	}
+
+
+	@Override
+	public void insertSearch(String keyword){
+		sqlSessionTemplate.insert("search.insertSearch",keyword);
+		
+	}
+
+	@Override
+	public int updateSearch(String keyword){
+		return sqlSessionTemplate.update("search.updateSearch",keyword);
+	}
+
+	@Override
+	public List<HashMap<String, String>> selectReport() {
+		return sqlSessionTemplate.selectList("search.selectSearch");
+	}
+
 }

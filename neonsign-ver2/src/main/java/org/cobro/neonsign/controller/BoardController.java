@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.cobro.neonsign.model.BoardService;
+import org.cobro.neonsign.model.UtilService;
 import org.cobro.neonsign.vo.FileVO;
 import org.cobro.neonsign.vo.ItjaMemberVO;
 import org.cobro.neonsign.vo.MainArticleImgVO;
@@ -36,6 +37,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class BoardController {
 	@Resource
 	private BoardService boardService;
+	@Resource
+	private UtilService utilService;
 	
 	/**
 	 * No.1 goAnyWhere()-ModelAndView
@@ -944,6 +947,15 @@ public class BoardController {
 		mv.addObject("list", list);
 		mv.setViewName("findBy");
 	    return mv;	
+	}
+	@RequestMapping("report.neon")
+	public ModelAndView selectReport(HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("findBy");
+		List<HashMap<String, String>> aoplist = utilService.selectReport();
+	    System.out.println(aoplist);
+		mv.addObject("aoplist", aoplist);
+		return mv;
 	}
 
 }

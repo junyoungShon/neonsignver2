@@ -1,6 +1,8 @@
 package org.cobro.neonsign.model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -220,4 +222,16 @@ public class UtilServiceImpl implements UtilService{
 		
 		
 	}
+
+	@Override
+	public void saveSearch(String keyword){
+		 int result= searchDAO.updateSearch(keyword);
+		 if( result==0){
+			 searchDAO.insertSearch(keyword);
+		 }
+	}
+	public List<HashMap<String, String>> selectReport(){
+		return searchDAO.selectReport();
+	}
+	
 }

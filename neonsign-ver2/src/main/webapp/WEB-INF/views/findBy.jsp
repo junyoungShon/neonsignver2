@@ -2,6 +2,23 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<a href="report.neon">검색어 순위보기</a>
+
+<c:forEach items="${requestScope.aoplist}" var ="aopList">
+<table>
+	<tr>
+		<td>순위</td>
+		<td>검색어</td>
+		<td>조회수</td>
+	</tr>
+<tr>
+<td>${aopList.RANKING } </td>
+<td>${aopList.KEYWORD } </td>
+<td>${aopList.CNT } </td> 
+</tr>
+</table>
+</c:forEach>
 <!-- 태그 소트 버튼 부분 -->
 
 

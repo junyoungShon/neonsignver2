@@ -176,7 +176,7 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVO requestTemporaryPassword(FindPasswordVO findPasswordVO) {
 		System.out.println("멤버 서비스에 들어오나"+findPasswordVO);
 		MemberVO memberVO = memberDAO.requestTemporaryPasswordCheckRandomSentence(findPasswordVO);
-		String temporaryPassword = passwordFinder.randomSentenceMaker(5);
+		String temporaryPassword = passwordFinder.randomSentenceMaker(7);
 		//만료된 요청이 아닐 경우에만 동작
 		if(memberVO!=null){
 			memberVO.setMemberPassword(temporaryPassword);

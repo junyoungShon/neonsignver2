@@ -133,7 +133,19 @@ select bm.MEMBER_NICKNAME, ma.MAIN_ARTICLE_NO, ma.MAIN_ARTICLE_TITLE, ma.MAIN_AR
       order by ma_date desc
  </select>
  
-
+<insert id="insertSearch" >
+		insert into searchRanking values(#{value},1)
+	</insert>
+ <update id="updateSearch" >
+		update searchRanking set cnt=cnt+1 where keyword=#{value}
+	</update>
+ <select id="selectSearch" resultType="map">
+	<![CDATA[
+		SELECT KEYWORD,CNT,RANKING FROM(
+		SELECT KEYWORD,CNT,RANK() OVER(ORDER BY cnt DESC) AS RANKING FROM searchRanking
+		) WHERE RANKING <= 15
+	]]>
+	</select>	
  
  
  </mapper> 		
