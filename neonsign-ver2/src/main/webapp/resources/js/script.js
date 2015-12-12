@@ -452,7 +452,7 @@ $(document).ready(function(){ //DOM이 준비되고
 								+ '<div class="card card-with-border" data-background="image" style="background-image: url(resources/uploadImg/articleBg/'+data.completeMainArticleArrayList[i].mainArticleImgVO.mainArticleImgName+'); background-size: cover; background-position: 50% 50%;">' 
 								+ '<div class="content">' 
 								+ '<h6 class="category">' + data.completeMainArticleArrayList[i].tagName + '</h6><br>' 
-								+ '<h5 class="title">' + mainArticleTitle + '</h5>' 
+								+ '<h5 class="title">[완결]' + mainArticleTitle + '</h5>' 
 								+ ' <p class="description">' + mainArticleContent + '</p>' 
 								+ '<span class="writersNickName">- '+data.completeMainArticleArrayList[i].memberVO.memberNickName+' -</span>'
 								+ '<input type="hidden" class="mainArticleTitleNO" value="'+ data.completeMainArticleArrayList[i].mainArticleNo +'">'
