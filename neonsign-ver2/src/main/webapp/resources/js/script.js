@@ -784,7 +784,13 @@ $(document).ready(function(){ //DOM이 준비되고
 							'<button class="btn btn-social btn-twitter itja">'+
 							'<span class="itjaCount"><i class="fa fa-chain-broken"></i><br>'+data.likingSubArticle[i].subArticleLike+'it</span></button>'
 					}
-					mainArticle=mainArticle+"<tr><td>"+(i+1)+"</td>"+
+					var isEnd = "";
+					if(data.likingSubArticle[i].isEnd=="0"){
+						isEnd="계속";
+					}else{
+						isEnd="끊자";
+					}
+					mainArticle=mainArticle+"<tr><td>"+isEnd+"</td>"+
 					"<td>"+data.likingSubArticle[i].subArticleContent+"</td>"+
 					"<td>"+data.likingSubArticle[i].memberVO.memberNickName+"</td>"+
 					"<td>"+mainLikeItHTML+"</td><td>" +
@@ -837,7 +843,13 @@ $(document).ready(function(){ //DOM이 준비되고
 		                  if(data.subArticleVO[i].block==1){
 		                	  subAtricleOrder=subAtricleOrder+"<tr><td colspan='5'><font color='gray' size='3px'><center>해당 잇는글은 관리자에 의해 삭제된 글입니다.</center></font></td></tr>"
 		                  }else{
-		                  subAtricleOrder=subAtricleOrder+"<tr><td>"+(i+1)+"</td><td>"+
+		                	  var isEnd = "";
+		  					  if(data.subArticleVO[i].isEnd=="0"){
+		  						isEnd="계속";
+		  					  }else{
+		  						isEnd="끊자";
+		  					  }
+		                  subAtricleOrder=subAtricleOrder+"<tr><td>"+isEnd+"</td><td>"+
 		                  data.subArticleVO[i].subArticleContent+"</td><td>"+
 		                  data.subArticleVO[i].memberVO.memberNickName+"</td><td>"+
 		                  mainLikeItHTML+"<br>"+

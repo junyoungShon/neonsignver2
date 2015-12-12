@@ -171,7 +171,7 @@
 						<!-- 2015-12-08 대협추가 <tr> -->
 						<tr>
 							<td>
-							<input type="file" name="file">
+							<input type="file" name="file" accept="image/*">
 							</td>
 						</tr>
 					</table>

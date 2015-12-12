@@ -72,8 +72,14 @@ public class BoardServiceImpl implements BoardService{
 		System.out.println("스토리링킨 서비스 관련 글 몇개 출력?"+list.size());
 		//댓글이 없는 경우 자동 완결 처리 한다.
 		if(list.size()==0){
+			//메인 아티클의 타이틀을 가져온다.
+			MainArticleVO mainArticleVO = boardDAO.selectMainArticleTitleByMainArticleNo(subArticleVO.getMainArticleNo());
 			//메인 아티클의 컴플리트 여부를 수정해준다.insertMainArticle
 			boardDAO.updateBestToCompletArticle(subArticleVO.getMainArticleNo());
+			//베스트 글이 완결 글로 이동할 때 타이틀에 [완결]표시를 달아준다.
+			String mainArticleTitle = "[완결]"+mainArticleVO.getMainArticleTitle();
+			mainArticleVO.setMainArticleTitle(mainArticleTitle);
+			boardDAO.appendToCompleteArticle(mainArticleVO);
 			map.put("result","complete");
 		}else if(list.size()==1){
 			if(list.get(0).getIsEnd()==0){
@@ -91,6 +97,13 @@ public class BoardServiceImpl implements BoardService{
 				boardDAO.updateIsConnect(subArticleVO);
 				//메인 아티클의 컴플리트 여부를 수정해준다.
 				boardDAO.updateBestToCompletArticle(subArticleVO.getMainArticleNo());
+				//메인 아티클의 타이틀을 가져온다.
+				MainArticleVO mainArticleVO = boardDAO.selectMainArticleTitleByMainArticleNo(subArticleVO.getMainArticleNo());
+				System.out.println("서비스 : "+mainArticleVO);
+				//베스트 글이 완결 글로 이동할 때 타이틀에 [완결]표시를 달아준다.
+				mainArticleVO.setMainArticleTitle("[완결]"+mainArticleVO.getMainArticleTitle());
+				System.out.println("서비스(수정 후) : "+mainArticleVO);
+				boardDAO.appendToCompleteArticle(mainArticleVO);
 				map.put("result","complete");
 			}
 		//동점 댓글이 여러개일 경우
@@ -118,8 +131,14 @@ public class BoardServiceImpl implements BoardService{
 				//우선 연결을 해준다.
 				subArticleVO.setSubArticleNo(list.get(j).getSubArticleNo());
 				boardDAO.updateIsConnect(subArticleVO);
-				//메인 아티클의 컴플리트 여부를 수정해준다.
+				//메인 아티클의 타이틀을 가져온다.
+				MainArticleVO mainArticleVO = boardDAO.selectMainArticleTitleByMainArticleNo(subArticleVO.getMainArticleNo());
+				//메인 아티클의 컴플리트 여부를 수정해준다.insertMainArticle
 				boardDAO.updateBestToCompletArticle(subArticleVO.getMainArticleNo());
+				//베스트 글이 완결 글로 이동할 때 타이틀에 [완결]표시를 달아준다.
+				String mainArticleTitle = "[완결]"+mainArticleVO.getMainArticleTitle();
+				mainArticleVO.setMainArticleTitle(mainArticleTitle);
+				boardDAO.appendToCompleteArticle(mainArticleVO);
 				map.put("result","complete");
 			}
 		}

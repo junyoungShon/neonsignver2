@@ -100,4 +100,6 @@ public interface BoardDAO {
 	// 게시자 email로 내가 구독하는 리스트 받기
 	public List<SubscriptionInfoVO> getSubscriptingInfoListBySubscriberEmail(
 			MemberVO memberVO);
+	public MainArticleVO selectMainArticleTitleByMainArticleNo(int mainArticleNo);
+	public void appendToCompleteArticle(MainArticleVO mainArticleVO);
 }

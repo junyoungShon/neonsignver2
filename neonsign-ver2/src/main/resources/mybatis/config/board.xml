@@ -536,4 +536,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where SUBSCRIBER = #{memberEmail}
 	</select>
 	
+	<select id="selectMainArticleTitleByMainArticleNo" resultMap="mainArticleResultMap">
+		select MAIN_ARTICLE_TITLE from main_article where MAIN_ARTICLE_NO = #{value}
+	</select>
+	<update id="appendToCompleteArticle">
+		update main_article set MAIN_ARTICLE_TITLE = #{mainArticleTitle} where main_article_no = #{mainArticleNo}  
+	</update>
 </mapper> 		

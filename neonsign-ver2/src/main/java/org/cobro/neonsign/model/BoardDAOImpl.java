@@ -648,5 +648,14 @@ public class BoardDAOImpl implements BoardDAO{
 			MemberVO memberVO) {
 		return sqlSessionTemplate.selectList("board.getSubscriptingInfoListBySubscriberEmail", memberVO);
 	}
+	@Override
+	public MainArticleVO selectMainArticleTitleByMainArticleNo(int mainArticleNo) {
+		return sqlSessionTemplate.selectOne("board.selectMainArticleTitleByMainArticleNo", mainArticleNo);
+	}
+	@Override
+	public void appendToCompleteArticle(MainArticleVO mainArticleVO) {
+		System.out.println(mainArticleVO);
+		sqlSessionTemplate.update("board.appendToCompleteArticle",mainArticleVO);
+	}
 	
 }
