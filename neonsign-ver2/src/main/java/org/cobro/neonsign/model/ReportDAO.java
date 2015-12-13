@@ -53,4 +53,8 @@ public interface ReportDAO {
 
 	public ReportVO findReportByReportNoAndMainArticleNo(Integer integer,
 			MainArticleVO mainArticleVO);
+
+	public int nowMainArticleReportNumber(MainArticleVO mainArticleVO);
+
+	public int nowSubArticleReportNumber(SubArticleVO subArticleVO);
 }

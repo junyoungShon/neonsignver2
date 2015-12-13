@@ -227,5 +227,17 @@ public class ReportDAOImpl implements ReportDAO{
 	}
 
 
+@Override
+	public int nowMainArticleReportNumber(MainArticleVO mainArticleVO) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("report.nowMainArticleReportNumber",mainArticleVO);
+	}
+
+	@Override
+	public int nowSubArticleReportNumber(SubArticleVO subArticleVO) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("report.nowSubArticleReportNumber",subArticleVO);
+	}
+
 }
  

@@ -149,6 +149,7 @@ public class UtilServiceImpl implements UtilService{
 	public String articleReport(MainArticleVO mainArticleVO,
 			SubArticleVO subArticleVO, MemberVO memberVO) {
 		String reporterCheck="ok";
+		int reportNo=0;
 		//신고한 회원의 신고한 리포트 넘버를 받아온다
 		List<Integer> reporterReportNoList=reportDAO.selectReporterReportNo(memberVO);
 		//신고자의 report넘버에 대응하는 MainArticleNo가 있으면 신고를 하지않고
@@ -166,7 +167,7 @@ public class UtilServiceImpl implements UtilService{
 		if(reporterCheck.equals("ok")){
 		int result=0;
 		//subArticleNo가 있다면 else문 수행
-		if(subArticleVO.getSubArticleNo()==0){
+		if(subArticleVO.getSubArticleNo()==0){                
 			//주제글 신고를 업데이트
 			//주제글 신고 업데이트 후 업데이트가 실패했다면 신고하는메서드 실행 (실패시 result에 0이 할당된다)
 			result=reportDAO.updateMainArticleReport(mainArticleVO);
@@ -176,6 +177,7 @@ public class UtilServiceImpl implements UtilService{
 				System.out.println("주제글 신고 생성");
 				reportDAO.mainArticleReport(mainArticleVO);
 			}
+			reportNo=reportDAO.nowMainArticleReportNumber(mainArticleVO);
 		}else{
 			//잇는글 신고를 업데이트
 			//잇는글 업데이트 후 업데이트가 실패했다면 신고하는메서드 실행 (실패시 result에 0이 할당된다)
@@ -185,10 +187,11 @@ public class UtilServiceImpl implements UtilService{
 			//잇는글 신고 수행하는 메서드
 				reportDAO.subArticleReport(subArticleVO);
 			}
+			reportNo=reportDAO.nowSubArticleReportNumber(subArticleVO);
 		}
 		//현재 ReportNumber를 받아오는 메서드
-		int reportNo=reportDAO.nowReportNumber();
-		System.out.println("현재 리포트 넘버 : "+reportNo );
+		//int reportNo=reportDAO.nowReportNumber();
+		//System.out.println("현재 리포트 넘버 : "+reportNo );
 		//신고자를 추가해주는 메서드
 		reportDAO.insertReporter(memberVO, reportNo);
 		//신고한 report의 신고수를 받아와 10이상이되면 Block해준다
